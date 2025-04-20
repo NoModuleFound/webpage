@@ -1,0 +1,32 @@
+body {
+  font-family: 'Poppins', sans-serif;
+  background-color: #f8f9fa; /* Matches original body background */
+  margin: 0; /* Ensure no default margin */
+  padding: 0; /* Ensure no default padding */
+}
+/* Custom spinner CSS */
+.spinner {
+  width: 40px;
+  height: 40px;
+  /* Use border-color for visibility, not background color */
+  border: 4px solid rgba(0, 0, 0, 0.1); /* Light gray border for contrast */
+  border-radius: 50%;
+  border-top-color: #f43f5e; /* rose-500 */
+  animation: spin 1s ease-in-out infinite;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+/* Initially hide the main content area */
+#main {
+  display: none;
+}
+
+/* Style for the error message */
+#loading-content .error-message {
+  color: #ef4444; /* Tailwind red-500 */
+  font-size: 1rem;
+  margin-top: 1rem;
+}

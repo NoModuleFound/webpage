@@ -1,0 +1,64 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+        
+body {
+    font-family: 'Poppins', sans-serif;
+    background-color: #f8f9fa;
+}
+
+.progress-bar {
+    height: 4px;
+    transition: width 0.3s ease;
+}
+
+.interest-tag {
+    transition: all 0.2s ease;
+}
+
+.interest-tag.selected {
+    transform: scale(1.05);
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.slide {
+    transition: transform 0.5s ease, opacity 0.5s ease;
+}
+
+.slide.hidden {
+    transform: translateX(100%);
+    opacity: 0;
+    position: absolute;
+    width: 100%;
+}
+
+.slide.active {
+    transform: translateX(0);
+    opacity: 1;
+}
+
+.slide.previous {
+    transform: translateX(-100%);
+    display: none;
+    opacity: 0;
+}
+
+.date-input::-webkit-calendar-picker-indicator {
+    filter: invert(0.5);
+}
+
+.gender-option {
+    transition: all 0.2s ease;
+}
+
+.gender-option.selected {
+    transform: scale(1.02);
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.language-option {
+    transition: all 0.2s ease;
+}
+
+.language-option.selected {
+    transform: scale(1.02);
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}

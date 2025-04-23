@@ -20,7 +20,7 @@ window.onload = async function () {
   loadingIndicatorDiv.style.display = 'block'; // Ensure spinner is visible
   errorDisplayDiv.classList.add('hidden'); // Ensure error is hidden
   mainContentDiv.style.display = 'none';
-  console.log(tg)
+  console.log(tg.initData)
 };
   
 //   if (tg) {

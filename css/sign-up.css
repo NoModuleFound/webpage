@@ -1,5 +1,5 @@
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
-        
+
 body {
     font-family: 'Poppins', sans-serif;
     background-color: #f8f9fa;
@@ -17,48 +17,35 @@ body {
 .interest-tag.selected {
     transform: scale(1.05);
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    border-color: #f43f5e; /* rose-500 */
+    background-color: #fff1f2; /* rose-50 */
 }
 
 .slide {
-    transition: transform 0.5s ease, opacity 0.5s ease;
+    width: 100%;
+    padding: 1.5rem; /* Tailwind p-6 */
+    box-sizing: border-box; /* Include padding in width */
 }
 
-.slide.hidden {
-    transform: translateX(100%);
-    opacity: 0;
-    position: absolute;
-    width: 100%;
+.slide:not(.active) {
+    display: none; /* Hide non-active slides completely */
 }
 
 .slide.active {
-    transform: translateX(0);
-    opacity: 1;
+    display: block; /* Show active slide */
 }
 
-.slide.previous {
-    transform: translateX(-100%);
-    display: none;
-    opacity: 0;
+/* Style for date input */
+input[type="date"]::-webkit-calendar-picker-indicator {
+    filter: invert(0.5); /* Darken for better visibility on light background */
 }
 
-.date-input::-webkit-calendar-picker-indicator {
-    filter: invert(0.5);
-}
-
-.gender-option {
+.gender-option, .language-option {
     transition: all 0.2s ease;
 }
 
-.gender-option.selected {
+.gender-option.selected, .language-option.selected {
     transform: scale(1.02);
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-}
-
-.language-option {
-    transition: all 0.2s ease;
-}
-
-.language-option.selected {
-    transform: scale(1.02);
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    border-color: #f43f5e; /* rose-500 */
 }

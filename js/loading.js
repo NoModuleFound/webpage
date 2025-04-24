@@ -1,6 +1,3 @@
-import { backend_url } from './url.js';
-
-
 window.onload = async function () {
   const tg = window.Telegram.WebApp;
   const loadingContentDiv = document.getElementById('loading-content');
@@ -23,8 +20,9 @@ window.onload = async function () {
   loadingIndicatorDiv.style.display = 'block'; 
   errorDisplayDiv.classList.add('hidden'); 
   mainContentDiv.style.display = 'none';
-  console.log(tg.initData)
 };
+
+console.log(tg.initData);
 
 if (tg.initData) {
   await fetch(`${backend_url}/auth/web-app`, {

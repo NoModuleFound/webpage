@@ -1,7 +1,3 @@
-window.onload = async function () {
-  const tg = window.Telegram.WebApp;
-};
-
 let currentStep = 1;
 const totalSteps = 7;
 let selectedLanguage = 'en';

@@ -22,9 +22,9 @@ window.onload = async function () {
   mainContentDiv.style.display = 'none';
 };
 
-console.log(tg.initData);
 
 if (tg.initData) {
+  console.log(tg)
   await fetch(`${backend_url}/auth/web-app`, {
     method: "POST",
     headers: {

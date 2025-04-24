@@ -1,6 +1,11 @@
+window.onload = async function () {
+  const tg = window.Telegram.WebApp;
+};
+
 let currentStep = 1;
 const totalSteps = 7;
-let selectedLanguage = 'en'; // Default language
+let selectedLanguage = tg.initData.language_code;
+console.log(selectLanguage)
 
 const formData = {
     language: selectedLanguage, // Set default language initially

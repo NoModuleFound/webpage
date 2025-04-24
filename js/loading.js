@@ -1,3 +1,6 @@
+import { backend_url } from './url.js';
+
+
 window.onload = async function () {
   const tg = window.Telegram.WebApp;
   const loadingContentDiv = document.getElementById('loading-content');
@@ -5,7 +8,7 @@ window.onload = async function () {
   const errorDisplayDiv = document.getElementById('error-display');
   const mainContentDiv = document.getElementById('main');
 
-  // Function to display an error message on the loading screen
+
   function displayError(message) {
       loadingIndicatorDiv.style.display = 'none'; // Hide spinner and loading text
       errorDisplayDiv.textContent = message;
@@ -15,25 +18,40 @@ window.onload = async function () {
       tg.expand(); // Try to expand the web app size
   }
 
-  // Ensure loading content is visible initially, hide main content
+
   loadingContentDiv.style.display = 'block';
-  loadingIndicatorDiv.style.display = 'block'; // Ensure spinner is visible
-  errorDisplayDiv.classList.add('hidden'); // Ensure error is hidden
+  loadingIndicatorDiv.style.display = 'block'; 
+  errorDisplayDiv.classList.add('hidden'); 
   mainContentDiv.style.display = 'none';
   console.log(tg.initData)
 };
-  
-//   if (tg) {
-//     const res = await fetch("https://your-backend.com/api/check-user", {
-//       method: "POST",
-//       headers: {
-//           "Content-Type": "application/json"
-//       },
-//       body: JSON.stringify({
-//           telegram_id: user.id
-//       })
-//   });
-//   }
-// };
 
-
+if (tg.initData) {
+  await fetch(`${backend_url}/auth/web-app`, {
+    method: "POST",
+    headers: {
+        "Content-Type": "application/json"
+    },
+    body: JSON.stringify({
+        initData: tg.initData
+    })
+  }).then(response => {
+    if (!response.ok) {
+      displayError("Failed to authenticate with the backend.");
+      return null;
+    }
+    return response.json();
+  }).then(data => {
+    if (data && data.status === "success") {
+      console.log("Authentication successful. JWT Token:", data.token);
+      // You can now use the token for further requests
+    } else {
+      displayError("Authentication failed. Please try again.");
+    }
+  }).catch(error => {
+    displayError("An error occurred during authentication. Please try again later.");
+    console.error(error);
+  });
+} else {
+  displayError("Initialization data is missing. Please reload the page or contact support.");
+}

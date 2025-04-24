@@ -42,7 +42,6 @@ if (tg.initData) {
   }).then(data => {
     if (data && data.status === "success") {
       console.log("Authentication successful. JWT Token:", data.token);
-      // You can now use the token for further requests
     } else {
       displayError("Authentication failed. Please try again.");
     }

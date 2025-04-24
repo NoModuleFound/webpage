@@ -4,8 +4,7 @@ window.onload = async function () {
 
 let currentStep = 1;
 const totalSteps = 7;
-let selectedLanguage = tg.initData.language_code;
-console.log(selectLanguage)
+let selectedLanguage = 'en';
 
 const formData = {
     language: selectedLanguage, // Set default language initially

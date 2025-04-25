@@ -1,6 +1,14 @@
 let currentStep = 1;
 const totalSteps = 7;
-let selectedLanguage = 'en';
+let selectedLanguage = getCookie('lang') || 'en';
+
+function getCookie(name) {
+  const value = `; ${document.cookie}`;
+  const parts = value.split(`; ${name}=`);
+  if (parts.length === 2) return parts.pop().split(';').shift();
+  return null;
+}
+
 
 const formData = {
     language: selectedLanguage, // Set default language initially

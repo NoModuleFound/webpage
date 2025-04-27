@@ -4,7 +4,7 @@ body {
   margin: 0; /* Ensure no default margin */
   padding: 0; /* Ensure no default padding */
 }
-/* Custom spinner CSS */
+
 .spinner {
   width: 40px;
   height: 40px;

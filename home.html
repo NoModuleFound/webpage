@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Daily Manfaat - Home</title>
+    <!-- Font Awesome CDN -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Poppins Font -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Custom Styles (for body background & font if not using external style.css) -->
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: #f8f9fa; /* Matching the signup body background */
+            min-height: 100vh; /* Ensure body takes full height */
+            display: flex; /* Use flexbox to structure content and nav */
+            flex-direction: column; /* Stack content and nav vertically */
+        }
+        /* Add padding to the main content to prevent it from being hidden by the fixed nav */
+        main {
+            flex-grow: 1; /* Allow main content to fill space */
+            padding-bottom: 5rem; /* Adjust padding based on nav bar height */
+        }
+    </style>
+</head>
+<body class="flex flex-col min-h-screen">
+
+    <!-- Main Content Area -->
+    <main class="flex-grow p-4">
+        <div class="container mx-auto max-w-lg"> <!-- Center and constrain content width -->
+            <h1 class="text-3xl font-bold text-gray-800 mb-6">Daily Manfaat</h1>
+
+            <!-- Example Home Feed/Content -->
+            <div class="bg-white rounded-xl shadow-md p-6 mb-6">
+                <h2 class="text-xl font-semibold text-gray-800 mb-4">Welcome Back!</h2>
+                <p class="text-gray-600">Explore new communities and connect with like-minded individuals.</p>
+            </div>
+
+             <div class="bg-white rounded-xl shadow-md p-6 mb-6">
+                <h3 class="text-lg font-semibold text-gray-800 mb-3">Featured Communities</h3>
+                <ul class="space-y-3">
+                    <li class="flex items-center text-gray-700"><i class="fas fa-code text-rose-500 mr-3"></i> Coding Enthusiasts</li>
+                    <li class="flex items-center text-gray-700"><i class="fas fa-book-open text-rose-500 mr-3"></i> Reading Circle</li>
+                    <li class="flex items-center text-gray-700"><i class="fas fa-leaf text-rose-500 mr-3"></i> Environmental Advocates</li>
+                </ul>
+             </div>
+
+            <div class="bg-white rounded-xl shadow-md p-6 mb-6">
+                <h3 class="text-lg font-semibold text-gray-800 mb-3">Your Activity</h3>
+                <p class="text-gray-600">No recent activity. Join a community or start a discussion!</p>
+             </div>
+
+            <!-- Add more content blocks as needed -->
+            <div class="bg-white rounded-xl shadow-md p-6 mb-6">
+                <h3 class="text-lg font-semibold text-gray-800 mb-3">Discover People</h3>
+                <p class="text-gray-600">Find people based on shared interests in the "All Talent" section.</p>
+            </div>
+        </div>
+    </main>
+
+    <!-- Fixed Bottom Navigation Bar -->
+    <nav class="fixed bottom-0 left-0 right-0 bg-white shadow-lg p-3">
+        <div class="flex justify-around items-center max-w-md mx-auto"> <!-- Center nav items on wider screens -->
+            <!-- Settings -->
+            <a href="#" class="flex flex-col items-center text-gray-500 hover:text-gray-700 transition">
+                <i class="fas fa-cog text-xl mb-1"></i>
+                <span class="text-xs font-medium">Settings</span>
+            </a>
+
+            <!-- Home (Active) -->
+            <a href="#" class="flex flex-col items-center text-rose-500"> <!-- Highlight active link -->
+                <i class="fas fa-home text-xl mb-1"></i>
+                <span class="text-xs font-medium">Home</span>
+            </a>
+
+            <!-- All Talent -->
+            <a href="#" class="flex flex-col items-center text-gray-500 hover:text-gray-700 transition">
+                <i class="fas fa-users text-xl mb-1"></i> <!-- Using users icon for talent -->
+                <span class="text-xs font-medium">All Talent</span>
+            </a>
+        </div>
+    </nav>
+
+    <noscript>Please enable JavaScript</noscript>
+</body>
+</html>

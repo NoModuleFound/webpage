@@ -1,7 +1,7 @@
 let currentStep = 1;
 const totalSteps = 7;
 let selectedLanguage = getCookie('lang') || 'en';
-
+const backend_url = 'https://xz2-production.up.railway.app';
 function getCookie(name) {
   const value = `; ${document.cookie}`;
   const parts = value.split(`; ${name}=`);
@@ -9,6 +9,7 @@ function getCookie(name) {
   return null;
 }
 
+const tg = window.Telegram.WebApp;
 
 const formData = {
     language: selectedLanguage, // Set default language initially
@@ -717,30 +718,84 @@ function toggleInterest(element, interestKey) {
      // console.log("Selected Interests:", formData.interests); // Debugging
 }
 
-function submitForm() {
-    // In a real app, you would send the formData to your server here
-    console.log('Form submitted:', formData);
-    alert('Profile created successfully! Check console for data.');
+async function submitForm() {
+  // Prepare the data for API submission
+  // Calculate age from birthDate
+  const age = calculateAge(formData.birthDate);
+  
+  // Map gender to match GenderEnum values ('male' or 'female')
+  const genderMapping = {
+      'male': 'male',
+      'female': 'female'
+      // Add other mappings if your form has more gender options
+  };
+  
+  // Get institution name
+  const institutionName = formData.institution === 'other' ? 
+      formData.otherInstitution : 
+      institutionSelect.querySelector(`option[value="${formData.institution}"]`)?.textContent || formData.institution;
+  
+  // Format interests as comma-separated string if needed by API
+  const interestsString = formData.interests.join(', ');
+  
+  // Create API-compatible user object
+  const apiFormData = {
+      first_name: formData.firstName,
+      last_name: formData.lastName || null,
+      age: age,
+      gender: genderMapping[formData.gender] || formData.gender,
+      interests: interestsString,
+      institution: institutionName || null,
+      init_data: tg.initData,
+      lang: formData.language,
+      bio: aboutMe
+      
+  };
+  
+  try {
+      const response = await fetch(`${backend_url}/auth/create-user`, {
+          method: 'POST',
+          headers: {
+              'Content-Type': 'application/json'
+          },
+          body: JSON.stringify(apiFormData)
+      });
+      
+      const data = await response.json();
+      
+      if (response.ok) {
+          console.log('Form submitted:', apiFormData);
+          document.cookie = `jwt=${data.token}; path=/;`;
+          const successMessage = translations[selectedLanguage]?.profile_created || 'Profile created successfully!';
+          alert(successMessage);
 
-    // Optional: Redirect or show a success message
-    // window.location.href = '/profile-success';
+          window.location.href = 'home.html';
+      } else {
+          if (response.status === 409) {
+              const conflictMessage = translations[selectedLanguage]?.user_exists || 'Error: User already exists';
+              alert(conflictMessage);
+          } else {
+              const errorMessage = translations[selectedLanguage]?.submission_error || 'Error:';
+              alert(`${errorMessage} ${data.message || 'Something went wrong'}`);
+          }
+      }
+  } catch (error) {
+      console.error('Error submitting form:', error);
+      const failureMessage = translations[selectedLanguage]?.profile_creation_failed || 'Failed to create profile. Please try again.';
+      alert(failureMessage);
+  }
 }
 
-// Initial setup on page load
 document.addEventListener('DOMContentLoaded', () => {
-    // Show step 1
     showStep(1);
 
-    // Set default language (English) and apply translations/render interests
-    // Find the English language option element to trigger selectLanguage as if clicked
     const defaultLangElement = document.querySelector('.language-option[onclick*="selectLanguage(\'en\')"]');
      if (defaultLangElement) {
          selectLanguage('en', defaultLangElement);
      } else {
-         // Fallback if element not found (shouldn't happen with current HTML)
          selectedLanguage = 'en';
          formData.language = 'en';
-         applyTranslation(); // Apply translation manually
+         applyTranslation();
      }
-    updateProgressBar(); // Set initial progress
+    updateProgressBar();
 });

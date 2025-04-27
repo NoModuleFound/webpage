@@ -1,114 +1,112 @@
-const backend_url = 'https://'
-const tg = window.Telegram.WebApp;
-console.log(tg.initData)
-const queryParams = new URLSearchParams(tg.initData);
-const languageCode = queryParams.get('user') ? JSON.parse(decodeURIComponent(queryParams.get('user'))).language_code : 'en';
-const supportedLanguages = ['en', 'ru', 'uz'];
-const selectedLanguage = supportedLanguages.includes(languageCode) ? languageCode : 'en';
-document.cookie = `lang=${selectedLanguage}; path=/;`;
-const loadingContentDiv = document.getElementById('loading-content');
-const loadingIndicatorDiv = document.getElementById('loading-indicator');
-const errorDisplayDiv = document.getElementById('error-display');
-const mainContentDiv = document.getElementById('main');
+document.addEventListener('DOMContentLoaded', function() {
+  const backend_url = 'https://xz2-production.up.railway.app';
+  const tg = window.Telegram.WebApp;
 
-window.onload = async function () {
+  const loadingIndicatorDiv = document.getElementById('loading-indicator');
+  const errorDisplayDiv = document.getElementById('error-display');
+  const mainContentDiv = document.getElementById('main');
 
   function displayError(message) {
-      loadingIndicatorDiv.style.display = 'none'; // Hide spinner and loading text
+    if (loadingIndicatorDiv) loadingIndicatorDiv.style.display = 'none';
+
+    if (errorDisplayDiv) {
       errorDisplayDiv.textContent = message;
-      errorDisplayDiv.classList.remove('hidden'); // Show the error div
-      mainContentDiv.style.display = 'none'; // Ensure main content remains hidden
-      tg.ready(); // Still call ready if possible, even on error, might help in some contexts
-      tg.expand(); // Try to expand the web app size
+      errorDisplayDiv.classList.remove('hidden'); 
+      errorDisplayDiv.classList.add('text-red-500', 'font-semibold', 'text-lg', 'mt-4');
+    }
+
+    if (mainContentDiv) mainContentDiv.style.display = 'none';
+
+    tg.ready(); 
+    tg.expand();
   }
 
-  loadingContentDiv.style.display = 'block';
-  loadingIndicatorDiv.style.display = 'block'; 
-  errorDisplayDiv.classList.add('hidden'); 
-  mainContentDiv.style.display = 'none';
-};
+  // Initialize Telegram WebApp
+  tg.ready();
+  tg.expand();
 
-if (!tg.initData) {
-  displayError('You should login via Telegram');
-} else {
-  console.log('Telegram initData is available:', tg.initData);
-  (async () => {
+  if (!tg.initData || tg.initData === "") {
+    displayError('You need to login via Telegram');
+    console.log('InitData is invalid or missing');
+    return;
+  }
+
+  console.log('InitData:', tg.initData);
+  
+  // Set language preference from Telegram user data
+  try {
+    // Handle language setting from user data
+    // Note: initData isn't a URL query string, but we'll try both approaches
+    let userData = null;
+    
+    // First try to extract user from initData directly
     try {
-      const response = await fetch(`${backend_url}/auth/web-app`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json"
-        },
-        body: JSON.stringify({
-          initData: tg.initData
-        })
-      });
-
-      if (response.status === 404) {
-        window.location.href = "sign-up.html";
-        return;
+      const initDataParams = new URLSearchParams(tg.initData);
+      const userParam = initDataParams.get('user');
+      if (userParam) {
+        userData = JSON.parse(decodeURIComponent(userParam));
       }
-
-      if (response.status === 401) {
-        const data = await response.json();
-        if (data && data.token) {
-          document.cookie = `jwt=${data.token}; path=/;`;
-          window.location.href = "home.html"; // Redirect to home page
-        } else {
-          displayError("Unauthorized access. Please try again.");
-        }
-        return;
-      }
-
-      if (!response.ok) {
-        displayError("Failed to authenticate with the backend.");
-        return;
-      }
-
-      const data = await response.json();
-
-      if (data && data.status === "success") {
-        console.log("Authentication successful. JWT Token:", data.token);
-        document.cookie = `jwt=${data.token}; path=/;`;
-        window.location.href = "main.html"; // Redirect to main page
-      } else if (data && data.status === "sign-up-required") {
-        window.location.href = "sign-up.html"; // Redirect to sign-up page
-      } else {
-        displayError("Authentication failed. Please try again.");
-      }
-    } catch (error) {
-      console("An error occurred during authentication. Please try again later.");
+    } catch (e) {
+      console.log('Could not parse initData as URLSearchParams, trying alternative method');
     }
-  })();
-}
+    
+    // If the above fails, try with WebApp user data
+    if (!userData && tg.initDataUnsafe && tg.initDataUnsafe.user) {
+      userData = tg.initDataUnsafe.user;
+    }
+    
+    // Set language cookie if user data was found
+    if (userData) {
+      const supportedLanguages = ['en', 'ru', 'uz'];
+      const languageCode = userData.language_code || 'en';
+      const selectedLanguage = supportedLanguages.includes(languageCode) ? languageCode : 'en';
+      document.cookie = `lang=${selectedLanguage}; path=/;`;
+      console.log(`Language set to: ${selectedLanguage}`);
+    }
+  } catch (error) {
+    console.error('Error processing language settings:', error);
+    // Continue with authentication even if language processing fails
+  }
 
-
-
-// if (tg.initData) {
-//   await fetch(`${backend_url}/auth/web-app`, {
-//     method: "POST",
-//     headers: {
-//         "Content-Type": "application/json"
-//     },
-//     body: JSON.stringify({
-//         initData: tg.initData
-//     })
-//   }).then(response => {
-//     if (!response.ok) {
-//       displayError("Failed to authenticate with the backend.");
-//       return null;
-//     }
-//     return response.json();
-//   }).then(data => {
-//     if (data && data.status === "success") {
-//       console.log("Authentication successful. JWT Token:", data.token);
-//     } else {
-//       displayError("Authentication failed. Please try again.");
-//     }
-//   }).catch(error => {
-//     displayError("An error occurred during authentication. Please try again later.");
-//     console.error(error);
-//   });
-// } else {
-//   displayError("Initialization data is missing. Please reload the page or contact support.");
-// }
+  // Authenticate with the backend
+  fetch(`${backend_url}/auth/web-app`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({
+      initData: tg.initData
+    })
+  })
+  .then(response => {
+    console.log('Auth response status:', response.status);
+    
+    if (response.status === 404) {
+      console.log('User not found, redirecting to signup');
+      window.location.href = "sign-up.html";
+      return null;
+    }
+    
+    if (!response.ok) {
+      throw new Error(`Authentication failed with status: ${response.status}`);
+    }
+    
+    return response.json();
+  })
+  .then(data => {
+    if (!data) return; // Handle the 404 redirect case
+    
+    if (data && data.token) {
+      // Store JWT token
+      document.cookie = `jwt=${data.token}; path=/;`;
+      console.log('Authentication successful, redirecting to home');
+      window.location.href = "home.html";
+    } else {
+      displayError("Authentication failed. Invalid token received.");
+    }
+  })
+  .catch(error => {
+    console.error('Authentication error:', error);
+    displayError("Authentication failed. Please try again later.");
+  });
+});

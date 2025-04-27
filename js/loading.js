@@ -77,8 +77,7 @@ if (!tg.initData) {
         displayError("Authentication failed. Please try again.");
       }
     } catch (error) {
-      displayError("An error occurred during authentication. Please try again later.");
-      console.error(error);
+      console("An error occurred during authentication. Please try again later.");
     }
   })();
 }

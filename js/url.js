@@ -1,1 +1,1 @@
-const backend_url = 'https://nomodulefound.github.io/webpage/'
+const backend_url = 'https://xz2-production.up.railway.app/'

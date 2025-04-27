@@ -749,7 +749,6 @@ async function submitForm() {
       init_data: tg.initData,
       lang: formData.language,
       bio: formData.aboutMe
-      
   };
   
   try {

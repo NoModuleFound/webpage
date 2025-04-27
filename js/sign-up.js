@@ -748,7 +748,7 @@ async function submitForm() {
       institution: institutionName || null,
       init_data: tg.initData,
       lang: formData.language,
-      bio: aboutMe
+      bio: formData.aboutMe
       
   };
   

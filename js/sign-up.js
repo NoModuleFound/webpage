@@ -768,7 +768,7 @@ async function submitForm() {
           const successMessage = translations[selectedLanguage]?.profile_created || 'Profile created successfully!';
           alert(successMessage);
 
-          window.location.href = 'home.html';
+          // window.location.href = 'home.html';
       } else {
           if (response.status === 409) {
               const conflictMessage = translations[selectedLanguage]?.user_exists || 'Error: User already exists';

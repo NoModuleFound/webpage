@@ -21,7 +21,6 @@ document.addEventListener('DOMContentLoaded', function() {
     tg.expand();
   }
 
-  // Initialize Telegram WebApp
   tg.ready();
   tg.expand();
 

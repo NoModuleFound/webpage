@@ -1,10 +1,32 @@
-/* Base Styles */
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
 
+/* Base Styles */
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
+}
+
+:root {
+  --primary: #ff3e6c;
+  --primary-light: #fff0f4;
+  --primary-dark: #d6184b;
+  --secondary: #6c63ff;
+  --secondary-light: #f0efff;
+  --text-dark: #2d3748;
+  --text-medium: #4a5568;
+  --text-light: #718096;
+  --background: #f7fafc;
+  --card-bg: #ffffff;
+  --success: #38b2ac;
+  --warning: #ed8936;
+  --danger: #e53e3e;
+  --border-radius: 16px;
+  --shadow-sm: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
+  --shadow-md: 0 4px 6px rgba(0,0,0,0.1);
+  --shadow-lg: 0 10px 15px -3px rgba(0,0,0,0.1), 0 4px 6px -2px rgba(0,0,0,0.05);
+  --gradient-primary: linear-gradient(135deg, #ff3e6c 0%, #ff8e53 100%);
+  --gradient-secondary: linear-gradient(135deg, #6c63ff 0%, #3b82f6 100%);
 }
 
 body {
@@ -17,422 +39,516 @@ body {
 .app-container {
     max-width: 480px;
     margin: 0 auto;
-    background-color: white;
     min-height: 100vh;
     position: relative;
-    box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
-}
-
-.content-area {
+    background-color: white;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     padding-bottom: 80px; /* Space for bottom nav */
-}
-
-/* Header Styles */
-.header {
-    text-align: center;
-    padding: 20px 15px;
-}
-
-.header h1 {
-    font-size: 24px;
-    font-weight: 700;
-    margin-bottom: 5px;
-}
-
-.header p {
-    color: #6c757d;
-    font-size: 14px;
-}
-
-.highlight {
-    color: #f43f5e; /* Rose color */
 }
 
 /* Screen Styles */
 .screen {
     display: none;
-    padding: 0 15px 20px;
+    padding: 20px;
+    min-height: calc(100vh - 80px);
 }
 
 .screen.active {
     display: block;
 }
 
-/* Profile Card Styles */
+/* Profile Card Styles - Updated to match the provided example */
 .profile-card {
-  background-color: white;
-  border-radius: 16px;
-  overflow: hidden;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
-  margin-bottom: 20px;
-  margin-left: auto;
-  margin-right: auto;
-}
-
-.profile-image {
-    width: 100%;
-    height: 400px;
+    background-color: white;
+    border-radius: 15px;
     overflow: hidden;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    margin-bottom: 20px;
+    padding: 24px;
 }
 
-.profile-image img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
+.card-header {
+    text-align: center;
+    margin-bottom: 24px;
 }
 
-.profile-info {
-    padding: 20px;
+.card-title {
+    font-size: 24px;
+    font-weight: 700;
+    color: #333;
+    margin-bottom: 4px;
+}
+
+.card-subtitle {
+    color: #6c757d;
+    font-size: 16px;
+}
+
+.user-profile {
+    background-color: #f8f9fa;
+    border-radius: 12px;
+    padding: 16px;
+    margin-bottom: 24px; /* Provides space below profile data for buttons */
 }
 
 .profile-header {
     display: flex;
-    justify-content: space-between;
     align-items: center;
-    margin-bottom: 10px;
+    margin-bottom: 16px;
 }
 
-.profile-header h2 {
-    font-size: 22px;
+.profile-avatar {
+    width: 48px;
+    height: 48px;
+    background-color: #f8e3e6;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-right: 12px;
+}
+
+.profile-avatar i {
+    color: #f43f5e;
+    font-size: 20px;
+}
+
+.profile-name-info h3 {
     font-weight: 600;
+    font-size: 18px;
+    margin-bottom: 2px;
 }
 
-.distance {
-    font-size: 12px;
+.profile-name-info p {
     color: #6c757d;
-}
-
-.bio {
-    color: #6c757d;
-    margin-bottom: 15px;
     font-size: 14px;
 }
 
-.interests-section, .values-section {
-    margin-bottom: 15px;
+.profile-details {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin-bottom: 20px; /* Space below basic details */
 }
 
-.interests-section h3, .values-section h3 {
+.detail-item {
+    display: flex;
+    align-items: flex-start; /* Align icon and text nicely */
+}
+
+.detail-item i {
+    color: #6c757d;
+    margin-right: 12px;
+    width: 20px; /* Fixed width for consistent alignment */
+    text-align: center;
+    margin-top: 3px; /* Slight vertical adjustment */
+}
+
+.detail-item p {
     font-size: 14px;
-    font-weight: 500;
-    margin-bottom: 8px;
+    flex: 1; /* Allows text to take available space */
+    color: var(--text-medium);
+}
+
+/* New Bio Section Style */
+.profile-bio-section {
+  margin-bottom: 20px; /* Space below bio */
+}
+
+.profile-bio-section h3 {
+  font-size: 16px;
+  font-weight: 600;
+  margin-bottom: 10px;
+  color: var(--text-dark);
+  display: flex;
+  align-items: center;
+}
+
+.profile-bio-section h3 i {
+  color: var(--primary); /* Use primary color for quote icon */
+  margin-right: 8px;
+  font-size: 14px; /* Adjust icon size slightly */
+}
+
+.profile-bio-section .bio {
+  color: var(--text-medium);
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+
+/* Interests Section Styles */
+.interests-section {
+  margin-bottom: 0; /* Last section inside user-profile */
+}
+
+.interests-section h3 {
+  font-size: 16px;
+  font-weight: 600;
+  margin-bottom: 10px;
+  color: var(--text-dark);
+  display: flex;
+  align-items: center;
+}
+
+.interests-section h3 i {
+  color: var(--primary);
+  margin-right: 8px;
+  font-size: 14px; /* Adjust icon size slightly */
 }
 
 .tags {
     display: flex;
     flex-wrap: wrap;
-    gap: 8px;
+    gap: 8px; /* Space between tags */
 }
 
 .tag {
-    display: inline-block;
-    padding: 6px 12px;
-    background-color: #fdf2f8; /* Light rose */
-    color: #f43f5e; /* Rose */
-    border-radius: 20px;
-    font-size: 12px;
-    font-weight: 500;
+  display: inline-flex;
+  align-items: center;
+  padding: 6px 12px; /* Slightly smaller padding for tags */
+  background-color: var(--primary-light);
+  color: var(--primary);
+  border-radius: 20px;
+  font-size: 13px;
+  font-weight: 500;
+  box-shadow: var(--shadow-sm);
+  transition: transform 0.2s, box-shadow 0.2s;
 }
 
-.tag.outline {
-    background-color: transparent;
-    border: 1px solid #f43f5e;
+.tag i {
+  margin-right: 6px; /* Space between tag icon and text */
+  font-size: 12px;
 }
+
+.tag:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-md);
+}
+
 
 /* Action Buttons */
 .action-buttons {
     display: flex;
     justify-content: center;
     gap: 30px;
-    margin-top: 20px;
+    padding-top: 20px; /* Add padding above buttons if margin-bottom on user-profile isn't enough */
+    border-top: 1px solid #eee; /* Optional: Add a separator line */
+    margin-top: 10px; /* Added some top margin */
 }
 
-.action-btn {
+.like-btn, .dislike-btn {
     width: 60px;
     height: 60px;
     border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
     border: none;
-    cursor: pointer;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-    transition: transform 0.2s, box-shadow 0.2s;
-}
-
-.action-btn:hover {
-    transform: scale(1.05);
-    box-shadow: 0 6px 14px rgba(0, 0, 0, 0.15);
-}
-
-.action-btn.dislike {
-    background-color: white;
-    border: 2px solid #ef4444; /* Red */
-}
-
-.action-btn.dislike i {
-    color: #ef4444;
-    font-size: 24px;
-}
-
-.action-btn.like {
-    background-color: #22c55e; /* Green */
-}
-
-.action-btn.like i {
-    color: white;
-    font-size: 24px;
-}
-
-/* Coming Soon */
-.coming-soon {
-    background-color: white;
-    border-radius: 16px;
-    padding: 40px 20px;
-    text-align: center;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
-}
-
-.icon-container {
-    width: 70px;
-    height: 70px;
-    background-color: #fdf2f8; /* Light rose */
-    border-radius: 50%;
     display: flex;
     align-items: center;
     justify-content: center;
-    margin: 0 auto 20px;
+    cursor: pointer;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
 }
 
-.icon-container i {
-    font-size: 30px;
-    color: #f43f5e; /* Rose */
+.like-btn:hover, .dislike-btn:hover {
+    transform: scale(1.1);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+}
+
+.like-btn {
+    background-color: #f43f5e;
+    color: white;
+}
+
+.like-btn i {
+    font-size: 24px;
+}
+
+.dislike-btn {
+    background-color: #e9ecef;
+    color: #6c757d;
+}
+
+.dislike-btn i {
+    font-size: 24px;
+}
+
+/* Coming Soon Screen */
+.coming-soon {
+    text-align: center;
+    padding: 50px 20px;
 }
 
 .coming-soon h2 {
-    font-size: 20px;
-    margin-bottom: 10px;
+    margin-bottom: 20px;
+    font-size: 28px;
+    color: var(--text-dark);
 }
 
 .coming-soon p {
-    color: #6c757d;
-    font-size: 14px;
-}
-
-/* Profile Tabs */
-.profile-tabs {
-    display: flex;
-    background-color: #f8f9fa;
-    border-radius: 12px;
-    margin-bottom: 20px;
-    overflow: hidden;
-}
-
-.tab {
-    flex: 1;
-    text-align: center;
-    padding: 12px;
-    cursor: pointer;
-    transition: background-color 0.2s;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 5px;
-}
-
-.tab i {
-    font-size: 18px;
-}
-
-.tab span {
-    font-size: 12px;
-    font-weight: 500;
-}
-
-.tab.active {
-    background-color: white;
-    color: #f43f5e; /* Rose */
-}
-
-/* Tab Content */
-.tab-content {
-    display: none;
-}
-
-.tab-content.active {
-    display: block;
-}
-
-.card {
-    background-color: white;
-    border-radius: 16px;
-    padding: 20px;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
-}
-
-.card h2 {
-    font-size: 18px;
+    color: var(--text-medium);
     margin-bottom: 10px;
 }
 
-.card p {
-    color: #6c757d;
-    font-size: 14px;
-    margin-bottom: 20px;
+/* Profile Settings Styles */
+.profile-settings h2 {
+    margin-bottom: 25px;
+    font-size: 24px;
+    color: var(--text-dark);
 }
 
-.primary-btn {
-    width: 100%;
-    padding: 12px;
-    background-color: #f43f5e; /* Rose */
-    color: white;
-    border: none;
-    border-radius: 12px;
-    font-weight: 500;
-    cursor: pointer;
-    transition: background-color 0.2s;
+.settings-section {
+    margin-bottom: 30px;
+    background-color: var(--card-bg);
+    border-radius: var(--border-radius);
+    padding: 20px;
+    box-shadow: var(--shadow-sm);
 }
 
-.primary-btn:hover {
-    background-color: #e11d48; /* Darker rose */
-}
-
-/* Language Options */
-.language-options {
+.settings-section h3 {
+    margin-bottom: 15px;
+    font-size: 18px;
+    color: var(--text-dark);
     display: flex;
-    flex-direction: column;
+    align-items: center; /* Align icon and text */
+}
+
+.settings-section h3 i {
+    margin-right: 8px;
+    font-size: 16px; /* Match heading size */
+}
+
+
+.form-group {
+    margin-bottom: 15px;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: 500;
+    color: var(--text-medium);
+}
+
+.form-group input[type="text"],
+.form-group textarea,
+.form-group input[type="number"] {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid var(--text-light);
+    border-radius: 5px;
+    font-family: 'Poppins', sans-serif;
+    font-size: 14px;
+    color: var(--text-dark);
+}
+
+.form-group textarea {
+    min-height: 80px;
+    resize: vertical;
+}
+
+.range-inputs {
+    display: flex;
+    align-items: center;
     gap: 10px;
 }
 
-.language-option {
-    display: flex;
-    align-items: center;
-    padding: 12px;
-    border: 1px solid #e5e7eb;
-    border-radius: 12px;
+.range-inputs input {
+    width: 70px;
+    padding: 8px;
+    border: 1px solid var(--text-light);
+    border-radius: 5px;
+    /* -moz-appearance: textfield; Hide arrows in Firefox */
+}
+
+.range-inputs input::-webkit-outer-spin-button,
+.range-inputs input::-webkit-inner-spin-button {
+    -webkit-appearance: none; /* Hide arrows in Chrome/Safari */
+    margin: 0;
+}
+
+
+input[type="range"] {
+    width: 100%;
+    margin-bottom: 5px; /* Less margin below range input */
+    -webkit-appearance: none;
+    appearance: none;
+    height: 6px;
+    background: var(--background);
+    outline: none;
+    opacity: 0.7;
+    transition: opacity .2s;
+    border-radius: 3px;
+}
+
+input[type="range"]::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 20px;
+    height: 20px;
+    background: var(--primary);
     cursor: pointer;
-    transition: all 0.2s;
+    border-radius: 50%;
+    box-shadow: var(--shadow-sm);
+}
+
+input[type="range"]::-moz-range-thumb {
+    width: 20px;
+    height: 20px;
+    background: var(--primary);
+    cursor: pointer;
+    border-radius: 50%;
+    box-shadow: var(--shadow-sm);
+}
+
+
+.range-value {
+    font-size: 14px;
+    color: var(--text-medium);
+}
+
+.language-options {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+.language-option {
+    padding: 10px 15px;
+    background-color: var(--background);
+    border: 1px solid var(--text-light);
+    border-radius: 5px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    font-size: 14px;
+    color: var(--text-dark);
 }
 
 .language-option:hover {
-    border-color: #f43f5e;
-    background-color: #fdf2f8;
+     transform: translateY(-2px);
+     box-shadow: var(--shadow-sm);
+     border-color: var(--text-medium);
 }
 
-.language-icon {
-    width: 30px;
-    height: 30px;
-    background-color: #fdf2f8;
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin-right: 12px;
-    font-size: 12px;
+
+.language-option.selected {
+    transform: scale(1.02);
+    box-shadow: var(--shadow-md);
+    border-color: var(--primary); /* rose-500 */
+    background-color: var(--primary-light);
+    color: var(--primary-dark); /* Darker shade for contrast */
     font-weight: 600;
-    color: #f43f5e;
 }
 
-/* Bottom Navigation */
+/* Bottom Navigation Bar */
 .bottom-nav {
     position: fixed;
     bottom: 0;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 100%;
-    max-width: 480px;
+    left: 0;
+    right: 0;
+    height: 70px;
     background-color: white;
     display: flex;
     justify-content: space-around;
-    padding: 10px 0;
-    box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.05);
-    z-index: 100;
+    align-items: center;
+    box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.1);
+    border-top-left-radius: 20px;
+    border-top-right-radius: 20px;
+    max-width: 480px;
+    margin: 0 auto;
+    z-index: 1000;
 }
 
 .nav-item {
     display: flex;
     flex-direction: column;
     align-items: center;
-    padding: 8px 0;
+    justify-content: center;
     cursor: pointer;
-    width: 70px;
+    padding: 8px 12px;
+    border-radius: 50px;
+    transition: all 0.3s ease;
+}
+
+.nav-item:hover {
+    background-color: var(--background);
+}
+
+.nav-item.active {
+    background-color: var(--secondary-light); /* secondary light */
+}
+
+.nav-item.active .nav-icon {
+    color: var(--secondary); /* secondary color */
+}
+
+.nav-item.active span {
+    color: var(--secondary);
+    font-weight: 500;
 }
 
 .nav-icon {
-    width: 40px;
-    height: 40px;
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin-bottom: 5px;
-    transition: background-color 0.2s;
+    margin-bottom: 4px;
+    color: var(--text-medium);
+}
+
+.nav-icon i {
+    font-size: 20px;
 }
 
 .nav-item span {
     font-size: 12px;
-    transition: color 0.2s;
+    color: var(--text-medium);
 }
 
-.nav-item.active .nav-icon {
-    background-color: #fdf2f8; /* Light rose */
+/* Other existing styles (ProgressBar, Gender, Interest tags, Slide) are kept as they were */
+/* Progress Bar */
+.progress-bar {
+    height: 4px;
+    transition: width 0.3s ease;
+    background-color: var(--primary);
 }
 
-.nav-item.active i {
-    color: #f43f5e; /* Rose */
+/* Style for date input */
+input[type="date"]::-webkit-calendar-picker-indicator {
+    filter: invert(0.5); /* Darken for better visibility on light background */
 }
 
-.nav-item.active span {
-    color: #f43f5e; /* Rose */
+/* Gender Options */
+.gender-option {
+    transition: all 0.2s ease;
 }
 
-/* Toast Notification */
-.toast {
-    position: fixed;
-    top: 20px;
-    left: 50%;
-    transform: translateX(-50%);
-    background-color: white;
-    border-radius: 12px;
-    padding: 15px;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-    width: 90%;
-    max-width: 320px;
-    z-index: 1000;
-    opacity: 0;
-    visibility: hidden;
-    transition: opacity 0.3s, visibility 0.3s;
+.gender-option.selected {
+    transform: scale(1.02);
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    border-color: var(--primary); /* rose-500 */
 }
 
-.toast.show {
-    opacity: 1;
-    visibility: visible;
+/* Interest Tags */
+/* Tag styles are already defined above */
+
+
+/* Slide */
+.slide {
+    width: 100%;
+    padding: 1.5rem; /* Tailwind p-6 */
+    box-sizing: border-box; /* Include padding in width */
 }
 
-.toast-content {
-    display: flex;
-    align-items: center;
+.slide:not(.active) {
+    display: none; /* Hide non-active slides completely */
 }
 
-.toast-icon {
-    width: 40px;
-    height: 40px;
-    background-color: #fdf2f8;
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: #f43f5e;
-    margin-right: 15px;
-    font-size: 18px;
+.slide.active {
+    display: block; /* Show active slide */
 }
 
-.toast-message h3 {
-    font-size: 16px;
-    margin-bottom: 3px;
-}
+/* Removed duplicate .tag styles */
 
-.toast-message p {
-    font-size: 12px;
-    color: #6c757d;
-}
+
+/* Adjusted bio styles */
+/* Removed unnecessary p display block override if not causing issues */
+
+
+/* Removed duplicate .tag.outline style if not used */

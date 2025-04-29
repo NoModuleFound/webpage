@@ -3,179 +3,380 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dating App - Find Like-minded People</title>
-    <!-- Font Awesome CDN -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-    <!-- Google Fonts -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    <!-- Custom CSS -->
+    <title data-translate="app.title">Dating App</title>
     <link rel="stylesheet" href="css/home.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 <body>
     <div class="app-container">
-        <!-- Main Content Area -->
-        <div class="content-area" id="contentArea">
-            <!-- Home Screen -->
-            <div class="screen active" id="homeScreen">
-                <div class="header">
-                    <h1>Find Your <span class="highlight">Match</span></h1>
-                    <p>Discover people who share your interests and values</p>
+        <!-- Home Screen -->
+        <div class="screen active" id="home-screen">
+            <div class="profile-card">
+                <div class="card-header">
+                    <h2 class="card-title" data-translate="home.discoverTitle">Discover</h2>
+                    <p class="card-subtitle" data-translate="home.discoverSubtitle">Find like-minded people</p>
                 </div>
 
-                <div class="profile-card">
-                    <div class="profile-info">
-                        <div class="profile-header">
-                            <h2>Alex, 28</h2>
-                            <span class="distance">5 miles away</span>
+                <div class="user-profile">
+                    <div class="profile-header">
+                        <div class="profile-avatar">
+                            <i class="fas fa-user"></i>
                         </div>
+                        <div class="profile-name-info">
+                            <!-- Placeholder data - in a real app, this would be dynamic -->
+                            <h3>Sarah, 28</h3>
+                            <p>New York, USA</p>
+                        </div>
+                    </div>
+
+                    <div class="profile-details">
+                        <div class="detail-item">
+                            <i class="fas fa-university"></i>
+                             <!-- Placeholder data -->
+                            <p>Columbia University</p>
+                        </div>
+
+                        <div class="detail-item">
+                            <i class="fas fa-heart"></i>
+                             <!-- Placeholder data -->
+                            <p>Art, Travel, Reading, Hiking</p>
+                        </div>
+                    </div>
+
+                    <!-- Separate Bio Section -->
+                    <div class="profile-bio-section">
+                        <h3 data-translate="home.section.bio"><i class="fas fa-quote-left"></i> Bio</h3>
+                        <!-- Placeholder data -->
                         <p class="bio">Passionate about photography, hiking, and trying new coffee shops. Looking for someone to share adventures with!</p>
-                        
-                        <div class="interests-section">
-                            <h3>Interests</h3>
-                            <div class="tags">
-                                <span class="tag">Photography</span>
-                                <span class="tag">Hiking</span>
-                                <span class="tag">Coffee</span>
-                                <span class="tag">Travel</span>
-                                <span class="tag">Reading</span>
-                            </div>
-                        </div>
-                        
-                        <div class="values-section">
-                            <h3>Values</h3>
-                            <div class="tags">
-                                <span class="tag outline">Honesty</span>
-                                <span class="tag outline">Adventure</span>
-                                <span class="tag outline">Creativity</span>
-                                <span class="tag outline">Growth</span>
-                            </div>
+                    </div>
+
+                    <!-- Interests Section -->
+                    <div class="interests-section">
+                        <h3 data-translate="home.section.interests"><i class="fas fa-heart"></i> Interests</h3>
+                        <div class="tags">
+                            <!-- Placeholder data - tags could also be dynamic -->
+                            <span class="tag"><i class="fas fa-camera"></i> <span data-translate="home.tag.photography">Photography</span></span>
+                            <span class="tag"><i class="fas fa-mountain"></i> <span data-translate="home.tag.hiking">Hiking</span></span>
+                            <span class="tag"><i class="fas fa-coffee"></i> <span data-translate="home.tag.coffee">Coffee</span></span>
+                            <span class="tag"><i class="fas fa-plane"></i> <span data-translate="home.tag.travel">Travel</span></span>
+                            <span class="tag"><i class="fas fa-book"></i> <span data-translate="home.tag.reading">Reading</span></span>
                         </div>
                     </div>
                 </div>
 
+                <!-- Action buttons are correctly placed below the user-profile div -->
                 <div class="action-buttons">
-                    <button class="action-btn dislike">
+                    <button class="dislike-btn">
                         <i class="fas fa-times"></i>
                     </button>
-                    <button class="action-btn like">
+                    <button class="like-btn">
                         <i class="fas fa-heart"></i>
                     </button>
                 </div>
             </div>
+        </div>
 
-            <!-- Chat Screen -->
-            <div class="screen" id="chatScreen">
-                <div class="header">
-                    <h1><span class="highlight">Chats</span></h1>
-                    <p>Connect with your matches</p>
-                </div>
-
-                <div class="coming-soon">
-                    <div class="icon-container">
-                        <i class="fas fa-comments"></i>
-                    </div>
-                    <h2>Coming Soon...</h2>
-                    <p>We're working on implementing the chat feature. Once you match with someone, you'll be able to start a conversation here.</p>
-                </div>
+        <!-- Chat Screen -->
+        <div class="screen" id="chat-screen">
+            <div class="coming-soon">
+                <h2 data-translate="chat.title">Chat</h2>
+                <p data-translate="chat.comingSoon">Coming Soon...</p>
+                <p data-translate="chat.underDevelopment">Our messaging feature is under development.</p>
             </div>
+        </div>
 
-            <!-- Profile Screen -->
-            <div class="screen" id="profileScreen">
-                <div class="header">
-                    <h1>Your <span class="highlight">Profile</span></h1>
-                    <p>Manage your preferences and settings</p>
-                </div>
+        <!-- Profile Screen -->
+        <div class="screen" id="profile-screen">
+            <div class="profile-settings">
+                <h2 data-translate="profile.title">Profile Settings</h2>
 
-                <div class="profile-tabs">
-                    <div class="tab active" data-tab="edit">
-                        <i class="fas fa-edit"></i>
-                        <span>Edit</span>
+                <div class="settings-section">
+                    <h3 data-translate="profile.editProfile">✏️ Edit Profile</h3>
+                    <div class="form-group">
+                        <label for="name" data-translate="profile.nameLabel">Name</label>
+                        <!-- Placeholder data -->
+                        <input type="text" id="name" value="John Doe">
                     </div>
-                    <div class="tab" data-tab="filter">
-                        <i class="fas fa-filter"></i>
-                        <span>Filter</span>
-                    </div>
-                    <div class="tab" data-tab="language">
-                        <i class="fas fa-globe"></i>
-                        <span>Language</span>
+                    <div class="form-group">
+                        <label for="bio" data-translate="profile.bioLabel">Bio</label>
+                         <!-- Placeholder data -->
+                        <textarea id="bio">I love hiking and outdoor activities.</textarea>
                     </div>
                 </div>
 
-                <div class="tab-content active" id="editTab">
-                    <div class="card">
-                        <h2>Edit Profile</h2>
-                        <p>Update your profile information to help others get to know you better.</p>
-                        <button class="primary-btn">Edit Profile Details</button>
-                    </div>
-                </div>
-
-                <div class="tab-content" id="filterTab">
-                    <div class="card">
-                        <h2>Filter Preferences</h2>
-                        <p>Set your preferences for age, interests, and distance to find better matches.</p>
-                        <button class="primary-btn">Update Preferences</button>
-                    </div>
-                </div>
-
-                <div class="tab-content" id="languageTab">
-                    <div class="card">
-                        <h2>Change Language</h2>
-                        <p>Select your preferred language for the application.</p>
-                        <div class="language-options">
-                            <div class="language-option">
-                                <div class="language-icon">EN</div>
-                                <span>English</span>
-                            </div>
-                            <div class="language-option">
-                                <div class="language-icon">ES</div>
-                                <span>Spanish</span>
-                            </div>
-                            <div class="language-option">
-                                <div class="language-icon">FR</div>
-                                <span>French</span>
-                            </div>
+                <div class="settings-section">
+                    <h3 data-translate="profile.filterPreferences">🔍 Filter Preferences</h3>
+                    <div class="form-group">
+                        <label data-translate="profile.ageRangeLabel">Age Range</label>
+                        <div class="range-inputs">
+                            <input type="number" min="18" max="100" value="18">
+                            <span data-translate="profile.rangeSeparator">to</span>
+                            <input type="number" min="18" max="100" value="35">
                         </div>
                     </div>
+                    <div class="form-group">
+                        <label data-translate="profile.distanceLabel">Distance (km)</label>
+                        <input type="range" min="1" max="100" value="25">
+                        <!-- The value here is dynamic, we translate the label and possibly "km" if needed -->
+                        <span class="range-value">25 km</span>
+                    </div>
+                </div>
+
+                <div class="settings-section">
+                    <h3 data-translate="profile.languageLabel">🌐 Language</h3>
+                    <div class="language-options">
+                        <!-- data-lang attribute holds the language code -->
+                        <!-- Text content holds the language name in its own language -->
+                        <div class="language-option" data-lang="en">English</div>
+                        <div class="language-option" data-lang="ru">Русский</div>
+                        <div class="language-option" data-lang="uz">O'zbek</div>
+                        <!-- Add 'selected' class via JS based on cookie -->
+                    </div>
                 </div>
             </div>
         </div>
 
-        <!-- Bottom Navigation -->
+        <!-- Bottom Navigation Bar -->
         <div class="bottom-nav">
-            <div class="nav-item active" data-screen="homeScreen">
-                <div class="nav-icon">
+            <div class="nav-item active" data-screen="home-screen">
+                <div class="nav-icon home-icon">
                     <i class="fas fa-home"></i>
                 </div>
-                <span>Home</span>
+                <span data-translate="nav.home">Home</span>
             </div>
-            <div class="nav-item" data-screen="chatScreen">
-                <div class="nav-icon">
+            <!-- Removed the 'explore' nav item as it had no corresponding screen -->
+            <div class="nav-item" data-screen="chat-screen">
+                <div class="nav-icon chat-icon">
                     <i class="fas fa-comment"></i>
                 </div>
-                <span>Chat</span>
+                <span data-translate="nav.chat">Chat</span>
             </div>
-            <div class="nav-item" data-screen="profileScreen">
-                <div class="nav-icon">
+            <div class="nav-item" data-screen="profile-screen">
+                <div class="nav-icon profile-icon">
                     <i class="fas fa-user"></i>
                 </div>
-                <span>Profile</span>
+                <span data-translate="nav.profile">Profile</span>
             </div>
         </div>
     </div>
 
-    <!-- Toast Notification -->
-    <div class="toast" id="toast">
-        <div class="toast-content">
-            <i class="fas fa-heart toast-icon"></i>
-            <div class="toast-message">
-                <h3>Liked!</h3>
-                <p>You liked this profile. We'll let you know if it's a match!</p>
-            </div>
-        </div>
-    </div>
+    <script>
+        // --- Cookie Functions ---
+        function setCookie(name, value, days) {
+            let expires = "";
+            if (days) {
+                const date = new Date();
+                date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
+                expires = "; expires=" + date.toUTCString();
+            }
+            document.cookie = name + "=" + (value || "") + expires + "; path=/";
+        }
 
-    <script src="js/home.js"></script>
+        function getCookie(name) {
+            const nameEQ = name + "=";
+            const ca = document.cookie.split(';');
+            for(let i = 0; i < ca.length; i++) {
+                let c = ca[i];
+                while (c.charAt(0) === ' ') c = c.substring(1, c.length);
+                if (c.indexOf(nameEQ) === 0) return c.substring(nameEQ.length, c.length);
+            }
+            return null;
+        }
+
+        // --- Translations ---
+        const translations = {
+            en: {
+                "app.title": "Dating App",
+                "nav.home": "Home",
+                "nav.chat": "Chat",
+                "nav.profile": "Profile",
+                "home.discoverTitle": "Discover",
+                "home.discoverSubtitle": "Find like-minded people",
+                "home.section.bio": "Bio",
+                "home.section.interests": "Interests",
+                "home.tag.photography": "Photography",
+                "home.tag.hiking": "Hiking",
+                "home.tag.coffee": "Coffee",
+                "home.tag.travel": "Travel",
+                "home.tag.reading": "Reading",
+                "chat.title": "Chat",
+                "chat.comingSoon": "Coming Soon...",
+                "chat.underDevelopment": "Our messaging feature is under development.",
+                "profile.title": "Profile Settings",
+                "profile.editProfile": "✏️ Edit Profile",
+                "profile.nameLabel": "Name",
+                "profile.bioLabel": "Bio",
+                "profile.filterPreferences": "🔍 Filter Preferences",
+                "profile.ageRangeLabel": "Age Range",
+                "profile.rangeSeparator": "to",
+                "profile.distanceLabel": "Distance (km)",
+                "profile.languageLabel": "🌐 Language",
+                 // Language names displayed in options (in their own language)
+                "lang.en": "English",
+                "lang.ru": "Русский",
+                "lang.uz": "O'zbek"
+            },
+            ru: {
+                 "app.title": "Приложение для знакомств",
+                "nav.home": "Главная",
+                "nav.chat": "Чат",
+                "nav.profile": "Профиль",
+                "home.discoverTitle": "Найти",
+                "home.discoverSubtitle": "Найдите близких по духу людей",
+                "home.section.bio": "О себе",
+                "home.section.interests": "Интересы",
+                "home.tag.photography": "Фотография",
+                "home.tag.hiking": "Походы",
+                "home.tag.coffee": "Кофе",
+                "home.tag.travel": "Путешествия",
+                "home.tag.reading": "Чтение",
+                "chat.title": "Чат",
+                "chat.comingSoon": "Скоро...",
+                "chat.underDevelopment": "Наш мессенджер находится в разработке.",
+                "profile.title": "Настройки профиля",
+                "profile.editProfile": "✏️ Редактировать профиль",
+                "profile.nameLabel": "Имя",
+                "profile.bioLabel": "О себе",
+                "profile.filterPreferences": "🔍 Настройки фильтра",
+                "profile.ageRangeLabel": "Возрастной диапазон",
+                "profile.rangeSeparator": "до",
+                "profile.distanceLabel": "Расстояние (км)",
+                "profile.languageLabel": "🌐 Язык",
+                 "lang.en": "English",
+                "lang.ru": "Русский",
+                "lang.uz": "O'zbek"
+            },
+            uz: {
+                 "app.title": "Tanishuv ilovasi",
+                "nav.home": "Bosh sahifa",
+                "nav.chat": "Chat",
+                "nav.profile": "Profil",
+                "home.discoverTitle": "Kashf etish",
+                "home.discoverSubtitle": "Fikrlar yaqin odamlarni toping",
+                "home.section.bio": "Men haqimda",
+                "home.section.interests": "Qiziqishlar",
+                "home.tag.photography": "Fotografiya",
+                "home.tag.hiking": "Piyoda sayr",
+                "home.tag.coffee": "Kofe",
+                "home.tag.travel": "Sayohat",
+                "home.tag.reading": "Kitob o'qish",
+                "chat.title": "Chat",
+                "chat.comingSoon": "Tez orada...",
+                "chat.underDevelopment": "Bizning xabar almashish funksiyasi ishlab chiqilmoqda.",
+                "profile.title": "Profil sozlamalari",
+                "profile.editProfile": "✏️ Profilni tahrirlash",
+                "profile.nameLabel": "Ism",
+                "profile.bioLabel": "Men haqimda",
+                "profile.filterPreferences": "🔍 Filtrlash sozlamalari",
+                "profile.ageRangeLabel": "Yosh oralig'i",
+                "profile.rangeSeparator": "gacha",
+                "profile.distanceLabel": "Masofa (km)",
+                "profile.languageLabel": "🌐 Til",
+                 "lang.en": "English",
+                "lang.ru": "Русский",
+                "lang.uz": "O'zbek"
+            }
+        };
+
+        function translatePage(lang) {
+            document.querySelectorAll('[data-translate]').forEach(element => {
+                const key = element.getAttribute('data-translate');
+                if (translations[lang] && translations[lang][key]) {
+                     // Handle specific cases if needed (e.g., input placeholders)
+                     if (element.tagName === 'INPUT' && element.type === 'text') {
+                         // Not typically translating value attribute in this method,
+                         // but if needed, you could set element.placeholder or similar
+                     } else {
+                         element.textContent = translations[lang][key];
+                     }
+                }
+            });
+
+            // Update language options text (display language name in target language)
+             document.querySelectorAll('.language-option').forEach(option => {
+                const langCode = option.getAttribute('data-lang');
+                 if (translations[lang] && translations[lang]['lang.' + langCode]) {
+                     option.textContent = translations[lang]['lang.' + langCode];
+                 } else {
+                     // Fallback to English name if translation is missing for the language option text itself
+                      option.textContent = translations['en']['lang.' + langCode];
+                 }
+            });
+
+            // Update the html lang attribute
+            document.documentElement.lang = lang;
+            // Update the document title separately as it's often not inside the body
+             if (translations[lang] && translations[lang]['app.title']) {
+                 document.title = translations[lang]['app.title'];
+             } else {
+                  document.title = translations['en']['app.title']; // Fallback
+             }
+
+
+            // Highlight the selected language option in the profile screen
+            document.querySelectorAll('.language-option').forEach(option => {
+                option.classList.remove('selected');
+                if (option.getAttribute('data-lang') === lang) {
+                    option.classList.add('selected');
+                }
+            });
+        }
+
+        // --- Initial Load & Event Listeners ---
+        document.addEventListener('DOMContentLoaded', () => {
+            // Get language from cookie, default to 'en'
+            const savedLang = getCookie('lang');
+            const initialLang = savedLang || 'en';
+
+            // Translate the page initially
+            translatePage(initialLang);
+
+            // Navigation listener
+            document.querySelectorAll('.nav-item').forEach(item => {
+                item.addEventListener('click', function() {
+                    // Remove active class from all screens and nav items
+                    document.querySelectorAll('.screen').forEach(screen => {
+                        screen.classList.remove('active');
+                    });
+                    document.querySelectorAll('.nav-item').forEach(navItem => {
+                        navItem.classList.remove('active');
+                    });
+
+                    // Add active class to clicked nav item
+                    this.classList.add('active');
+
+                    // Show corresponding screen
+                    const screenId = this.getAttribute('data-screen');
+                    const targetScreen = document.getElementById(screenId);
+                    if (targetScreen) {
+                        targetScreen.classList.add('active');
+                    } else {
+                        // Handle case where screenId is invalid (like the old 'explore')
+                        console.warn(`Screen with ID "${screenId}" not found.`);
+                         // Optionally, navigate back to home or show an error screen
+                         document.getElementById('home-screen').classList.add('active');
+                         document.querySelector('.nav-item[data-screen="home-screen"]').classList.add('active');
+                    }
+                });
+            });
+
+            // Language selection listener in Profile screen
+            document.querySelectorAll('.language-option').forEach(option => {
+                option.addEventListener('click', function() {
+                    const selectedLang = this.getAttribute('data-lang');
+                    translatePage(selectedLang); // Translate immediately
+                    setCookie('lang', selectedLang, 30); // Save preference for 30 days
+                });
+            });
+
+            // Update range value display (optional but good UX)
+             document.querySelector('input[type="range"]').addEventListener('input', function() {
+                 const valueSpan = this.closest('.form-group').querySelector('.range-value');
+                 // This text ' km' is currently static, could be translated if needed
+                 valueSpan.textContent = this.value + ' km';
+             });
+        });
+    </script>
 </body>
 </html>

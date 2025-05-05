@@ -1,3 +1,6 @@
+const backend_url = 'https://xz2-production.up.railway.app/api';
+const tg = window.Telegram.WebApp;
+
 const translations = {
   en: {
       // Nav
@@ -248,3 +251,5 @@ document.addEventListener('DOMContentLoaded', function() {
       content.style.transition = 'opacity 0.3s ease';
   });
 });
+
+

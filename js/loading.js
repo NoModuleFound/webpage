@@ -104,7 +104,7 @@ document.addEventListener('DOMContentLoaded', function() {
       document.cookie = `bearer=${encodeURIComponent(bearerToken)}; path=/; Secure; HttpOnly;`;
       document.cookie = `refresh_token=${encodeURIComponent(refreshToken)}; path=/; Secure; HttpOnly;`;
       console.log('Authentication successful, redirecting to home');
-      // window.location.href = "home.html";
+      window.location.href = "home.html";
     } else {
       displayError("Authentication failed. Invalid token received.");
     }

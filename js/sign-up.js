@@ -1,7 +1,7 @@
 let currentStep = 1;
 const totalSteps = 7;
 let selectedLanguage = getCookie('lang') || 'en';
-const backend_url = 'https://xz2-production.up.railway.app';
+const backend_url = 'https://xz2-production.up.railway.app/api';
 function getCookie(name) {
   const value = `; ${document.cookie}`;
   const parts = value.split(`; ${name}=`);

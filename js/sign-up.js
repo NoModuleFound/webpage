@@ -134,7 +134,6 @@ const translations = {
         gender: "Пол *",
         male: "Мужской",
         female: "Женский",
-        other_gender: "Другой / Не указано",
         institution_title: "Ваше учреждение",
         institution_subtitle: "Свяжитесь с коллегами из вашей школы или организации",
         institution: "Учреждение *",

@@ -20,7 +20,6 @@ function getCookie(name) {
   return null;
 }
 
-// --- Translations ---
 const translations = {
   en: {
       "app.title": "Daily Manfaat",
@@ -87,7 +86,7 @@ const translations = {
       "nav.chat": "Уведомления",
       "nav.profile": "Профиль",
       "home.discoverTitle": "Найти",
-      "home.discoverSubtitle": "Найдите близких по духу людей",
+      "home.discoverSubtitle": "Найдите единомышленников",
       "home.section.bio": "О себе",
       "home.section.interests": "Интересы",
       "home.tag.photography": "Фотография",
@@ -197,6 +196,173 @@ const translations = {
       "cancel": "Bekor qilish",
       "save": "Saqlash"
   }
+};
+
+
+
+const interestData = {
+  business_management: {
+      en: "Business Management",
+      uz: "Biznes boshqaruvi",
+      ru: "Управление бизнесом",
+      icon: "fa-briefcase"
+  },
+  finance_and_accounting: {
+      en: "Finance & Accounting",
+      uz: "Moliya va buxgalteriya",
+      ru: "Финансы и бухгалтерский учёт",
+      icon: "fa-coins"
+  },
+  tourism_and_hospitality: {
+      en: "Tourism & Hospitality",
+      uz: "Turizm va mehmonxona ishi",
+      ru: "Туризм и гостиничное дело",
+      icon: "fa-plane"
+  },
+  data_science: {
+      en: "Data Science & Analytics",
+      uz: "Ma'lumotlar fanlari va analitikasi",
+      ru: "Наука о данных и аналитика",
+      icon: "fa-chart-pie"
+  },
+   cybersecurity: {
+      en: "Cybersecurity",
+      uz: "Kiberxavfsizlik",
+      ru: "Кибербезопасность",
+      icon: "fa-lock"
+  },
+  motion_design: {
+      en: "Motion Design",
+      uz: "Harakat dizayni",
+      ru: "Моушн‑дизайн",
+      icon: "fa-film"
+  },
+  three_d_modeling: {
+      en: "3D Modeling",
+      uz: "3D modellashtirish",
+      ru: "3D‑моделирование",
+      icon: "fa-cube"
+  },
+  animation_and_visualization: {
+      en: "Animation & Visualization",
+      uz: "Animatsiya va vizualizatsiya",
+      ru: "Анимация и визуализация",
+      icon: "fa-paint-brush"
+  },
+  marketing_and_promotion: {
+      en: "Marketing & Promotion",
+      uz: "Marketing va targ‘ibot",
+      ru: "Маркетинг и продвижение",
+      icon: "fa-bullhorn"
+  },
+  human_resources_and_project_management: {
+      en: "Human Resources & Project Management",
+      uz: "Inson resurslari va loyiha boshqaruvi",
+      ru: "Управление персоналом и проектами",
+      icon: "fa-users"
+  },
+  economics_and_banking: {
+      en: "Economics & Banking",
+      uz: "Iqtisodiyot va bank ishlari",
+      ru: "Экономика и банковское дело",
+      icon: "fa-chart-line"
+  },
+  international_relations: {
+      en: "International Relations",
+      uz: "Xalqaro munosabatlar",
+      ru: "Международные отношения",
+      icon: "fa-globe"
+  },
+  psychology: {
+      en: "Psychology",
+      uz: "Psixologiya",
+      ru: "Психология",
+      icon: "fa-brain"
+  },
+  law_and_jurisprudence: {
+      en: "Law / Jurisprudence",
+      uz: "Huquqshunoslik",
+      ru: "Право / Юриспруденция",
+      icon: "fa-gavel"
+  },
+   education: {
+      en: "Education / Pedagogy",
+      uz: "Ta'lim / Pedagogika",
+      ru: "Образование / Педагогика",
+      icon: "fa-chalkboard-teacher"
+  },
+  journalism_and_mass_comm: {
+      en: "Journalism & Mass Communication",
+      uz: "Jurnalistika va ommaviy kommunikatsiya",
+      ru: "Журналистика и массовые коммуникации",
+      icon: "fa-newspaper"
+  },
+  architecture: {
+      en: "Architecture",
+      uz: "Arxitektura",
+      ru: "Архитектура",
+      icon: "fa-building"
+  },
+  construction: {
+      en: "Construction",
+      uz: "Qurilish",
+      ru: "Строительство",
+      icon: "fa-hard-hat"
+  },
+  engineering: {
+      en: "Engineering",
+      uz: "Muhandislik",
+      ru: "Инженерия",
+      icon: "fa-cogs"
+  },
+  languages_and_philology: {
+      en: "Languages & Philology",
+      uz: "Tillashunoslik va filologiya",
+      ru: "Языки и филология",
+      icon: "fa-language"
+  },
+  transportation_and_logistics: {
+      en: "Transportation & Logistics",
+      uz: "Transport va logistika",
+      ru: "Транспорт и логистика",
+      icon: "fa-truck"
+  },
+  medicine: {
+      en: "Medicine / Healthcare",
+      uz: "Tibbiyot / Sog'liqni saqlash",
+      ru: "Медицина / Здравоохранение",
+      icon: "fa-medkit"
+  },
+   pharmacy: {
+      en: "Pharmacy",
+      uz: "Farmatsevtika",
+      ru: "Фармацевтика",
+      icon: "fa-pills"
+   },
+   dentistry: {
+      en: "Dentistry",
+      uz: "Stomatologiya",
+      ru: "Стоматология",
+      icon: "fa-tooth"
+   },
+   pediatrics: {
+      en: "Pediatrics",
+      uz: "Pediatriya",
+      ru: "Педиатрия",
+      icon: "fa-child"
+   },
+   sports_and_fitness: {
+      en: "Sports & Fitness",
+      uz: "Sport va fitnes",
+      ru: "Спорт и фитнес",
+      icon: "fa-dumbbell"
+   },
+   art_and_design: {
+      en: "Art & Design",
+      uz: "San'at va dizayn",
+      ru: "Искусство и дизайн",
+      icon: "fa-palette"
+   }
 };
 
 function translatePage(lang) {

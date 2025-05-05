@@ -65,6 +65,8 @@ body {
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
     margin-bottom: 20px;
     padding: 24px;
+    position: relative; /* Needed for animations */
+    transition: transform 0.5s ease-in-out, opacity 0.5s ease-in-out; /* Added transition */
 }
 
 .card-header {
@@ -587,6 +589,55 @@ input[type="range"]::-moz-range-thumb {
     font-weight: 600;
 }
 
+/* Language and Gender Choice Styles */
+.choice-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
+    margin-top: 10px;
+}
+
+.choice-btn {
+    padding: 12px;
+    border: 2px solid var(--text-light);
+    border-radius: var(--border-radius);
+    background-color: var(--card-bg);
+    color: var(--text-medium);
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    text-align: center;
+}
+
+.choice-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-sm);
+    border-color: var(--text-medium);
+}
+
+.text-rose-500 {
+  color: #f4852f; /* Tailwind's rose-500 color */
+}
+
+.choice-btn.active {
+    background-color: #ff3e6c; /* Changed to orange */
+    color: white;
+    border-color: #ff3e6c; /* Changed to match background */
+    transform: scale(1.02);
+    box-shadow: var(--shadow-md);
+}
+
+.edit-gender-container {
+    margin-top: 10px;
+}
+
+.settings-section .settings-subtitle {
+    color: var(--text-medium);
+    font-size: 14px;
+    margin: 8px 0;
+}
+
 /* Bottom Navigation Bar */
 .bottom-nav {
     position: fixed;
@@ -684,4 +735,218 @@ input[type="date"]::-webkit-calendar-picker-indicator {
 
 .slide.active {
     display: block;
+}
+
+/* Edit Profile Modal Styles */
+.modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 1000;
+    overflow-y: auto;
+}
+
+.modal-content {
+    position: relative;
+    background-color: #fff;
+    margin: 20px auto;
+    max-width: 500px;
+    border-radius: var(--border-radius);
+    box-shadow: var(--shadow-lg);
+}
+
+.modal-header {
+    padding: 20px;
+    border-bottom: 1px solid #eee;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.modal-header h2 {
+    margin: 0;
+    font-size: 20px;
+    color: var(--text-dark);
+}
+
+.close-modal {
+    background: none;
+    border: none;
+    font-size: 24px;
+    cursor: pointer;
+    color: var(--text-medium);
+}
+
+.modal-body {
+    padding: 20px;
+    max-height: 70vh;
+    overflow-y: auto;
+}
+
+.modal-footer {
+    padding: 20px;
+    border-top: 1px solid #eee;
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+}
+
+.form-input {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid var(--text-light);
+    border-radius: 8px;
+    font-size: 14px;
+    transition: all 0.2s ease;
+}
+
+.form-input:focus {
+    border-color: var(--primary);
+    box-shadow: 0 0 0 2px var(--primary-light);
+}
+
+.gender-options {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
+    margin-top: 8px;
+}
+
+.interests-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 8px;
+    margin-top: 8px;
+}
+
+.edit-profile-btn {
+    width: 100%;
+    padding: 12px;
+    background-color: var(--primary);
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 16px;
+    font-weight: 500;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    transition: all 0.2s ease;
+}
+
+.edit-profile-btn:hover {
+    background-color: var(--primary-dark);
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-md);
+}
+
+
+
+
+.edit-gender-container {
+  display: flex;
+  gap: 10px; /* Space between buttons */
+}
+
+.edit-gender-btn {
+  flex: 1; /* Ensures both buttons take equal width */
+  padding: 12px;
+  background-color: var(--primary);
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 16px;
+  font-weight: 500;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  transition: all 0.2s ease;
+}
+
+.edit-gender-btn:hover {
+  background-color: var(--primary-dark);
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-md);
+}
+
+.cancel-btn, .save-btn {
+    padding: 10px 20px;
+    border-radius: 6px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.cancel-btn {
+    background-color: var(--background);
+    color: var(--text-medium);
+    border: 1px solid var(--text-light);
+}
+
+.save-btn {
+    background-color: var(--primary);
+    color: white;
+    border: none;
+}
+
+.save-btn:hover {
+    background-color: var(--primary-dark);
+    transform: translateY(-1px);
+    box-shadow: var(--shadow-sm);
+}
+
+.hidden {
+    display: none;
+}
+
+/* Profile Card Animations */
+@keyframes slideOutLeftFade {
+    0% {
+        transform: translateX(0) rotate(0);
+        opacity: 1;
+    }
+    100% {
+        transform: translateX(-150%) rotate(-20deg);
+        opacity: 0;
+    }
+}
+
+@keyframes slideOutRightFade {
+    0% {
+        transform: translateX(0) rotate(0);
+        opacity: 1;
+    }
+    100% {
+        transform: translateX(150%) rotate(20deg);
+        opacity: 0;
+    }
+}
+
+@keyframes fadeIn {
+    0% {
+        opacity: 0;
+    }
+    100% {
+        opacity: 1;
+    }
+}
+
+.profile-card.is-out-left {
+    animation: slideOutLeftFade 0.5s ease-in-out forwards;
+}
+
+.profile-card.is-out-right {
+    animation: slideOutRightFade 0.5s ease-in-out forwards;
+}
+
+.profile-card.is-in {
+    animation: fadeIn 0.5s ease-in-out;
 }

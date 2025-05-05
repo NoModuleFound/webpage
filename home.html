@@ -10,7 +10,6 @@
 </head>
 <body>
     <div class="app-container">
-        <!-- Home Screen -->
         <div class="screen active" id="home-screen">
             <div class="profile-card">
                 <div class="card-header">
@@ -25,50 +24,39 @@
                         </div>
                         <div class="profile-name-info">
                             <h3>Name</h3>
-                            <p></p>
+                            <p id="userName"></p>
                         </div>
                     </div>
 
                     <div class="profile-details">
                         <div class="detail-item">
                             <i class="fas fa-university"></i>
-                             <!-- Placeholder data -->
-                            <p>University</p>
+                            <p id="userInstitution"></p>
                         </div>
 
                         <div class="detail-item">
                             <i class="fas fa-hashtag"></i>
-                             <!-- Placeholder data -->
-                            <p>Age</p>
+                            <p id="userAge"></p>
                         </div>
 
                         <div class="detail-item">
                           <i class="fas fa-address-book"></i>
-                          <p>Gender</p>
+                          <p id="userGender"></p>
                       </div>
                     </div>
 
-                    <!-- Separate Bio Section -->
                     <div class="profile-bio-section">
                         <h3 data-translate="home.section.bio"><i class="fas fa-quote-left"></i> Bio</h3>
-                        <!-- Placeholder data -->
-                        <p class="bio">AboutMe</p>
+                        <p class="bio" id="userBio"></p>
                     </div>
 
                     <div class="interests-section">
                         <h3 data-translate="home.section.interests"><i class="fas fa-heart"></i> Interests</h3>
-                        <div class="tags">
-                            <!-- Placeholder data - tags could also be dynamic -->
-                            <span class="tag"><i class="fas fa-camera"></i> <span data-translate="home.tag.photography">Photography</span></span>
-                            <span class="tag"><i class="fas fa-mountain"></i> <span data-translate="home.tag.hiking">Hiking</span></span>
-                            <span class="tag"><i class="fas fa-coffee"></i> <span data-translate="home.tag.coffee">Coffee</span></span>
-                            <span class="tag"><i class="fas fa-plane"></i> <span data-translate="home.tag.travel">Travel</span></span>
-                            <span class="tag"><i class="fas fa-book"></i> <span data-translate="home.tag.reading">Reading</span></span>
-                        </div>
+                        <div class="tags" id="userInterestsContainer">
+                            </div>
                     </div>
                 </div>
 
-                <!-- Action buttons are correctly placed below the user-profile div -->
                 <div class="action-buttons">
                     <button class="dislike-btn">
                         <i class="fas fa-times"></i>
@@ -80,18 +68,13 @@
             </div>
         </div>
 
-        <!-- Notifications Screen (Replacing Chat Screen) -->
         <div class="screen" id="chat-screen">
             <div class="notifications-header">
                 <h2 data-translate="notifications.title">Notifications</h2>
                 <p data-translate="notifications.subtitle">People who liked your profile</p>
             </div>
-            
+
             <div class="notifications-container">
-                <!-- This section will be populated with notification cards from backend data -->
-                <!-- Each card represents a person who liked the user's profile -->
-                
-                <!-- Empty state when no notifications exist -->
                 <div class="empty-notifications hidden" id="empty-notifications">
                     <div class="empty-icon">
                         <i class="fas fa-bell-slash"></i>
@@ -102,32 +85,119 @@
             </div>
         </div>
 
-        <!-- Profile Screen -->
         <div class="screen" id="profile-screen">
             <div class="profile-settings">
                 <h2 data-translate="profile.title">Profile Settings</h2>
 
                 <div class="settings-section">
-                    <div class="form-group">
-                        <button data-translate="profile.editProfile">✏️ Edit Profile</button>
-                    </div>
+                    <button id="editProfileBtn" class="edit-profile-btn" data-translate="profile.editProfile">
+                        <i class="fas fa-edit"></i> Edit Profile
+                    </button>
                 </div>
 
                 <div class="settings-section">
-                    <h3 data-translate="profile.filterPreferences">🔍 Filter Preferences</h3>
-                    <button data-translate="profile.gender.male">Male</button>
-                    <button data-translate="profile.gender.female">Female</button>
+                  <h3 data-translate="profile.filterPreferences">🔍 Filter Preferences</h3>
+                  <p class="settings-subtitle" data-translate="profile.gender.preference">Choose gender preference</p>
+                  <div class="choice-grid">
+                    <button class="choice-btn" data-gender="male" data-translate="profile.gender.male">Male</button>
+                    <button class="choice-btn" data-gender="female" data-translate="profile.gender.female">Female</button>
+                    <button class="choice-btn" data-gender="both" data-translate="profile.gender.both">Both</button>
+                  </div>
                 </div>
+
                 <div class="settings-section">
-                  <h3 data-translate="xz">Language</h3>
-                  <button data-translate="lang.uz">O'zbek</button>
-                  <button data-translate="lang.ru">Русский</button>
-                  <button data-translate="lang.en">English</button>
-              </div>
+                  <h3 data-translate="profile.filterInterests">🔍 Filter By Interests</h3>
+                  <div class="choice-grid">
+                  <button class="choice-btn" data-choice="yes" data-translate="choice.yes">Yes</button>
+                  <button class="choice-btn" data-choice="no" data-translate="choice.no">No</button>
+                  </div>
+                </div>
+
+
+                <div class="settings-section">
+                  <h3 data-translate="profile.languageLabel">🌐 Language</h3>
+                  <p class="settings-subtitle" data-translate="profile.language.choose">Choose your language</p>
+                  <div class="choice-grid">
+                    <button class="choice-btn" data-lang="uz" data-translate="lang.uz">O'zbek</button>
+                    <button class="choice-btn" data-lang="ru" data-translate="lang.ru">Русский</button>
+                    <button class="choice-btn" data-lang="en" data-translate="lang.en">English</button>
+                  </div>
+                </div>
+
             </div>
         </div>
 
-        <!-- Bottom Navigation Bar -->
+        <div id="editProfileModal" class="modal">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h2 data-translate="edit.profile.title">Edit Profile</h2>
+                    <button class="close-modal">&times;</button>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label for="editFirstName" data-translate="first_name">First Name *</label>
+                        <input type="text" id="editFirstName" class="form-input">
+                    </div>
+                    <div class="form-group">
+                        <label for="editLastName" data-translate="last_name">Last Name</label>
+                        <input type="text" id="editLastName" class="form-input">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="editBirthDate" data-translate="birth_date">Date of Birth *</label>
+                        <input type="date" id="editBirthDate" class="form-input">
+                    </div>
+
+                    <div class="form-group">
+                        <label data-translate="gender">Gender *</label>
+                        <div class="gender-options">
+                            <div class="gender-option" data-gender="male">
+                                <i class="fas fa-mars"></i>
+                                <span data-translate="male">Male</span>
+                            </div>
+                            <div class="gender-option" data-gender="female">
+                                <i class="fas fa-venus"></i>
+                                <span data-translate="female">Female</span>
+                            </div>
+                            <div class="gender-option" data-gender="other">
+                                <i class="fas fa-genderless"></i>
+                                <span data-translate="other_gender">Other</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="editInstitution" data-translate="institution">Institution *</label>
+                        <select id="editInstitution" class="form-input">
+                            <option value="" disabled selected data-translate="select_institution">Select your institution</option>
+                            <option value="webster">Webster University</option>
+                            <option value="westminster">Westminster International University</option>
+                            <option value="tmc">Tashkent Medical College</option>
+                            <option value="bmu">Bukhara Medical University</option>
+                            <option value="cau">Central Asia University</option>
+                            <option value="other" data-translate="other">Other</option>
+                        </select>
+                        <input type="text" id="editOtherInstitution" class="form-input hidden" data-translate-placeholder="other_institution">
+                    </div>
+
+                    <div class="form-group">
+                        <label data-translate="interests_title">Interests</label>
+                        <div id="editInterestsContainer" class="interests-grid">
+                            </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="editAboutMe" data-translate="about_me">About Me</label>
+                        <textarea id="editAboutMe" class="form-input" rows="4"></textarea>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button class="cancel-btn" data-translate="cancel">Cancel</button>
+                    <button class="save-btn" data-translate="save">Save Changes</button>
+                </div>
+            </div>
+        </div>
+
         <div class="bottom-nav">
             <div class="nav-item active" data-screen="home-screen">
                 <div class="nav-icon home-icon">
@@ -135,7 +205,6 @@
                 </div>
                 <span data-translate="nav.home">Home</span>
             </div>
-            <!-- Removed the 'explore' nav item as it had no corresponding screen -->
             <div class="nav-item" data-screen="chat-screen">
                 <div class="nav-icon chat-icon">
                     <i class="fas fa-bell"></i>
@@ -151,228 +220,7 @@
         </div>
     </div>
 
-    <script>
-        // --- Cookie Functions ---
-        function setCookie(name, value, days) {
-            let expires = "";
-            if (days) {
-                const date = new Date();
-                date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
-                expires = "; expires=" + date.toUTCString();
-            }
-            document.cookie = name + "=" + (value || "") + expires + "; path=/";
-        }
-
-        function getCookie(name) {
-            const nameEQ = name + "=";
-            const ca = document.cookie.split(';');
-            for(let i = 0; i < ca.length; i++) {
-                let c = ca[i];
-                while (c.charAt(0) === ' ') c = c.substring(1, c.length);
-                if (c.indexOf(nameEQ) === 0) return c.substring(nameEQ.length, c.length);
-            }
-            return null;
-        }
-
-        // --- Translations ---
-        const translations = {
-            en: {
-                "app.title": "Daily Manfaat",
-                "nav.home": "Home",
-                "nav.chat": "Notifications",
-                "nav.profile": "Profile",
-                "home.discoverTitle": "Discover",
-                "home.discoverSubtitle": "Find like-minded people",
-                "home.section.bio": "Bio",
-                "home.section.interests": "Interests",
-                "home.tag.photography": "Photography",
-                "home.tag.hiking": "Hiking",
-                "home.tag.coffee": "Coffee",
-                "home.tag.travel": "Travel",
-                "home.tag.reading": "Reading",
-                "chat.title": "Chat",
-                "chat.comingSoon": "Coming Soon...",
-                "chat.underDevelopment": "Our messaging feature is under development.",
-                "profile.title": "Profile Settings",
-                "profile.editProfile": "✏️ Edit Profile",
-                "profile.nameLabel": "Name",
-                "profile.bioLabel": "Bio",
-                "profile.filterPreferences": "🔍 Filter Preferences",
-                "profile.ageRangeLabel": "Age Range",
-                "profile.rangeSeparator": "to",
-                "profile.distanceLabel": "Distance (km)",
-                "profile.languageLabel": "🌐 Language",
-                 // Language names displayed in options (in their own language)
-                "lang.en": "English",
-                "lang.ru": "Русский",
-                "lang.uz": "O'zbek",
-                "notifications.title": "Notifications",
-                "notifications.subtitle": "People who liked your profile",
-                "notifications.empty.title": "No Notifications Yet",
-                "notifications.empty.message": "When someone likes your profile, you'll see them here."
-            },
-            ru: {
-                 "app.title": "Приложение для знакомств",
-                "nav.home": "Главная",
-                "nav.chat": "Уведомления",
-                "nav.profile": "Профиль",
-                "home.discoverTitle": "Найти",
-                "home.discoverSubtitle": "Найдите близких по духу людей",
-                "home.section.bio": "О себе",
-                "home.section.interests": "Интересы",
-                "home.tag.photography": "Фотография",
-                "home.tag.hiking": "Походы",
-                "home.tag.coffee": "Кофе",
-                "home.tag.travel": "Путешествия",
-                "home.tag.reading": "Чтение",
-                "chat.title": "Чат",
-                "chat.comingSoon": "Скоро...",
-                "chat.underDevelopment": "Наш мессенджер находится в разработке.",
-                "profile.title": "Настройки профиля",
-                "profile.editProfile": "✏️ Редактировать профиль",
-                "profile.nameLabel": "Имя",
-                "profile.bioLabel": "О себе",
-                "profile.filterPreferences": "🔍 Настройки фильтра",
-                "profile.ageRangeLabel": "Возрастной диапазон",
-                "profile.rangeSeparator": "до",
-                "profile.distanceLabel": "Расстояние (км)",
-                "profile.languageLabel": "🌐 Язык",
-                 "lang.en": "English",
-                "lang.ru": "Русский",
-                "lang.uz": "O'zbek",
-                "notifications.title": "Уведомления",
-                "notifications.subtitle": "Люди, которым понравился ваш профиль",
-                "notifications.empty.title": "Пока нет уведомлений",
-                "notifications.empty.message": "Когда кому-то понравится ваш профиль, вы увидите их здесь."
-            },
-            uz: {
-                 "app.title": "Tanishuv ilovasi",
-                "nav.home": "Bosh sahifa",
-                "nav.chat": "Bildirishnomalar",
-                "nav.profile": "Profil",
-                "home.discoverTitle": "Kashf etish",
-                "home.discoverSubtitle": "Fikrlar yaqin odamlarni toping",
-                "home.section.bio": "Men haqimda",
-                "chat.title": "Chat",
-                "chat.comingSoon": "Tez orada...",
-                "chat.underDevelopment": "Bizning xabar almashish funksiyasi ishlab chiqilmoqda.",
-                "profile.title": "Profil sozlamalari",
-                "profile.editProfile": "✏️ Profilni tahrirlash",
-                "profile.nameLabel": "Ism",
-                "profile.bioLabel": "Men haqimda",
-                "profile.filterPreferences": "🔍 Filtrlash sozlamalari",
-                "profile.ageRangeLabel": "Yosh oralig'i",
-                "profile.rangeSeparator": "gacha",
-                "profile.distanceLabel": "Masofa (km)",
-                "profile.languageLabel": "🌐 Til",
-                 "lang.en": "English",
-                "lang.ru": "Русский",
-                "lang.uz": "O'zbek",
-                "notifications.title": "Bildirishnomalar",
-                "notifications.subtitle": "Sizning profilingizga yoqqan odamlar",
-                "notifications.empty.title": "Hozircha bildirishnoma yo'q",
-                "notifications.empty.message": "Kimdir sizning profilingizga yoqsa, siz ularni bu yerda ko'rasiz."
-            }
-        };
-
-        function translatePage(lang) {
-            document.querySelectorAll('[data-translate]').forEach(element => {
-                const key = element.getAttribute('data-translate');
-                if (translations[lang] && translations[lang][key]) {
-                     // Handle specific cases if needed (e.g., input placeholders)
-                     if (element.tagName === 'INPUT' && element.type === 'text') {
-                         // Not typically translating value attribute in this method,
-                         // but if needed, you could set element.placeholder or similar
-                     } else {
-                         element.textContent = translations[lang][key];
-                     }
-                }
-            });
-
-            // Update language options text (display language name in target language)
-             document.querySelectorAll('.language-option').forEach(option => {
-                const langCode = option.getAttribute('data-lang');
-                 if (translations[lang] && translations[lang]['lang.' + langCode]) {
-                     option.textContent = translations[lang]['lang.' + langCode];
-                 } else {
-                     // Fallback to English name if translation is missing for the language option text itself
-                      option.textContent = translations['en']['lang.' + langCode];
-                 }
-            });
-
-            // Update the html lang attribute
-            document.documentElement.lang = lang;
-            // Update the document title separately as it's often not inside the body
-             if (translations[lang] && translations[lang]['app.title']) {
-                 document.title = translations[lang]['app.title'];
-             } else {
-                  document.title = translations['en']['app.title']; // Fallback
-             }
-
-
-            // Highlight the selected language option in the profile screen
-            document.querySelectorAll('.language-option').forEach(option => {
-                option.classList.remove('selected');
-                if (option.getAttribute('data-lang') === lang) {
-                    option.classList.add('selected');
-                }
-            });
-        }
-
-        // --- Initial Load & Event Listeners ---
-        document.addEventListener('DOMContentLoaded', () => {
-            // Get language from cookie, default to 'en'
-            const savedLang = getCookie('lang');
-            const initialLang = savedLang || 'en';
-
-            // Translate the page initially
-            translatePage(initialLang);
-
-            // Navigation listener
-            document.querySelectorAll('.nav-item').forEach(item => {
-                item.addEventListener('click', function() {
-                    // Remove active class from all screens and nav items
-                    document.querySelectorAll('.screen').forEach(screen => {
-                        screen.classList.remove('active');
-                    });
-                    document.querySelectorAll('.nav-item').forEach(navItem => {
-                        navItem.classList.remove('active');
-                    });
-
-                    // Add active class to clicked nav item
-                    this.classList.add('active');
-
-                    // Show corresponding screen
-                    const screenId = this.getAttribute('data-screen');
-                    const targetScreen = document.getElementById(screenId);
-                    if (targetScreen) {
-                        targetScreen.classList.add('active');
-                    } else {
-                        // Handle case where screenId is invalid (like the old 'explore')
-                        console.warn(`Screen with ID "${screenId}" not found.`);
-                         // Optionally, navigate back to home or show an error screen
-                         document.getElementById('home-screen').classList.add('active');
-                         document.querySelector('.nav-item[data-screen="home-screen"]').classList.add('active');
-                    }
-                });
-            });
-
-            // Language selection listener in Profile screen
-            document.querySelectorAll('.language-option').forEach(option => {
-                option.addEventListener('click', function() {
-                    const selectedLang = this.getAttribute('data-lang');
-                    translatePage(selectedLang); // Translate immediately
-                    setCookie('lang', selectedLang, 30); // Save preference for 30 days
-                });
-            });
-
-            // Update range value display (optional but good UX)
-             document.querySelector('input[type="range"]').addEventListener('input', function() {
-                 const valueSpan = this.closest('.form-group').querySelector('.range-value');
-                 // This text ' km' is currently static, could be translated if needed
-                 valueSpan.textContent = this.value + ' km';
-             });
-        });
+    <script src="js/home.js">
     </script>
 </body>
 </html>

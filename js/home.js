@@ -116,7 +116,7 @@ const translations = {
 
 
 document.addEventListener('DOMContentLoaded', function() {
-  // Navigation functionality
+
   const navItems = document.querySelectorAll('.nav-item');
   const screens = document.querySelectorAll('.screen');
 

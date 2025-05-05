@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title data-translate="app.title">Dating App</title>
+    <title data-translate="app.title">Daily Manfaat</title>
     <link rel="stylesheet" href="css/home.css">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -24,9 +24,8 @@
                             <i class="fas fa-user"></i>
                         </div>
                         <div class="profile-name-info">
-                            <!-- Placeholder data - in a real app, this would be dynamic -->
-                            <h3>Sarah, 28</h3>
-                            <p>New York, USA</p>
+                            <h3>Name</h3>
+                            <p></p>
                         </div>
                     </div>
 
@@ -34,24 +33,28 @@
                         <div class="detail-item">
                             <i class="fas fa-university"></i>
                              <!-- Placeholder data -->
-                            <p>Columbia University</p>
+                            <p>University</p>
                         </div>
 
                         <div class="detail-item">
-                            <i class="fas fa-heart"></i>
+                            <i class="fas fa-hashtag"></i>
                              <!-- Placeholder data -->
-                            <p>Art, Travel, Reading, Hiking</p>
+                            <p>Age</p>
                         </div>
+
+                        <div class="detail-item">
+                          <i class="fas fa-address-book"></i>
+                          <p>Gender</p>
+                      </div>
                     </div>
 
                     <!-- Separate Bio Section -->
                     <div class="profile-bio-section">
                         <h3 data-translate="home.section.bio"><i class="fas fa-quote-left"></i> Bio</h3>
                         <!-- Placeholder data -->
-                        <p class="bio">Passionate about photography, hiking, and trying new coffee shops. Looking for someone to share adventures with!</p>
+                        <p class="bio">AboutMe</p>
                     </div>
 
-                    <!-- Interests Section -->
                     <div class="interests-section">
                         <h3 data-translate="home.section.interests"><i class="fas fa-heart"></i> Interests</h3>
                         <div class="tags">
@@ -77,12 +80,25 @@
             </div>
         </div>
 
-        <!-- Chat Screen -->
+        <!-- Notifications Screen (Replacing Chat Screen) -->
         <div class="screen" id="chat-screen">
-            <div class="coming-soon">
-                <h2 data-translate="chat.title">Chat</h2>
-                <p data-translate="chat.comingSoon">Coming Soon...</p>
-                <p data-translate="chat.underDevelopment">Our messaging feature is under development.</p>
+            <div class="notifications-header">
+                <h2 data-translate="notifications.title">Notifications</h2>
+                <p data-translate="notifications.subtitle">People who liked your profile</p>
+            </div>
+            
+            <div class="notifications-container">
+                <!-- This section will be populated with notification cards from backend data -->
+                <!-- Each card represents a person who liked the user's profile -->
+                
+                <!-- Empty state when no notifications exist -->
+                <div class="empty-notifications hidden" id="empty-notifications">
+                    <div class="empty-icon">
+                        <i class="fas fa-bell-slash"></i>
+                    </div>
+                    <h3 data-translate="notifications.empty.title">No Notifications Yet</h3>
+                    <p data-translate="notifications.empty.message">When someone likes your profile, you'll see them here.</p>
+                </div>
             </div>
         </div>
 
@@ -92,48 +108,23 @@
                 <h2 data-translate="profile.title">Profile Settings</h2>
 
                 <div class="settings-section">
-                    <h3 data-translate="profile.editProfile">✏️ Edit Profile</h3>
                     <div class="form-group">
-                        <label for="name" data-translate="profile.nameLabel">Name</label>
-                        <!-- Placeholder data -->
-                        <input type="text" id="name" value="John Doe">
-                    </div>
-                    <div class="form-group">
-                        <label for="bio" data-translate="profile.bioLabel">Bio</label>
-                         <!-- Placeholder data -->
-                        <textarea id="bio">I love hiking and outdoor activities.</textarea>
+                        <button data-translate="profile.editProfile">✏️ Edit Profile</button>
                     </div>
                 </div>
 
                 <div class="settings-section">
                     <h3 data-translate="profile.filterPreferences">🔍 Filter Preferences</h3>
-                    <div class="form-group">
-                        <label data-translate="profile.ageRangeLabel">Age Range</label>
-                        <div class="range-inputs">
-                            <input type="number" min="18" max="100" value="18">
-                            <span data-translate="profile.rangeSeparator">to</span>
-                            <input type="number" min="18" max="100" value="35">
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label data-translate="profile.distanceLabel">Distance (km)</label>
-                        <input type="range" min="1" max="100" value="25">
-                        <!-- The value here is dynamic, we translate the label and possibly "km" if needed -->
-                        <span class="range-value">25 km</span>
-                    </div>
+                    <button data-translate="profile.gender.male">Male</button>
+                    <button data-translate="profile.gender.female">Female</button>
+                    <button data-translate="profile.gender.other">Other</button>
                 </div>
-
                 <div class="settings-section">
-                    <h3 data-translate="profile.languageLabel">🌐 Language</h3>
-                    <div class="language-options">
-                        <!-- data-lang attribute holds the language code -->
-                        <!-- Text content holds the language name in its own language -->
-                        <div class="language-option" data-lang="en">English</div>
-                        <div class="language-option" data-lang="ru">Русский</div>
-                        <div class="language-option" data-lang="uz">O'zbek</div>
-                        <!-- Add 'selected' class via JS based on cookie -->
-                    </div>
-                </div>
+                  <h3 data-translate="xz">Language</h3>
+                  <button data-translate="lang.uz">O'zbek</button>
+                  <button data-translate="lang.ru">Русский</button>
+                  <button data-translate="lang.en">English</button>
+              </div>
             </div>
         </div>
 
@@ -148,9 +139,9 @@
             <!-- Removed the 'explore' nav item as it had no corresponding screen -->
             <div class="nav-item" data-screen="chat-screen">
                 <div class="nav-icon chat-icon">
-                    <i class="fas fa-comment"></i>
+                    <i class="fas fa-bell"></i>
                 </div>
-                <span data-translate="nav.chat">Chat</span>
+                <span data-translate="nav.notifications">Notifications</span>
             </div>
             <div class="nav-item" data-screen="profile-screen">
                 <div class="nav-icon profile-icon">
@@ -187,9 +178,9 @@
         // --- Translations ---
         const translations = {
             en: {
-                "app.title": "Dating App",
+                "app.title": "Daily Manfaat",
                 "nav.home": "Home",
-                "nav.chat": "Chat",
+                "nav.chat": "Notifications",
                 "nav.profile": "Profile",
                 "home.discoverTitle": "Discover",
                 "home.discoverSubtitle": "Find like-minded people",
@@ -215,12 +206,16 @@
                  // Language names displayed in options (in their own language)
                 "lang.en": "English",
                 "lang.ru": "Русский",
-                "lang.uz": "O'zbek"
+                "lang.uz": "O'zbek",
+                "notifications.title": "Notifications",
+                "notifications.subtitle": "People who liked your profile",
+                "notifications.empty.title": "No Notifications Yet",
+                "notifications.empty.message": "When someone likes your profile, you'll see them here."
             },
             ru: {
                  "app.title": "Приложение для знакомств",
                 "nav.home": "Главная",
-                "nav.chat": "Чат",
+                "nav.chat": "Уведомления",
                 "nav.profile": "Профиль",
                 "home.discoverTitle": "Найти",
                 "home.discoverSubtitle": "Найдите близких по духу людей",
@@ -245,22 +240,20 @@
                 "profile.languageLabel": "🌐 Язык",
                  "lang.en": "English",
                 "lang.ru": "Русский",
-                "lang.uz": "O'zbek"
+                "lang.uz": "O'zbek",
+                "notifications.title": "Уведомления",
+                "notifications.subtitle": "Люди, которым понравился ваш профиль",
+                "notifications.empty.title": "Пока нет уведомлений",
+                "notifications.empty.message": "Когда кому-то понравится ваш профиль, вы увидите их здесь."
             },
             uz: {
                  "app.title": "Tanishuv ilovasi",
                 "nav.home": "Bosh sahifa",
-                "nav.chat": "Chat",
+                "nav.chat": "Bildirishnomalar",
                 "nav.profile": "Profil",
                 "home.discoverTitle": "Kashf etish",
                 "home.discoverSubtitle": "Fikrlar yaqin odamlarni toping",
                 "home.section.bio": "Men haqimda",
-                "home.section.interests": "Qiziqishlar",
-                "home.tag.photography": "Fotografiya",
-                "home.tag.hiking": "Piyoda sayr",
-                "home.tag.coffee": "Kofe",
-                "home.tag.travel": "Sayohat",
-                "home.tag.reading": "Kitob o'qish",
                 "chat.title": "Chat",
                 "chat.comingSoon": "Tez orada...",
                 "chat.underDevelopment": "Bizning xabar almashish funksiyasi ishlab chiqilmoqda.",
@@ -275,7 +268,11 @@
                 "profile.languageLabel": "🌐 Til",
                  "lang.en": "English",
                 "lang.ru": "Русский",
-                "lang.uz": "O'zbek"
+                "lang.uz": "O'zbek",
+                "notifications.title": "Bildirishnomalar",
+                "notifications.subtitle": "Sizning profilingizga yoqqan odamlar",
+                "notifications.empty.title": "Hozircha bildirishnoma yo'q",
+                "notifications.empty.message": "Kimdir sizning profilingizga yoqsa, siz ularni bu yerda ko'rasiz."
             }
         };
 

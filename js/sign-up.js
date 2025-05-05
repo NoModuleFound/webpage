@@ -752,7 +752,7 @@ async function submitForm() {
   };
   
   try {
-      const response = await fetch(`${backend_url}/auth/create-user`, {
+      const response = await fetch(`${backend_url}/auth/sign-up`, {
           method: 'POST',
           headers: {
               'Content-Type': 'application/json'
@@ -768,7 +768,7 @@ async function submitForm() {
           const successMessage = translations[selectedLanguage]?.profile_created || 'Profile created successfully!';
           alert(successMessage);
 
-          // window.location.href = 'home.html';
+          window.location.href = 'home.html';
       } else {
           if (response.status === 409) {
               const conflictMessage = translations[selectedLanguage]?.user_exists || 'Error: User already exists';

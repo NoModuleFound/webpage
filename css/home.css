@@ -57,7 +57,7 @@ body {
     display: block;
 }
 
-/* Profile Card Styles - Updated to match the provided example */
+/* Profile Card Styles */
 .profile-card {
     background-color: white;
     border-radius: 15px;
@@ -150,7 +150,7 @@ body {
     color: var(--text-medium);
 }
 
-/* New Bio Section Style */
+/* Bio Section Style */
 .profile-bio-section {
   margin-bottom: 20px; /* Space below bio */
 }
@@ -175,7 +175,6 @@ body {
   font-size: 14px;
   line-height: 1.5;
 }
-
 
 /* Interests Section Styles */
 .interests-section {
@@ -226,13 +225,12 @@ body {
   box-shadow: var(--shadow-md);
 }
 
-
 /* Action Buttons */
 .action-buttons {
     display: flex;
     justify-content: center;
     gap: 30px;
-    padding-top: 20px; /* Add padding above buttons if margin-bottom on user-profile isn't enough */
+    padding-top: 20px;
     border-top: 1px solid #eee; /* Optional: Add a separator line */
     margin-top: 10px; /* Added some top margin */
 }
@@ -273,21 +271,175 @@ body {
     font-size: 24px;
 }
 
-/* Coming Soon Screen */
-.coming-soon {
+/* Notifications Screen Styles */
+.notifications-header {
     text-align: center;
-    padding: 50px 20px;
+    margin-bottom: 24px;
 }
 
-.coming-soon h2 {
-    margin-bottom: 20px;
-    font-size: 28px;
+.notifications-header h2 {
+    font-size: 24px;
+    font-weight: 700;
+    color: var(--text-dark);
+    margin-bottom: 4px;
+}
+
+.notifications-header p {
+    color: var(--text-medium);
+    font-size: 16px;
+}
+
+.notifications-container {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.notification-card {
+    background-color: var(--card-bg);
+    border-radius: var(--border-radius);
+    padding: 16px;
+    box-shadow: var(--shadow-sm);
+    display: flex;
+    transition: transform 0.2s ease, opacity 0.3s ease;
+}
+
+.notification-card:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-md);
+}
+
+.notification-avatar {
+    width: 60px;
+    height: 60px;
+    background-color: var(--primary-light);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-right: 16px;
+    flex-shrink: 0;
+}
+
+.notification-avatar i {
+    color: var(--primary);
+    font-size: 24px;
+}
+
+.notification-content {
+    flex: 1;
+}
+
+.notification-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 4px;
+}
+
+.notification-header h3 {
+    font-weight: 600;
+    font-size: 18px;
     color: var(--text-dark);
 }
 
-.coming-soon p {
+.notification-time {
+    font-size: 12px;
+    color: var(--text-light);
+}
+
+.notification-location {
     color: var(--text-medium);
-    margin-bottom: 10px;
+    font-size: 14px;
+    margin-bottom: 8px;
+}
+
+.notification-interests {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    margin-bottom: 12px;
+}
+
+.mini-tag {
+    font-size: 12px;
+    padding: 4px 10px;
+    background-color: var(--secondary-light);
+    color: var(--secondary);
+    border-radius: 12px;
+}
+
+.notification-actions {
+    display: flex;
+    gap: 10px;
+}
+
+.view-profile-btn, .match-btn {
+    padding: 8px 16px;
+    border-radius: 20px;
+    border: none;
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.view-profile-btn {
+    background-color: var(--background);
+    color: var(--text-medium);
+    border: 1px solid var(--text-light);
+}
+
+.view-profile-btn:hover {
+    background-color: var(--text-light);
+    color: white;
+}
+
+.match-btn {
+    background-color: var(--primary);
+    color: white;
+}
+
+.match-btn:hover {
+    background-color: var(--primary-dark);
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-md);
+}
+
+.empty-notifications {
+    text-align: center;
+    padding: 40px 20px;
+}
+
+.empty-notifications.hidden {
+    display: none;
+}
+
+.empty-icon {
+    width: 80px;
+    height: 80px;
+    background-color: var(--background);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 20px;
+}
+
+.empty-icon i {
+    font-size: 36px;
+    color: var(--text-light);
+}
+
+.empty-notifications h3 {
+    font-size: 20px;
+    font-weight: 600;
+    color: var(--text-dark);
+    margin-bottom: 8px;
+}
+
+.empty-notifications p {
+    color: var(--text-medium);
 }
 
 /* Profile Settings Styles */
@@ -317,7 +469,6 @@ body {
     margin-right: 8px;
     font-size: 16px; /* Match heading size */
 }
-
 
 .form-group {
     margin-bottom: 15px;
@@ -358,19 +509,17 @@ body {
     padding: 8px;
     border: 1px solid var(--text-light);
     border-radius: 5px;
-    /* -moz-appearance: textfield; Hide arrows in Firefox */
 }
 
 .range-inputs input::-webkit-outer-spin-button,
 .range-inputs input::-webkit-inner-spin-button {
-    -webkit-appearance: none; /* Hide arrows in Chrome/Safari */
+    -webkit-appearance: none;
     margin: 0;
 }
 
-
 input[type="range"] {
     width: 100%;
-    margin-bottom: 5px; /* Less margin below range input */
+    margin-bottom: 5px;
     -webkit-appearance: none;
     appearance: none;
     height: 6px;
@@ -401,7 +550,6 @@ input[type="range"]::-moz-range-thumb {
     box-shadow: var(--shadow-sm);
 }
 
-
 .range-value {
     font-size: 14px;
     color: var(--text-medium);
@@ -425,18 +573,17 @@ input[type="range"]::-moz-range-thumb {
 }
 
 .language-option:hover {
-     transform: translateY(-2px);
-     box-shadow: var(--shadow-sm);
-     border-color: var(--text-medium);
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-sm);
+    border-color: var(--text-medium);
 }
-
 
 .language-option.selected {
     transform: scale(1.02);
     box-shadow: var(--shadow-md);
-    border-color: var(--primary); /* rose-500 */
+    border-color: var(--primary);
     background-color: var(--primary-light);
-    color: var(--primary-dark); /* Darker shade for contrast */
+    color: var(--primary-dark);
     font-weight: 600;
 }
 
@@ -475,11 +622,11 @@ input[type="range"]::-moz-range-thumb {
 }
 
 .nav-item.active {
-    background-color: var(--secondary-light); /* secondary light */
+    background-color: var(--secondary-light);
 }
 
 .nav-item.active .nav-icon {
-    color: var(--secondary); /* secondary color */
+    color: var(--secondary);
 }
 
 .nav-item.active span {
@@ -501,7 +648,6 @@ input[type="range"]::-moz-range-thumb {
     color: var(--text-medium);
 }
 
-/* Other existing styles (ProgressBar, Gender, Interest tags, Slide) are kept as they were */
 /* Progress Bar */
 .progress-bar {
     height: 4px;
@@ -511,7 +657,7 @@ input[type="range"]::-moz-range-thumb {
 
 /* Style for date input */
 input[type="date"]::-webkit-calendar-picker-indicator {
-    filter: invert(0.5); /* Darken for better visibility on light background */
+    filter: invert(0.5);
 }
 
 /* Gender Options */
@@ -522,33 +668,20 @@ input[type="date"]::-webkit-calendar-picker-indicator {
 .gender-option.selected {
     transform: scale(1.02);
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    border-color: var(--primary); /* rose-500 */
+    border-color: var(--primary);
 }
-
-/* Interest Tags */
-/* Tag styles are already defined above */
-
 
 /* Slide */
 .slide {
     width: 100%;
-    padding: 1.5rem; /* Tailwind p-6 */
-    box-sizing: border-box; /* Include padding in width */
+    padding: 1.5rem;
+    box-sizing: border-box;
 }
 
 .slide:not(.active) {
-    display: none; /* Hide non-active slides completely */
+    display: none;
 }
 
 .slide.active {
-    display: block; /* Show active slide */
+    display: block;
 }
-
-/* Removed duplicate .tag styles */
-
-
-/* Adjusted bio styles */
-/* Removed unnecessary p display block override if not causing issues */
-
-
-/* Removed duplicate .tag.outline style if not used */

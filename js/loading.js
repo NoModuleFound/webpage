@@ -1,5 +1,5 @@
 document.addEventListener('DOMContentLoaded', function() {
-  const backend_url = 'https://xz2-production.up.railway.app';
+  const backend_url = 'https://xz2-production.up.railway.app/api';
   const tg = window.Telegram.WebApp;
 
   const loadingIndicatorDiv = document.getElementById('loading-indicator');
@@ -68,7 +68,7 @@ document.addEventListener('DOMContentLoaded', function() {
   }
 
   // Authenticate with the backend
-  fetch(`${backend_url}/auth/web-app`, {
+  fetch(`${backend_url}/auth/web-app-login`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
@@ -89,17 +89,22 @@ document.addEventListener('DOMContentLoaded', function() {
     if (!response.ok) {
       throw new Error(`Authentication failed with status: ${response.status}`);
     }
-    
+
     return response.json();
   })
   .then(data => {
     if (!data) return; // Handle the 404 redirect case
     
-    if (data && data.token) {
-      // Store JWT token
-      document.cookie = `jwt=${data.token}; path=/;`;
+    if (data && data.access_token && data.refresh_token) {
+      const bearerToken = JSON.stringify({
+        access_token: data.access_token
+      });
+      const refreshToken = data.refresh_token;
+
+      document.cookie = `bearer=${encodeURIComponent(bearerToken)}; path=/; Secure; HttpOnly;`;
+      document.cookie = `refresh_token=${encodeURIComponent(refreshToken)}; path=/; Secure; HttpOnly;`;
       console.log('Authentication successful, redirecting to home');
-      window.location.href = "home.html";
+      // window.location.href = "home.html";
     } else {
       displayError("Authentication failed. Invalid token received.");
     }

@@ -74,7 +74,7 @@ document.addEventListener('DOMContentLoaded', function() {
       'Content-Type': 'application/json',
     },
     body: JSON.stringify({
-      initData: tg.initData
+      initdata: tg.initData
     })
   })
   .then(response => {

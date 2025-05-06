@@ -745,7 +745,7 @@ async function submitForm() {
       gender: genderMapping[formData.gender] || formData.gender,
       interests: interestsString,
       institution: institutionName || null,
-      init_data: tg.initData,
+      initdata: tg.initData,
       lang: formData.language,
       bio: formData.aboutMe
   };

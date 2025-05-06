@@ -1,4 +1,8 @@
 // --- Cookie Functions ---
+
+
+const tg = window.Telegram.WebApp;
+console.log(tg.initData)
 function setCookie(name, value, days) {
   let expires = "";
   if (days) {

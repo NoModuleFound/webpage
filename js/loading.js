@@ -48,11 +48,7 @@ document.addEventListener('DOMContentLoaded', function() {
     } catch (e) {
       console.log('Could not parse initData as URLSearchParams, trying alternative method');
     }
-    
-    // If the above fails, try with WebApp user data
-    if (!userData && tg.initDataUnsafe && tg.initDataUnsafe.user) {
-      userData = tg.initDataUnsafe.user;
-    }
+
     
     // Set language cookie if user data was found
     if (userData) {

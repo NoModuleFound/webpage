@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Like-Minded — Profile</title>
+    <link rel="stylesheet" href="css/design-tokens.css" />
+    <link rel="stylesheet" href="css/components.css" />
+    <link rel="stylesheet" href="css/profile.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+</head>
+<body>
+    <div class="app-frame">
+        <header class="profile-header">
+            <button class="btn-icon-sm" id="editProfileBtn"><i class="fas fa-pen"></i></button>
+            <h1 class="text-h2">Profile</h1>
+            <button class="btn-icon-sm" id="themeToggleBtn" aria-label="Toggle theme"><i class="fas fa-moon"></i></button>
+        </header>
+
+        <div class="scroll-area" style="padding-bottom:100px">
+            <!-- Avatar + Info -->
+            <div class="profile-hero">
+                <div class="profile-avatar-wrap">
+                    <img src="https://api.dicebear.com/7.x/adventurer/svg?seed=You&backgroundColor=c0aede" alt="Your avatar" class="profile-avatar" />
+                    <div class="profile-level-badge"><i class="fas fa-language"></i> English</div>
+                </div>
+                <h2 class="text-h1 profile-name" id="profileName">Abbos</h2>
+                <p class="profile-username" id="profileUsername">@abbos</p>
+                <div class="profile-tags">
+                    <span class="profile-tag"><i class="fas fa-mars"></i> Male</span>
+                    <span class="profile-tag"><i class="fas fa-cake-candles"></i> 22</span>
+                    <span class="profile-tag"><i class="fas fa-map-marker-alt"></i> Tashkent</span>
+                </div>
+            </div>
+
+            <!-- Stats -->
+            <div class="profile-stats">
+                <div class="stat-card">
+                    <span class="stat-num" id="statCalls">142</span>
+                    <span class="stat-label">Calls</span>
+                </div>
+                <div class="stat-card">
+                    <span class="stat-num" id="statTime">48h</span>
+                    <span class="stat-label">Talk time</span>
+                </div>
+                <div class="stat-card">
+                    <span class="stat-num" id="statFriends">23</span>
+                    <span class="stat-label">Friends</span>
+                </div>
+                <div class="stat-card">
+                    <span class="stat-num" id="statRating">96%</span>
+                    <span class="stat-label">Rating</span>
+                </div>
+            </div>
+
+            <!-- Bio -->
+            <div class="profile-section">
+                <h3 class="section-label">About Me</h3>
+                <div class="card" style="box-shadow:none">
+                    <p class="text-body" id="profileBio">Passionate about building scalable products and learning new languages. Let's chat about tech!</p>
+                </div>
+            </div>
+
+            <!-- Voice Intro -->
+            <div class="profile-section">
+                <h3 class="section-label">Voice Intro</h3>
+                <button class="voice-intro-btn" id="voiceIntroBtn">
+                    <div class="voice-intro-icon"><i class="fas fa-play"></i></div>
+                    <div class="voice-intro-wave">
+                        <span></span><span></span><span></span><span></span><span></span>
+                        <span></span><span></span><span></span><span></span><span></span>
+                    </div>
+                    <span class="voice-intro-dur">0:12</span>
+                </button>
+            </div>
+
+            <!-- Interests -->
+            <div class="profile-section">
+                <h3 class="section-label">Interests</h3>
+                <div class="profile-interests" id="profileInterests">
+                    <span class="chip chip-selected chip-cat-art"><i class="fas fa-film chip-icon"></i> Motion Design</span>
+                    <span class="chip chip-selected chip-cat-travel"><i class="fas fa-plane chip-icon"></i> Travel</span>
+                    <span class="chip chip-selected chip-cat-tech"><i class="fas fa-laptop-code chip-icon"></i> Tech</span>
+                    <span class="chip chip-selected chip-cat-music"><i class="fas fa-music chip-icon"></i> Music</span>
+                    <span class="chip chip-selected chip-cat-books"><i class="fas fa-book chip-icon"></i> Books</span>
+                </div>
+            </div>
+
+            <!-- Settings -->
+            <div class="profile-section">
+                <h3 class="section-label">Settings</h3>
+                <div class="settings-list">
+                    <button class="settings-row">
+                        <div class="settings-icon" style="background:var(--color-info-soft);color:var(--color-info)"><i class="fas fa-language"></i></div>
+                        <span class="settings-text">App Language</span>
+                        <span class="settings-value">English <i class="fas fa-chevron-right"></i></span>
+                    </button>
+                    <button class="settings-row">
+                        <div class="settings-icon" style="background:var(--color-primary-soft);color:var(--color-primary)"><i class="fas fa-shield-alt"></i></div>
+                        <span class="settings-text">Privacy</span>
+                        <span class="settings-value"><i class="fas fa-chevron-right"></i></span>
+                    </button>
+                    <button class="settings-row">
+                        <div class="settings-icon" style="background:var(--color-warning-soft);color:var(--color-warning)"><i class="fas fa-bell"></i></div>
+                        <span class="settings-text">Notifications</span>
+                        <span class="settings-value"><i class="fas fa-chevron-right"></i></span>
+                    </button>
+                    <button class="settings-row" id="settingsMatching">
+                        <div class="settings-icon" style="background:var(--color-success-soft);color:var(--color-success)"><i class="fas fa-sliders"></i></div>
+                        <span class="settings-text">Matching Preferences</span>
+                        <span class="settings-value"><i class="fas fa-chevron-right"></i></span>
+                    </button>
+                    <button class="settings-row" id="settingsTheme">
+                        <div class="settings-icon" style="background:var(--color-surface-sunken);color:var(--color-text-secondary)"><i class="fas fa-moon"></i></div>
+                        <span class="settings-text">Appearance</span>
+                        <span class="settings-value">Light <i class="fas fa-chevron-right"></i></span>
+                    </button>
+                    <button class="settings-row settings-danger">
+                        <div class="settings-icon" style="background:var(--color-danger-soft);color:var(--color-danger)"><i class="fas fa-sign-out-alt"></i></div>
+                        <span class="settings-text" style="color:var(--color-danger)">Log Out</span>
+                        <span class="settings-value"></span>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <nav class="tab-bar">
+            <button class="tab-item" data-tab="lobby"><i class="fas fa-home"></i><span>Lobby</span></button>
+            <button class="tab-item" data-tab="groups"><i class="fas fa-headphones"></i><span>Groups</span></button>
+            <button class="tab-item" data-tab="ranking"><i class="fas fa-trophy"></i><span>Rating</span></button>
+            <button class="tab-item" data-tab="contacts"><i class="fas fa-address-book"></i><span>Contacts</span></button>
+            <button class="tab-item active" data-tab="profile"><i class="far fa-user"></i><span>Profile</span></button>
+        </nav>
+    </div>
+
+    <!-- ═══ MATCHING PREFERENCES SHEET ═══ -->
+    <div class="sheet-overlay" id="matchingOverlay"></div>
+    <div class="sheet" id="matchingSheet">
+        <div class="sheet-handle"></div>
+        <div class="sheet-header">
+            <h2 class="text-h2">Matching Preferences</h2>
+            <button class="btn-icon-sm" id="closeMatchingBtn"><i class="fas fa-times"></i></button>
+        </div>
+        <div class="sheet-body">
+            <div class="filter-group">
+                <label class="section-label">Preferred Languages</label>
+                <div class="filter-chips">
+                    <span class="chip chip-selected">English</span>
+                    <span class="chip">Spanish</span>
+                    <span class="chip chip-selected">Russian</span>
+                    <span class="chip">Uzbek</span>
+                </div>
+            </div>
+            <div class="filter-group">
+                <label class="section-label">Preferred Gender</label>
+                <select class="input">
+                    <option value="all">Anyone</option>
+                    <option value="male">Male</option>
+                    <option value="female">Female</option>
+                </select>
+            </div>
+        </div>
+        <div class="sheet-footer">
+            <button class="btn btn-primary btn-block" id="saveMatchingBtn">Save Preferences</button>
+        </div>
+    </div>
+
+    <!-- ═══ EDIT PROFILE SHEET ═══ -->
+    <div class="sheet-overlay" id="editProfileOverlay"></div>
+    <div class="sheet" id="editProfileSheet" style="height:85vh;height:85dvh">
+        <div class="sheet-handle"></div>
+        <div class="sheet-header">
+            <h2 class="text-h2">Edit Profile</h2>
+            <button class="btn-icon-sm" id="closeEditProfileBtn"><i class="fas fa-times"></i></button>
+        </div>
+        <div class="sheet-body scroll-area">
+            <div class="filter-group">
+                <label class="section-label">Name</label>
+                <input type="text" class="input" value="Abbos" />
+            </div>
+            <div class="filter-group">
+                <label class="section-label">Bio</label>
+                <textarea class="input" style="height:100px">Passionate about building scalable products and learning new languages. Let's chat about tech!</textarea>
+            </div>
+            <div class="filter-group">
+                <label class="section-label">My Spoken Language</label>
+                <select class="input">
+                    <option value="english" selected>English</option>
+                    <option value="spanish">Spanish</option>
+                    <option value="russian">Russian</option>
+                    <option value="uzbek">Uzbek</option>
+                </select>
+            </div>
+            <div class="filter-group">
+                <label class="section-label">Interests (Max 5)</label>
+                <div class="filter-chips">
+                    <span class="chip chip-selected">Motion Design</span>
+                    <span class="chip chip-selected">Travel</span>
+                    <span class="chip chip-selected">Tech</span>
+                    <span class="chip chip-selected">Music</span>
+                    <span class="chip chip-selected">Books</span>
+                    <span class="chip">Gaming</span>
+                    <span class="chip">Sports</span>
+                </div>
+            </div>
+        </div>
+        <div class="sheet-footer">
+            <button class="btn btn-primary btn-block" id="saveProfileBtn">Save Changes</button>
+        </div>
+    </div>
+    <script src="js/profile.js"></script>
+</body>
+</html>

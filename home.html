@@ -1,225 +1,314 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title data-translate="app.title">Daily Manfaat</title>
-    <link rel="stylesheet" href="css/home.css">
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <script src="https://telegram.org/js/telegram-web-app.js?57"></script>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <title>Like-Minded — Lobby</title>
+    <meta name="description"
+        content="Find your perfect voice partner. Connect with interesting people through live 1-on-1 conversations." />
+    <link rel="stylesheet" href="css/design-tokens.css" />
+    <link rel="stylesheet" href="css/components.css" />
+    <link rel="stylesheet" href="css/home.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
 </head>
+
 <body>
-    <div class="app-container">
-        <div class="screen active" id="home-screen">
-            <div class="profile-card">
-                <div class="card-header">
-                    <h2 class="card-title" data-translate="home.discoverTitle">Discover</h2>
-                    <p class="card-subtitle text-rose-500" data-translate="home.discoverSubtitle">Find like-minded people</p>
+    <div class="app-frame" id="appFrame">
+
+        <!-- ═══ HEADER ═══ -->
+        <header class="lobby-header">
+            <div class="lobby-header-left">
+                <div class="lobby-online-badge" id="onlineBadge">
+                    <span class="online-pulse"></span>
+                    <span id="onlineCount">1,247</span> online
                 </div>
+            </div>
+            <h1 class="text-h2" style="font-family:var(--font-display)">Lobby</h1>
+            <button class="btn-icon-sm" id="filterTopBtn" aria-label="Filters">
+                <i class="fas fa-sliders"></i>
+            </button>
+        </header>
 
-                <div class="user-profile">
-                    <div class="profile-header">
-                        <div class="profile-avatar">
-                            <i class="fas fa-user"></i>
-                        </div>
-                        <div class="profile-name-info">
-                            <h3>Name</h3>
-                            <p id="userName"></p>
-                        </div>
+        <!-- ═══ MAIN SCROLL AREA ═══ -->
+        <div class="scroll-area" id="lobbyScroll" style="padding-bottom:140px">
+
+            <!-- ══ HERO CTA ══ -->
+            <section class="lobby-hero" id="lobbyHero">
+                <button class="btn btn-primary btn-lg btn-block hero-cta animate-pulse-glow" id="findPartnerBtn">
+                    <i class="fas fa-wand-magic-sparkles"></i>
+                    Find Perfect Partner
+                </button>
+                <button class="btn btn-lg btn-block hero-discover-btn" id="discoverBtn">
+                    <i class="fas fa-magnifying-glass"></i>
+                    Discover People
+                </button>
+                <!-- Quick Filters -->
+                <div class="hero-filters" id="quickFilters">
+                    <button class="chip chip-filter" data-filter="language"><i class="fas fa-globe chip-icon"></i>
+                        English</button>
+                    <button class="chip chip-filter" data-filter="gender"><i class="fas fa-users chip-icon"></i>
+                        All</button>
+                    <button class="chip chip-filter" data-filter="age"><i class="fas fa-calendar chip-icon"></i>
+                        18-40</button>
+                </div>
+            </section>
+
+            <!-- ══ RATE THE TALK (post-call) ══ -->
+            <section class="rate-card card animate-slide-up" id="rateCard" style="display:none">
+                <div class="rate-card-header">
+                    <div class="avatar-wrap">
+                        <img src="https://api.dicebear.com/7.x/adventurer/svg?seed=Alex" class="avatar avatar-md"
+                            id="rateAvatar" alt="Partner" />
                     </div>
-
-                    <div class="profile-details">
-                        <div class="detail-item">
-                            <i class="fas fa-university"></i>
-                            <p id="userInstitution"></p>
-                        </div>
-
-                        <div class="detail-item">
-                            <i class="fas fa-hashtag"></i>
-                            <p id="userAge"></p>
-                        </div>
-
-                        <div class="detail-item">
-                          <i class="fas fa-address-book"></i>
-                          <p id="userGender"></p>
-                      </div>
-                    </div>
-
-                    <div class="profile-bio-section">
-                        <h3 data-translate="home.section.bio"><i class="fas fa-quote-left"></i> Bio</h3>
-                        <p class="bio" id="userBio"></p>
-                    </div>
-
-                    <div class="interests-section">
-                        <h3 data-translate="home.section.interests"><i class="fas fa-heart"></i> Interests</h3>
-                        <div class="tags" id="userInterestsContainer">
-                            </div>
+                    <div class="rate-card-info">
+                        <p class="text-caption" style="color:var(--color-text-muted)">Rate your talk with</p>
+                        <p class="text-body-bold" id="rateName">🐼 Mr.Alex 🐼</p>
+                        <p class="text-caption" style="color:var(--color-text-muted)" id="rateMeta">Today at 18:22 · 4
+                            min</p>
                     </div>
                 </div>
+                <div class="rate-stars" id="rateStars">
+                    <button class="star-btn" data-star="1">⭐</button>
+                    <button class="star-btn" data-star="2">⭐</button>
+                    <button class="star-btn" data-star="3">⭐</button>
+                    <button class="star-btn" data-star="4">⭐</button>
+                    <button class="star-btn" data-star="5">⭐</button>
+                </div>
+                <div class="rate-tags" id="rateTags">
+                    <button class="chip chip-sm" data-tag="listener">👂 Good listener</button>
+                    <button class="chip chip-sm" data-tag="funny">😄 Funny</button>
+                    <button class="chip chip-sm" data-tag="insightful">💡 Insightful</button>
+                    <button class="chip chip-sm" data-tag="accent">🗣️ Great accent</button>
+                </div>
+                <div class="rate-actions">
+                    <button class="btn btn-ghost btn-sm" id="rateSkipBtn">Skip</button>
+                    <button class="btn btn-primary btn-sm" id="rateSubmitBtn" style="flex:1">Submit & Find Next</button>
+                </div>
+            </section>
 
-                <div class="action-buttons">
-                    <button class="dislike-btn">
-                        <i class="fas fa-times"></i>
+            <!-- ══ READY TO TALK ══ -->
+            <section class="lobby-section animate-slide-up" style="animation-delay:.1s">
+                <h2 class="section-title">Ready to talk now</h2>
+                <div class="partner-scroll" id="readyCards">
+                    <!-- JS populated -->
+                </div>
+            </section>
+
+            <!-- ══ ONLINE PARTNERS ══ -->
+            <section class="lobby-section animate-slide-up" style="animation-delay:.2s">
+                <div class="section-header-row">
+                    <h2 class="section-title">Online partners</h2>
+                    <button class="btn btn-sm btn-primary" id="refreshBtn" style="padding:6px 14px;min-height:32px">
+                        <i class="fas fa-rotate-right" id="refreshIcon"></i> Refresh
                     </button>
-                    <button class="like-btn">
-                        <i class="fas fa-heart"></i>
+                </div>
+                <div class="invite-list" id="inviteList">
+                    <!-- JS populated -->
+                </div>
+            </section>
+        </div>
+
+        <!-- ═══ SEARCHING OVERLAY ═══ -->
+        <div class="searching-overlay" id="searchingOverlay">
+            <button class="searching-close" id="cancelSearchBtn">
+                <i class="fas fa-times"></i>
+            </button>
+            <div class="searching-content">
+                <div class="radar-container">
+                    <div class="radar-sweep"></div>
+                    <div class="radar-ring radar-ring-1"></div>
+                    <div class="radar-ring radar-ring-2"></div>
+                    <div class="radar-ring radar-ring-3"></div>
+                    <div class="radar-center">
+                        <i class="fas fa-microphone"></i>
+                    </div>
+                    <!-- Faded avatar ring -->
+                    <div class="radar-avatars" id="radarAvatars"></div>
+                </div>
+                <h2 class="text-h2 searching-title">Scanning for your match…</h2>
+                <p class="text-caption" style="color:var(--color-text-muted)" id="searchStatus">Checking 1,247 people
+                    online</p>
+                <div class="searching-dots">
+                    <span></span><span></span><span></span>
+                </div>
+            </div>
+        </div>
+
+        <!-- ═══ MATCH FOUND OVERLAY ═══ -->
+        <div class="match-found-overlay" id="matchFoundOverlay">
+            <div class="match-found-card animate-scale-pop">
+                <div class="match-countdown-ring" id="countdownRing">
+                    <svg viewBox="0 0 100 100">
+                        <circle class="countdown-track" cx="50" cy="50" r="46" />
+                        <circle class="countdown-progress" cx="50" cy="50" r="46" id="countdownCircle" />
+                    </svg>
+                    <span class="countdown-num" id="countdownNum">8</span>
+                </div>
+                <div class="match-avatar-section">
+                    <img class="avatar avatar-xl match-avatar" id="matchAvatar" src="" alt="Match" />
+                    <div class="match-flag" id="matchFlag">🇬🇧</div>
+                </div>
+                <h2 class="text-h1 match-name" id="matchName">Maria, 24</h2>
+                <div class="match-rating" id="matchRating">
+                    <i class="fas fa-thumbs-up"></i> 98%
+                </div>
+                <div class="match-interests" id="matchInterests">
+                    <!-- JS populated -->
+                </div>
+                <button class="match-voice-btn" id="matchVoiceBtn">
+                    <i class="fas fa-play"></i> Play voice intro
+                </button>
+                <div class="match-actions">
+                    <button class="btn btn-ghost btn-icon match-action-skip" id="skipMatchBtn" aria-label="Skip">
+                        <i class="fas fa-forward"></i>
+                    </button>
+                    <button class="btn btn-success btn-lg match-action-accept" id="acceptCallBtn">
+                        <i class="fas fa-phone"></i> Accept & Call
+                    </button>
+                    <button class="btn btn-ghost btn-icon match-action-report" id="reportMatchBtn" aria-label="Report">
+                        <i class="fas fa-flag"></i>
                     </button>
                 </div>
             </div>
         </div>
 
-        <div class="screen" id="chat-screen">
-            <div class="notifications-header">
-                <h2 data-translate="notifications.title">Notifications</h2>
-                <p data-translate="notifications.subtitle">People who liked your profile</p>
+        <!-- ═══ TINDER-LIKE DISCOVERY DECK ═══ -->
+        <div class="discovery-overlay" id="discoveryOverlay">
+            <div class="discovery-header">
+                <button class="discovery-close-btn" id="closeDiscoveryBtn"><i class="fas fa-arrow-left"></i></button>
+                <h2 class="discovery-title">Discover</h2>
+                <button class="discovery-filter-btn" id="discoveryFilterBtn"><i class="fas fa-sliders"></i></button>
             </div>
-
-            <div class="notifications-container">
-                <div class="empty-notifications hidden" id="empty-notifications">
-                    <div class="empty-icon">
-                        <i class="fas fa-bell-slash"></i>
-                    </div>
-                    <h3 data-translate="notifications.empty.title">No Notifications Yet</h3>
-                    <p data-translate="notifications.empty.message">When someone likes your profile, you'll see them here.</p>
-                </div>
+            <div class="discovery-deck" id="discoveryDeck">
+                <!-- JS populated: stacked profile cards -->
             </div>
-        </div>
-
-        <div class="screen" id="profile-screen">
-            <div class="profile-settings">
-                <h2 data-translate="profile.title">Profile Settings</h2>
-
-                <div class="settings-section">
-                    <button id="editProfileBtn" class="edit-profile-btn" data-translate="profile.editProfile">
-                        <i class="fas fa-edit"></i> Edit Profile
-                    </button>
-                </div>
-
-                <div class="settings-section">
-                  <h3 data-translate="profile.filterPreferences">🔍 Filter Preferences</h3>
-                  <div class="choice-grid">
-                    <button class="choice-btn" data-gender="yes" data-translate="choice.yes">Male</button>
-                    <button class="choice-btn" data-gender="no" data-translate="choice.no">Female</button>
-                  </div>
-                </div>
-
-                <div class="settings-section">
-                  <h3 data-translate="profile.filterInterests">🔍 Filter By Interests</h3>
-                  <div class="choice-grid">
-                  <button class="choice-btn" data-choice="yes" data-translate="choice.yes">Yes</button>
-                  <button class="choice-btn" data-choice="no" data-translate="choice.no">No</button>
-                  </div>
-                </div>
-
-
-                <div class="settings-section">
-                  <h3 data-translate="profile.languageLabel">🌐 Language</h3>
-                  <p class="settings-subtitle" data-translate="profile.language.choose">Choose your language</p>
-                  <div class="choice-grid">
-                    <button class="choice-btn" data-lang="uz" data-translate="lang.uz">O'zbek</button>
-                    <button class="choice-btn" data-lang="ru" data-translate="lang.ru">Русский</button>
-                    <button class="choice-btn" data-lang="en" data-translate="lang.en">English</button>
-                  </div>
-                </div>
-
+            <div class="discovery-actions" id="discoveryActions">
+                <button class="disc-action disc-action-skip" id="discSkipBtn" aria-label="Skip">
+                    <i class="fas fa-xmark"></i>
+                </button>
+                <button class="disc-action disc-action-superlike" id="discSuperBtn" aria-label="Super Like">
+                    <i class="fas fa-star"></i>
+                </button>
+                <button class="disc-action disc-action-like" id="discLikeBtn" aria-label="Like">
+                    <i class="fas fa-heart"></i>
+                </button>
             </div>
         </div>
 
-        <div id="editProfileModal" class="modal">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h2 data-translate="edit.profile.title">Edit Profile</h2>
-                    <button class="close-modal">&times;</button>
+        <!-- ═══ BOTTOM NAV ═══ -->
+        <nav class="tab-bar" id="tabBar">
+            <button class="tab-item active" data-tab="lobby" id="nav-lobby">
+                <i class="fas fa-home"></i>
+                <span>Lobby</span>
+            </button>
+            <button class="tab-item" data-tab="groups" id="nav-groups">
+                <i class="fas fa-headphones"></i>
+                <span>Groups</span>
+            </button>
+            <button class="tab-item" data-tab="ranking" id="nav-ranking">
+                <i class="fas fa-trophy"></i>
+                <span>Rating</span>
+            </button>
+            <button class="tab-item" data-tab="contacts" id="nav-contacts">
+                <i class="fas fa-address-book"></i>
+                <span>Contacts</span>
+            </button>
+            <button class="tab-item" data-tab="profile" id="nav-profile">
+                <i class="far fa-user"></i>
+                <span>Profile</span>
+            </button>
+        </nav>
+    </div>
+
+    <!-- ═══ FILTER BOTTOM SHEET ═══ -->
+    <div class="sheet-overlay" id="filterOverlay"></div>
+    <div class="sheet" id="filterSheet">
+        <div class="sheet-handle"></div>
+        <div class="sheet-header">
+            <h2 class="text-h2">Filters</h2>
+            <button class="btn-icon-sm" id="closeFilterBtn"><i class="fas fa-times"></i></button>
+        </div>
+        <div class="sheet-body">
+            <!-- Gender -->
+            <div class="filter-group">
+                <label class="section-label">Gender</label>
+                <div class="gender-toggle" id="genderToggle">
+                    <button class="gender-btn active" data-gender="all">All</button>
+                    <button class="gender-btn" data-gender="male">Male</button>
+                    <button class="gender-btn" data-gender="female">Female</button>
                 </div>
-                <div class="modal-body">
-                    <div class="form-group">
-                        <label for="editFirstName" data-translate="first_name">First Name *</label>
-                        <input type="text" id="editFirstName" class="form-input">
-                    </div>
-                    <div class="form-group">
-                        <label for="editLastName" data-translate="last_name">Last Name</label>
-                        <input type="text" id="editLastName" class="form-input">
-                    </div>
-
-                    <div class="form-group">
-                        <label for="editBirthDate" data-translate="birth_date">Date of Birth *</label>
-                        <input type="date" id="editBirthDate" class="form-input">
-                    </div>
-
-                    <div class="form-group">
-                        <label data-translate="gender">Gender *</label>
-                        <div class="gender-options">
-                            <div class="gender-option" data-gender="male">
-                                <i class="fas fa-mars"></i>
-                                <span data-translate="male">Male</span>
-                            </div>
-                            <div class="gender-option" data-gender="female">
-                                <i class="fas fa-venus"></i>
-                                <span data-translate="female">Female</span>
-                            </div>
-                            <div class="gender-option" data-gender="other">
-                                <i class="fas fa-genderless"></i>
-                                <span data-translate="other_gender">Other</span>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="form-group">
-                        <label for="editInstitution" data-translate="institution">Institution *</label>
-                        <select id="editInstitution" class="form-input">
-                            <option value="" disabled selected data-translate="select_institution">Select your institution</option>
-                            <option value="webster">Webster University</option>
-                            <option value="westminster">Westminster International University</option>
-                            <option value="tmc">Tashkent Medical College</option>
-                            <option value="bmu">Bukhara Medical University</option>
-                            <option value="cau">Central Asia University</option>
-                            <option value="other" data-translate="other">Other</option>
-                        </select>
-                        <input type="text" id="editOtherInstitution" class="form-input hidden" data-translate-placeholder="other_institution">
-                    </div>
-
-                    <div class="form-group">
-                        <label data-translate="interests_title">Interests</label>
-                        <div id="editInterestsContainer" class="interests-grid">
-                            </div>
-                    </div>
-
-                    <div class="form-group">
-                        <label for="editAboutMe" data-translate="about_me">About Me</label>
-                        <textarea id="editAboutMe" class="form-input" rows="4"></textarea>
-                    </div>
-                </div>
-                <div class="modal-footer">
-                    <button class="cancel-btn" data-translate="cancel">Cancel</button>
-                    <button class="save-btn" data-translate="save">Save Changes</button>
-                </div>
+            </div>
+            <!-- Interests -->
+            <div class="filter-group">
+                <label class="section-label">Interests</label>
+                <div class="filter-chips" id="filterInterests"></div>
+            </div>
+            <!-- Language -->
+            <div class="filter-group">
+                <label class="section-label">Language</label>
+                <select class="input" id="languageFilter">
+                    <option value="all">Any Language</option>
+                    <option value="english">English</option>
+                    <option value="spanish">Spanish</option>
+                    <option value="russian">Russian</option>
+                    <option value="uzbek">Uzbek</option>
+                    <option value="german">German</option>
+                </select>
             </div>
         </div>
-
-        <div class="bottom-nav">
-            <div class="nav-item active" data-screen="home-screen">
-                <div class="nav-icon home-icon">
-                    <i class="fas fa-home"></i>
-                </div>
-                <span data-translate="nav.home">Home</span>
-            </div>
-            <div class="nav-item" data-screen="chat-screen">
-                <div class="nav-icon chat-icon">
-                    <i class="fas fa-bell"></i>
-                </div>
-                <span data-translate="nav.notifications">Notifications</span>
-            </div>
-            <div class="nav-item" data-screen="profile-screen">
-                <div class="nav-icon profile-icon">
-                    <i class="fas fa-user"></i>
-                </div>
-                <span data-translate="nav.profile">Profile</span>
-            </div>
+        <div class="sheet-footer">
+            <button class="btn btn-primary btn-block" id="applyFilterBtn">Apply Filters</button>
         </div>
     </div>
 
-    <script src="js/home.js">
-    </script>
+    <!-- ═══ USER PREVIEW SHEET ═══ -->
+    <div class="sheet-overlay" id="previewOverlay"></div>
+    <div class="sheet preview-sheet" id="previewSheet" style="height:85vh;height:85dvh">
+        <div class="preview-cover" id="previewCover">
+            <button class="preview-close-btn" id="closePreviewBtn"><i class="fas fa-times"></i></button>
+            <div class="preview-cover-gradient"></div>
+            <div class="preview-header-info">
+                <div class="preview-avatar-ring">
+                    <img id="previewAvatar" src="" alt="Avatar" class="avatar avatar-lg" />
+                </div>
+                <h2 class="text-h1" style="color:white"><span id="previewName">Name</span> <span id="previewAge"
+                        style="font-weight:600;opacity:.9;font-size:18px"></span></h2>
+                <p class="text-caption" style="color:rgba(255,255,255,.8)" id="previewUsername">@username</p>
+            </div>
+        </div>
+        <div class="preview-body scroll-area">
+            <div class="preview-badges">
+                <span class="badge badge-verified"><i class="fas fa-language"></i> <span
+                        id="previewLanguage">English</span></span>
+                <span class="badge" style="background:var(--color-surface-raised);color:var(--color-text-secondary)"><i
+                        class="fas fa-map-marker-alt" style="color:var(--color-secondary)"></i> <span
+                        id="previewLocation">Location</span></span>
+            </div>
+            <div class="preview-section">
+                <h3 class="section-label">About Me</h3>
+                <div class="card" style="box-shadow:none">
+                    <p class="text-body" id="previewBio">No bio provided.</p>
+                </div>
+            </div>
+            <div class="preview-section">
+                <h3 class="section-label">Interests</h3>
+                <div class="preview-interests" id="previewInterests"></div>
+            </div>
+        </div>
+        <div class="preview-actions">
+            <button class="btn btn-primary" id="previewFollowBtn" style="flex:1"><i class="fas fa-user-plus"></i> <span
+                    id="previewFollowText">Add Friend</span></button>
+            <button class="btn btn-ghost btn-icon"
+                style="background:var(--color-primary-soft);color:var(--color-primary)"><i
+                    class="fas fa-comment-dots"></i></button>
+            <button class="btn btn-ghost btn-icon"
+                style="background:var(--color-secondary-soft);color:var(--color-secondary)"><i
+                    class="fas fa-phone-alt"></i></button>
+        </div>
+    </div>
+
+    <script src="js/home.js"></script>
 </body>
+
 </html>

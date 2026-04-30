@@ -1,799 +1,528 @@
+'use strict';
+
+// ── Config ───────────────────────────────────────
 let currentStep = 1;
-const totalSteps = 7;
+const totalSteps = 4;
 let selectedLanguage = getCookie('lang') || 'en';
 const backend_url = 'https://xz2-production.up.railway.app/api';
+
 function getCookie(name) {
-  const value = `; ${document.cookie}`;
-  const parts = value.split(`; ${name}=`);
-  if (parts.length === 2) return parts.pop().split(';').shift();
-  return null;
+    const value = `; ${document.cookie}`;
+    const parts = value.split(`; ${name}=`);
+    if (parts.length === 2) return parts.pop().split(';').shift();
+    return null;
 }
 
 const tg = window.Telegram.WebApp;
 
 const formData = {
-    language: selectedLanguage, // Set default language initially
+    language: selectedLanguage,
     firstName: '',
-    lastName: '',
-    birthDate: '',
+    username: '',
+    age: null,
     gender: '',
-    institution: '',
-    otherInstitution: '',
-    interests: [],
-    aboutMe: ''
+    avatarSeed: '',
+    avatarBg: '',
+    interests: []
 };
 
+
+// ── Translations ─────────────────────────────────
 const translations = {
     en: {
-        welcome_title: "Welcome to Daily Manfaat",
-        welcome_subtitle: "Connecting passionate minds through shared interests",
-        language_prompt: "Let's get started by selecting your preferred language",
-        continue: "Continue",
-        back: "Back",
-        uzbek: "Uzbek",
-        russian: "Russian",
-        english: "English",
-        identity_title: "Tell us about yourself",
-        identity_subtitle: "This helps us personalize your experience",
-        first_name: "First Name *",
-        first_name_placeholder: "Your first name",
-        last_name: "Last Name (Optional)",
-        last_name_placeholder: "Your last name",
-        demographics_title: "Basic information",
-        demographics_subtitle: "This helps us find relevant communities for you",
-        birth_date: "Date of Birth *",
-        gender: "Gender *",
+        step1_title: "Hey! Let's get you started 🎉",
+        step1_subtitle: "Takes 60 seconds. No spam, ever.",
+        language_label: "Language",
+        name_label: "Your name",
+        name_placeholder: "What should we call you?",
+        name_error: "What should we call you?",
+        username_label: "Username",
+        username_placeholder: "choose_a_username",
+        username_error: "Pick a username — it's how people find you",
+        trust_name: "Your real name is never shown publicly",
+        cta_step1: "Find Your People",
+        step2_title: "Who are you? 👤",
+        step2_subtitle: "This helps us match you with the right people",
+        gender_label: "Gender",
         male: "Male",
         female: "Female",
-        other_gender: "Other / Prefer not to say",
-        institution_title: "Your institution",
-        institution_subtitle: "Connect with peers from your school or organization",
-        institution: "Institution *",
-        select_institution: "Select your institution",
-        other: "Other",
-        other_institution: "Enter your institution name",
-        interests_title: "Your interests",
-        interests_subtitle: "Select topics you're passionate about to connect with like-minded people",
-        interest_error: "Please select at least one interest",
-        personal_title: "Personal touch",
-        personal_subtitle: "Tell others about yourself (optional)",
-        about_me: "About Me (Optional)",
-        about_me_placeholder: "Share something interesting about yourself...",
-        max_chars: "Max 300 characters",
-        complete_title: "You're all set!",
-        complete_subtitle: "Review your information below before creating your profile",
-        create_profile: "Create My Profile",
-        edit_profile: "Back to Edit",
-        // Review page specific translations
-        years: "years", // Used in reviewAgeGender
-         // Validation messages (consider adding these keys and translations)
-         // requires_field: "is required"
-         // invalid_age: "Please enter a valid date of birth."
+        gender_error: "Tap one to continue",
+        age_label: "Your age",
+        age_placeholder: "e.g. 19",
+        age_error: "How old are you? We need this to keep things safe",
+        avatar_label: "Pick your look",
+        avatar_error: "Pick your look! You can always change it later",
+        cta_step2: "Almost there!",
+        step3_title: "What are you into? 🎯",
+        step3_subtitle: "Pick 1–5 that excite you. This is how we find your people.",
+        interest_error: "Pick at least 1 — this is how we find your people",
+        cta_step3: "Show Me My Matches!",
+        step4_title: "You're in! 🎊",
+        match_count: "Finding people who share your interests...",
+        cta_step4: "Enter the Lobby",
+        complete_later: "You can complete your full profile anytime in Settings"
     },
     uz: {
-        welcome_title: "Daily Manfaatga xush kelibsiz",
-        welcome_subtitle: "Qiziqishlarni baham ko'radigan insonlarni bog'laymiz",
-        language_prompt: "Iltimos, tilni tanlang",
-        continue: "Davom etish",
-        back: "Orqaga",
-        uzbek: "O'zbekcha",
-        russian: "Ruscha",
-        english: "Inglizcha",
-        identity_title: "O'zingiz haqingizda ayting",
-        identity_subtitle: "Bu bizga sizga mos tajriba yaratishga yordam beradi",
-        first_name: "Ism *",
-        first_name_placeholder: "Ismingizni kiriting",
-        last_name: "Familiya (Ixtiyoriy)",
-        last_name_placeholder: "Familiyangizni kiriting",
-        demographics_title: "Asosiy ma'lumotlar",
-        demographics_subtitle: "Bu bizga tegishli jamoalarni topishga yordam beradi",
-        birth_date: "Tug'ilgan sana *",
-        gender: "Jins *",
+        step1_title: "Keling, boshlaylik! 🎉",
+        step1_subtitle: "60 soniya. Hech qanday spam yo'q.",
+        language_label: "Til",
+        name_label: "Ismingiz",
+        name_placeholder: "Sizni qanday chaqiramiz?",
+        name_error: "Sizni qanday chaqiramiz?",
+        username_label: "Foydalanuvchi nomi",
+        username_placeholder: "foydalanuvchi_nomi",
+        username_error: "Foydalanuvchi nomini tanlang",
+        trust_name: "Haqiqiy ismingiz hech qachon ko'rsatilmaydi",
+        cta_step1: "Odamlaringizni toping",
+        step2_title: "Siz kimsiz? 👤",
+        step2_subtitle: "Bu sizga to'g'ri odamlarni topishga yordam beradi",
+        gender_label: "Jins",
         male: "Erkak",
         female: "Ayol",
-        other_gender: "Boshqa / Aytishni xohlamayman",
-        institution_title: "Muassasangiz",
-        institution_subtitle: "Maktab yoki tashkilotingizdagi hamkasblar bilan bog'laning",
-        institution: "Muassasa *",
-        select_institution: "Muassasangizni tanlang",
-        other: "Boshqa",
-        other_institution: "Muassasa nomini kiriting",
-        interests_title: "Qiziqishlaringiz",
-        interests_subtitle: "O'xshash fikrli odamlar bilan bog'lanish uchun qiziqishlaringizni tanlang",
-        interest_error: "Iltimos, kamida bitta qiziqishni tanlang",
-        personal_title: "Shaxsiy ma'lumot",
-        personal_subtitle: "O'zingiz haqingizda boshqalarga ayting (ixtiyoriy)",
-        about_me: "Men haqimda (Ixtiyoriy)",
-        about_me_placeholder: "O'zingiz haqingizda qiziqarli narsalar yozing...",
-        max_chars: "Maksimal 300 belgi",
-        complete_title: "Hammasi tayyor!",
-        complete_subtitle: "Profil yaratishdan oldin ma'lumotlaringizni ko'rib chiqing",
-        create_profile: "Profil yaratish",
-        edit_profile: "Tahrirlashga qaytish",
-         // Review page specific translations
-        years: "yosh"
+        gender_error: "Davom etish uchun birini tanlang",
+        age_label: "Yoshingiz",
+        age_placeholder: "masalan, 19",
+        age_error: "Yoshingiz necha? Xavfsizlik uchun kerak",
+        avatar_label: "Qiyofangizni tanlang",
+        avatar_error: "Qiyofangizni tanlang! Keyinroq o'zgartirsangiz ham bo'ladi",
+        cta_step2: "Deyarli tayyor!",
+        step3_title: "Nima qiziq? 🎯",
+        step3_subtitle: "1–5 ta tanlang. Shunga asoslanib odamlaringizni topamiz.",
+        interest_error: "Kamida 1 ta tanlang",
+        cta_step3: "Menga mos keladiganlarni ko'rsat!",
+        step4_title: "Siz ichkaridasiz! 🎊",
+        match_count: "Qiziqishlaringizga mos odamlar izlanmoqda...",
+        cta_step4: "Lobbyga kirish",
+        complete_later: "To'liq profilingizni istalgan vaqtda Sozlamalarda yakunlashingiz mumkin"
     },
     ru: {
-        welcome_title: "Добро пожаловать в Daily Manfaat",
-        welcome_subtitle: "Объединяем людей с общими интересами",
-        language_prompt: "Пожалуйста, выберите язык",
-        continue: "Продолжить",
-        back: "Назад",
-        uzbek: "Узбекский",
-        russian: "Русский",
-        english: "Английский",
-        identity_title: "Расскажите о себе",
-        identity_subtitle: "Это поможет нам персонализировать ваш опыт",
-        first_name: "Имя *",
-        first_name_placeholder: "Ваше имя",
-        last_name: "Фамилия (Необязательно)",
-        last_name_placeholder: "Ваша фамилия",
-        demographics_title: "Основная информация",
-        demographics_subtitle: "Это поможет нам найти подходящие сообщества",
-        birth_date: "Дата рождения *",
-        gender: "Пол *",
+        step1_title: "Привет! Давайте начнём 🎉",
+        step1_subtitle: "60 секунд. Никакого спама.",
+        language_label: "Язык",
+        name_label: "Ваше имя",
+        name_placeholder: "Как вас называть?",
+        name_error: "Как вас называть?",
+        username_label: "Имя пользователя",
+        username_placeholder: "имя_пользователя",
+        username_error: "Выберите имя — так вас найдут другие",
+        trust_name: "Ваше настоящее имя никогда не показывается публично",
+        cta_step1: "Найти своих людей",
+        step2_title: "Кто вы? 👤",
+        step2_subtitle: "Это поможет подобрать для вас нужных людей",
+        gender_label: "Пол",
         male: "Мужской",
         female: "Женский",
-        institution_title: "Ваше учреждение",
-        institution_subtitle: "Свяжитесь с коллегами из вашей школы или организации",
-        institution: "Учреждение *",
-        select_institution: "Выберите учреждение",
-        other: "Другое",
-        other_institution: "Введите название учреждения",
-        interests_title: "Ваши интересы",
-        interests_subtitle: "Выберите темы, которые вам интересны",
-        interest_error: "Пожалуйста, выберите хотя бы один интерес",
-        personal_title: "Личная информация",
-        personal_subtitle: "Расскажите о себе (необязательно)",
-        about_me: "Обо мне (Необязательно)",
-        about_me_placeholder: "Расскажите что-нибудь интересное о себе...",
-        max_chars: "Максимум 300 символов",
-        complete_title: "Все готово!",
-        complete_subtitle: "Проверьте информацию перед созданием профиля",
-        create_profile: "Создать профиль",
-        edit_profile: "Вернуться к редактированию",
-        // Review page specific translations
-        years: "лет"
+        gender_error: "Нажмите, чтобы продолжить",
+        age_label: "Ваш возраст",
+        age_placeholder: "напр. 19",
+        age_error: "Сколько вам лет? Это нужно для безопасности",
+        avatar_label: "Выберите образ",
+        avatar_error: "Выберите образ! Позже его можно изменить",
+        cta_step2: "Почти готово!",
+        step3_title: "Что вам интересно? 🎯",
+        step3_subtitle: "Выберите 1–5. Так мы найдём ваших людей.",
+        interest_error: "Выберите хотя бы 1 — так мы найдём ваших людей",
+        cta_step3: "Покажите мои совпадения!",
+        step4_title: "Вы в деле! 🎊",
+        match_count: "Ищем людей с вашими интересами...",
+        cta_step4: "Войти в лобби",
+        complete_later: "Полный профиль можно заполнить позже в Настройках"
     }
 };
 
-// Updated and expanded list of interests WITH icons
+
+// ── Interest Data (curated top 12) ───────────────
 const interestData = {
-    business_management: {
-        en: "Business Management",
-        uz: "Biznes boshqaruvi",
-        ru: "Управление бизнесом",
-        icon: "fa-briefcase"
-    },
-    finance_and_accounting: {
-        en: "Finance & Accounting",
-        uz: "Moliya va buxgalteriya",
-        ru: "Финансы и бухгалтерский учёт",
-        icon: "fa-coins"
-    },
-    tourism_and_hospitality: {
-        en: "Tourism & Hospitality",
-        uz: "Turizm va mehmonxona ishi",
-        ru: "Туризм и гостиничное дело",
-        icon: "fa-plane"
-    },
-    data_science: {
-        en: "Data Science & Analytics",
-        uz: "Ma'lumotlar fanlari va analitikasi",
-        ru: "Наука о данных и аналитика",
-        icon: "fa-chart-pie"
-    },
-     cybersecurity: {
-        en: "Cybersecurity",
-        uz: "Kiberxavfsizlik",
-        ru: "Кибербезопасность",
-        icon: "fa-lock"
-    },
-    motion_design: {
-        en: "Motion Design",
-        uz: "Harakat dizayni",
-        ru: "Моушн‑дизайн",
-        icon: "fa-film"
-    },
-    three_d_modeling: {
-        en: "3D Modeling",
-        uz: "3D modellashtirish",
-        ru: "3D‑моделирование",
-        icon: "fa-cube"
-    },
-    animation_and_visualization: {
-        en: "Animation & Visualization",
-        uz: "Animatsiya va vizualizatsiya",
-        ru: "Анимация и визуализация",
-        icon: "fa-paint-brush"
-    },
-    marketing_and_promotion: {
-        en: "Marketing & Promotion",
-        uz: "Marketing va targ‘ibot",
-        ru: "Маркетинг и продвижение",
-        icon: "fa-bullhorn"
-    },
-    human_resources_and_project_management: {
-        en: "Human Resources & Project Management",
-        uz: "Inson resurslari va loyiha boshqaruvi",
-        ru: "Управление персоналом и проектами",
-        icon: "fa-users"
-    },
-    economics_and_banking: {
-        en: "Economics & Banking",
-        uz: "Iqtisodiyot va bank ishlari",
-        ru: "Экономика и банковское дело",
-        icon: "fa-chart-line"
-    },
-    international_relations: {
-        en: "International Relations",
-        uz: "Xalqaro munosabatlar",
-        ru: "Международные отношения",
-        icon: "fa-globe"
-    },
-    psychology: {
-        en: "Psychology",
-        uz: "Psixologiya",
-        ru: "Психология",
-        icon: "fa-brain"
-    },
-    law_and_jurisprudence: {
-        en: "Law / Jurisprudence",
-        uz: "Huquqshunoslik",
-        ru: "Право / Юриспруденция",
-        icon: "fa-gavel"
-    },
-     education: {
-        en: "Education / Pedagogy",
-        uz: "Ta'lim / Pedagogika",
-        ru: "Образование / Педагогика",
-        icon: "fa-chalkboard-teacher"
-    },
-    journalism_and_mass_comm: {
-        en: "Journalism & Mass Communication",
-        uz: "Jurnalistika va ommaviy kommunikatsiya",
-        ru: "Журналистика и массовые коммуникации",
-        icon: "fa-newspaper"
-    },
-    architecture: {
-        en: "Architecture",
-        uz: "Arxitektura",
-        ru: "Архитектура",
-        icon: "fa-building"
-    },
-    construction: {
-        en: "Construction",
-        uz: "Qurilish",
-        ru: "Строительство",
-        icon: "fa-hard-hat"
-    },
-    engineering: {
-        en: "Engineering",
-        uz: "Muhandislik",
-        ru: "Инженерия",
-        icon: "fa-cogs"
-    },
-    languages_and_philology: {
-        en: "Languages & Philology",
-        uz: "Tillashunoslik va filologiya",
-        ru: "Языки и филология",
-        icon: "fa-language"
-    },
-    transportation_and_logistics: {
-        en: "Transportation & Logistics",
-        uz: "Transport va logistika",
-        ru: "Транспорт и логистика",
-        icon: "fa-truck"
-    },
-    medicine: {
-        en: "Medicine / Healthcare",
-        uz: "Tibbiyot / Sog'liqni saqlash",
-        ru: "Медицина / Здравоохранение",
-        icon: "fa-medkit"
-    },
-     pharmacy: {
-        en: "Pharmacy",
-        uz: "Farmatsevtika",
-        ru: "Фармацевтика",
-        icon: "fa-pills"
-     },
-     dentistry: {
-        en: "Dentistry",
-        uz: "Stomatologiya",
-        ru: "Стоматология",
-        icon: "fa-tooth"
-     },
-     pediatrics: {
-        en: "Pediatrics",
-        uz: "Pediatriya",
-        ru: "Педиатрия",
-        icon: "fa-child"
-     },
-     sports_and_fitness: {
-        en: "Sports & Fitness",
-        uz: "Sport va fitnes",
-        ru: "Спорт и фитнес",
-        icon: "fa-dumbbell"
-     },
-     art_and_design: {
-        en: "Art & Design",
-        uz: "San'at va dizayn",
-        ru: "Искусство и дизайн",
-        icon: "fa-palette"
-     }
+    business_management:     { en: "Business",           uz: "Biznes",             ru: "Бизнес",              icon: "fa-briefcase" },
+    data_science:            { en: "Data Science",       uz: "Ma'lumotlar fani",   ru: "Наука о данных",      icon: "fa-chart-pie" },
+    psychology:              { en: "Psychology",         uz: "Psixologiya",        ru: "Психология",          icon: "fa-brain" },
+    motion_design:           { en: "Motion Design",     uz: "Dizayn",             ru: "Моушн-дизайн",        icon: "fa-film" },
+    marketing_and_promotion: { en: "Marketing",         uz: "Marketing",          ru: "Маркетинг",           icon: "fa-bullhorn" },
+    medicine:                { en: "Medicine",           uz: "Tibbiyot",           ru: "Медицина",            icon: "fa-medkit" },
+    engineering:             { en: "Engineering",        uz: "Muhandislik",        ru: "Инженерия",           icon: "fa-cogs" },
+    international_relations: { en: "Intl Relations",     uz: "Xalqaro munosabat",  ru: "Межд. отношения",     icon: "fa-globe" },
+    law_and_jurisprudence:   { en: "Law",               uz: "Huquq",              ru: "Право",               icon: "fa-gavel" },
+    art_and_design:          { en: "Art & Design",      uz: "San'at va dizayn",   ru: "Искусство",           icon: "fa-palette" },
+    sports_and_fitness:      { en: "Sports & Fitness",  uz: "Sport",              ru: "Спорт",               icon: "fa-dumbbell" },
+    languages_and_philology: { en: "Languages",         uz: "Tillar",             ru: "Языки",               icon: "fa-language" }
 };
 
 
-// DOM elements
-const formContainer = document.getElementById('formContainer');
-const progressBar = document.getElementById('progressBar');
-const interestError = document.getElementById('interestError');
-const reviewName = document.getElementById('reviewName');
-const reviewAgeGender = document.getElementById('reviewAgeGender');
-const reviewInstitution = document.getElementById('reviewInstitution');
-const reviewInterests = document.getElementById('reviewInterests');
-const reviewAbout = document.getElementById('reviewAbout');
-const reviewAboutContainer = document.getElementById('reviewAboutContainer');
-const institutionSelect = document.getElementById('institution');
-const otherInstitutionContainer = document.getElementById('otherInstitutionContainer');
-const otherInstitution = document.getElementById('otherInstitution');
-const interestsContainer = document.getElementById('interestsContainer'); // Get the container
+// ── Avatar Seeds (6 per gender) ──────────────────
+const maleSeeds   = ['Jack', 'Alex', 'Max', 'Felix', 'Leo', 'Sam'];
+const femaleSeeds = ['Maria', 'Sarah', 'Lena', 'Mia', 'Zoe', 'Lily'];
+const bgColors    = ['b6e3f4', 'c0aede', 'd1d4f9', 'ffd5dc', 'ffdfbf', 'd1f4d9'];
 
 
-// Language translation function
+// ── DOM Refs ─────────────────────────────────────
+const stepDotsContainer = document.getElementById('stepDotsContainer');
+const headerStepLabel   = document.getElementById('headerStepLabel');
+const interestsContainer = document.getElementById('interestsContainer');
+
+
+// ── Translation Engine ───────────────────────────
 function applyTranslation() {
-    document.querySelectorAll('[data-translate]').forEach(element => {
-        const key = element.getAttribute('data-translate');
-        if (translations[selectedLanguage] && translations[selectedLanguage][key]) {
-            element.textContent = translations[selectedLanguage][key];
+    document.querySelectorAll('[data-translate]').forEach(el => {
+        const key = el.getAttribute('data-translate');
+        if (translations[selectedLanguage]?.[key]) {
+            el.textContent = translations[selectedLanguage][key];
         }
     });
-     document.querySelectorAll('[data-translate-placeholder]').forEach(element => {
-        const key = element.getAttribute('data-translate-placeholder');
-         if (translations[selectedLanguage] && translations[selectedLanguage][key]) {
-            element.placeholder = translations[selectedLanguage][key];
+    document.querySelectorAll('[data-translate-placeholder]').forEach(el => {
+        const key = el.getAttribute('data-translate-placeholder');
+        if (translations[selectedLanguage]?.[key]) {
+            el.placeholder = translations[selectedLanguage][key];
         }
     });
-
-    // Also re-render interests to apply language
-    if (interestsContainer) {
-         renderInterests(selectedLanguage);
-    }
-     // Update institution 'Other' option text explicitly as it's in a select
-     const otherOption = institutionSelect.querySelector('option[value="other"]');
-     if(otherOption) {
-         otherOption.textContent = translations[selectedLanguage] ? translations[selectedLanguage]['other'] : 'Other';
-     }
-     const selectInstitutionOption = institutionSelect.querySelector('option[disabled][selected]');
-     if(selectInstitutionOption) {
-         selectInstitutionOption.textContent = translations[selectedLanguage] ? translations[selectedLanguage]['select_institution'] : 'Select your institution';
-     }
-
-     // Update gender options text
-     document.querySelectorAll('.gender-option p').forEach(pElement => {
-        const key = pElement.getAttribute('data-translate');
-         if (key && translations[selectedLanguage] && translations[selectedLanguage][key]) {
-            pElement.textContent = translations[selectedLanguage][key];
-         }
-     });
+    renderInterests();
 }
 
-// Render interests function
-function renderInterests(lang) {
-    if (!interestsContainer) return; // Check if the container exists
-    interestsContainer.innerHTML = ''; // Clear current interests
+
+// ── Render Interests ─────────────────────────────
+function renderInterests() {
+    if (!interestsContainer) return;
+    interestsContainer.innerHTML = '';
 
     Object.keys(interestData).forEach(key => {
         const interest = interestData[key];
-        const translatedName = interest[lang] || interest.en; // Fallback to English
-        const iconClass = interest.icon; // Get the icon class
-
+        const name = interest[selectedLanguage] || interest.en;
         const isSelected = formData.interests.includes(key);
 
-        const interestDiv = document.createElement('div');
-        interestDiv.classList.add('interest-tag', 'p-3', 'border-2', 'rounded-xl', 'text-center', 'cursor-pointer', 'flex', 'flex-col', 'items-center', 'justify-center', 'space-y-1'); // Basic classes
-         if (isSelected) { // Apply selected classes based on state
-             interestDiv.classList.add('selected', 'border-rose-500', 'bg-rose-50');
-         } else {
-             interestDiv.classList.add('border-gray-200');
-         }
-        interestDiv.setAttribute('onclick', `toggleInterest(this, '${key}')`);
-        interestDiv.setAttribute('data-interest-key', key); // Store key for easier lookup
-
-        const iconElement = document.createElement('i');
-        if (iconClass) { // Check if iconClass exists
-            iconElement.classList.add('fas', iconClass, 'text-rose-500', 'text-xl');
-        } else {
-            // Fallback if no icon class is defined for an interest (shouldn't happen with current data)
-            iconElement.classList.add('fas', 'fa-heart', 'text-rose-500', 'text-xl'); // Default icon
-        }
-
-
-        const textElement = document.createElement('p');
-        textElement.classList.add('text-sm', 'font-medium');
-        textElement.textContent = translatedName;
-
-        interestDiv.appendChild(iconElement);
-        interestDiv.appendChild(textElement);
-        interestsContainer.appendChild(interestDiv);
+        const pill = document.createElement('button');
+        pill.type = 'button';
+        pill.className = `interest-pill ${isSelected ? 'selected' : ''}`;
+        pill.setAttribute('data-key', key);
+        pill.innerHTML = `<i class="fas ${interest.icon} pill-icon"></i> ${name}`;
+        pill.onclick = () => toggleInterest(key, pill);
+        interestsContainer.appendChild(pill);
     });
 }
 
-
-// Institution select change handler
-institutionSelect.addEventListener('change', function() {
-    if (this.value === 'other') {
-        otherInstitutionContainer.classList.remove('hidden');
+function toggleInterest(key, pill) {
+    const idx = formData.interests.indexOf(key);
+    if (idx === -1) {
+        if (formData.interests.length >= 5) return; // max 5
+        formData.interests.push(key);
+        pill.classList.add('selected');
     } else {
-        otherInstitutionContainer.classList.add('hidden');
-        otherInstitution.value = ''; // Clear the other institution field
+        formData.interests.splice(idx, 1);
+        pill.classList.remove('selected');
     }
-});
+    hideError('interestError');
+}
 
-// Navigation functions
-function showStep(step) {
-    const slides = document.querySelectorAll('.slide');
-    slides.forEach(slide => {
-        slide.classList.remove('active');
-        slide.style.display = 'none'; // Hide all
+
+// ── Populate Avatars ─────────────────────────────
+function populateAvatars() {
+    const container = document.getElementById('avatarContainer');
+    if (!container) return;
+    container.innerHTML = '';
+
+    const seeds = formData.gender === 'female' ? femaleSeeds : maleSeeds;
+
+    seeds.forEach((seed, i) => {
+        const bg = bgColors[i % bgColors.length];
+        const url = `https://api.dicebear.com/7.x/adventurer/svg?seed=${seed}&backgroundColor=${bg}`;
+
+        const div = document.createElement('div');
+        div.className = `avatar-option ${formData.avatarSeed === seed ? 'selected' : ''}`;
+        div.innerHTML = `<img src="${url}" alt="${seed}" class="w-full h-full object-cover">`;
+        div.onclick = () => selectAvatar(seed, bg, div);
+        container.appendChild(div);
     });
-    const activeSlide = document.getElementById(`step${step}`);
-    activeSlide.classList.add('active');
-    activeSlide.style.display = 'block'; // Show active one
 }
 
-function nextStep() {
-    // Validate current step before proceeding
-    if (!validateStep(currentStep)) {
-        return;
-    }
+function selectAvatar(seed, bg, element) {
+    formData.avatarSeed = seed;
+    formData.avatarBg = bg;
 
-    // Update form data
-    updateFormData();
-
-    // Increment step
-    currentStep++;
-
-    // If we're going to the review step, update the review information
-    if (currentStep === totalSteps) {
-        updateReviewInfo();
-    }
-
-    // Show next step
-    showStep(currentStep);
-
-    // Update progress bar
-    updateProgressBar();
-}
-
- function prevStep() {
-    // Decrement step
-    currentStep--;
-
-    // Show previous step
-    showStep(currentStep);
-
-    // Update progress bar
-    updateProgressBar();
-}
-
-function updateProgressBar() {
-    const progressPercentage = (currentStep / totalSteps) * 100;
-    progressBar.style.width = `${progressPercentage}%`;
-}
-
-function validateStep(step) {
-    let isValid = true;
-    let errorMessage = '';
-
-    switch(step) {
-        case 1:
-            if (!formData.language) {
-                 errorMessage = translations[selectedLanguage] ? translations[selectedLanguage]['language_prompt'] : 'Please select a language';
-                isValid = false;
-            }
-            break;
-
-        case 2:
-            const firstName = document.getElementById('firstName').value.trim();
-            if (!firstName) {
-                 errorMessage = (translations[selectedLanguage] ? translations[selectedLanguage]['first_name'] : 'First Name') + ' ' + (translations[selectedLanguage].requires_field || 'is required'); // Use translated 'is required' if available
-                isValid = false;
-            }
-            break;
-
-        case 3:
-            const birthDate = document.getElementById('birthDate').value;
-            if (!birthDate) {
-                 errorMessage = (translations[selectedLanguage] ? translations[selectedLanguage]['birth_date'] : 'Date of Birth') + ' ' + (translations[selectedLanguage].requires_field || 'is required'); // Use translated 'is required' if available
-                isValid = false;
-            } else {
-                const age = calculateAge(birthDate);
-                if (age === null || age < 10 || age > 100) { // Add basic age validation
-                     errorMessage = translations[selectedLanguage].invalid_age || "Please enter a valid date of birth."; // Use translated message
-                     isValid = false;
-                }
-            }
-            if (isValid && !formData.gender) { // Check gender only if date is valid
-                 errorMessage = (translations[selectedLanguage] ? translations[selectedLanguage]['gender'] : 'Gender') + ' ' + (translations[selectedLanguage].requires_field || 'is required'); // Use translated 'is required' if available
-                isValid = false;
-            }
-            break;
-
-        case 4:
-            const institution = institutionSelect.value;
-            if (!institution) {
-                 errorMessage = (translations[selectedLanguage] ? translations[selectedLanguage]['institution'] : 'Institution') + ' ' + (translations[selectedLanguage].requires_field || 'is required'); // Use translated 'is required' if available
-                isValid = false;
-            } else if (institution === 'other' && !otherInstitution.value.trim()) {
-                 errorMessage = (translations[selectedLanguage] ? translations[selectedLanguage]['other_institution'] : 'Enter your institution name') + ' ' + (translations[selectedLanguage].requires_field || 'is required'); // Use translated 'is required' if available
-                isValid = false;
-            }
-            break;
-
-        case 5:
-            if (formData.interests.length === 0) {
-                errorMessage = translations[selectedLanguage] ? translations[selectedLanguage]['interest_error'] : 'Please select at least one interest';
-                interestError.classList.remove('hidden');
-                isValid = false;
-            } else {
-               interestError.classList.add('hidden');
-               isValid = true;
-            }
-            break;
-         case 6:
-             // Optional field, no validation needed to proceed
-             isValid = true;
-             break;
-
-        default:
-            isValid = true;
-            break;
-    }
-
-    if (!isValid) {
-         // Only show alert if there's an error message
-         if (errorMessage) {
-            alert(errorMessage);
-         }
-         return false;
-    }
-     return true;
+    document.querySelectorAll('.avatar-option').forEach(el => el.classList.remove('selected'));
+    element.classList.add('selected');
+    hideError('avatarError');
 }
 
 
-function updateFormData() {
-    switch(currentStep) {
-        case 1:
-            // Language is already set by selectLanguage()
-            break;
-
-        case 2:
-            formData.firstName = document.getElementById('firstName').value.trim();
-            formData.lastName = document.getElementById('lastName').value.trim();
-            break;
-
-        case 3:
-            formData.birthDate = document.getElementById('birthDate').value;
-            // Gender is already set by selectGender()
-            break;
-
-        case 4:
-            formData.institution = institutionSelect.value;
-            if (institutionSelect.value === 'other') {
-                formData.otherInstitution = otherInstitution.value.trim();
-            } else {
-                formData.otherInstitution = ''; // Clear if not 'other'
-            }
-            break;
-
-        case 5:
-            // Interests are already managed by toggleInterest()
-            break;
-
-        case 6:
-            formData.aboutMe = document.getElementById('aboutMe').value.trim().substring(0, 300); // Trim and limit chars
-            document.getElementById('aboutMe').value = formData.aboutMe; // Update textarea in case it was trimmed
-            break;
-    }
-}
-
- // Calculate age from birth date string (YYYY-MM-DD)
- function calculateAge(birthDateString) {
-     if (!birthDateString) return null;
-     try {
-        const today = new Date();
-        const birthDate = new Date(birthDateString);
-         // Ensure birthDate is a valid date
-        if (isNaN(birthDate.getTime())) {
-            return null; // Handle invalid date strings
-        }
-        let age = today.getFullYear() - birthDate.getFullYear();
-        const m = today.getMonth() - birthDate.getMonth();
-        if (m < 0 || (m === 0 && today.getDate() < birthDate.getDate())) {
-            age--;
-        }
-         // Prevent negative or unrealistically large ages
-        if (age < 0 || age > 120) { // Basic sanity check for age
-            return null;
-        }
-        return age;
-     } catch (e) {
-         console.error("Error calculating age:", e);
-         return null; // Handle any potential errors during calculation
-     }
- }
-
-
-function updateReviewInfo() {
-    // Name
-    reviewName.textContent = formData.firstName + (formData.lastName ? ' ' + formData.lastName : '');
-
-    // Age and gender
-     const age = calculateAge(formData.birthDate);
-     const translatedYears = translations[selectedLanguage] ? translations[selectedLanguage]['years'] : 'years';
-     const ageString = age !== null ? `${age} ${translatedYears}` : '';
-     const translatedGender = formData.gender ? (translations[selectedLanguage] && translations[selectedLanguage][formData.gender] ? translations[selectedLanguage][formData.gender] : formData.gender) : '';
-
-    reviewAgeGender.textContent = [ageString, translatedGender].filter(Boolean).join(' • '); // Combine if both exist
-
-    // Institution
-    if (formData.institution === 'other') {
-        reviewInstitution.textContent = formData.otherInstitution || (translations[selectedLanguage] ? translations[selectedLanguage]['other'] : 'Other');
-    } else {
-        const selectedOption = institutionSelect.querySelector(`option[value="${formData.institution}"]`);
-         // Use the text content of the selected option
-        reviewInstitution.textContent = selectedOption ? selectedOption.textContent : (translations[selectedLanguage] ? translations[selectedLanguage]['select_institution'] : 'Select your institution');
-    }
-
-    // Interests
-    reviewInterests.textContent = formData.interests.map(interestKey => {
-         const interest = interestData[interestKey];
-         return interest ? (interest[selectedLanguage] || interest.en) : interestKey; // Use translated name, fallback to English or key
-    }).join(', ');
-
-    // About me
-    if (formData.aboutMe) {
-        reviewAbout.textContent = formData.aboutMe;
-        reviewAboutContainer.classList.remove('hidden');
-    } else {
-        reviewAboutContainer.classList.add('hidden');
-    }
-}
-
-// Form field interaction functions
+// ── Language & Gender Selection ───────────────────
 function selectLanguage(lang, element) {
     formData.language = lang;
-    selectedLanguage = lang; // Update global language variable
+    selectedLanguage = lang;
 
-    // Remove selected class from all options
-    document.querySelectorAll('.language-option').forEach(option => {
-        option.classList.remove('selected', 'border-rose-500');
-        option.classList.add('border-gray-200');
-    });
+    document.querySelectorAll('.lang-btn').forEach(btn => {
+        btn.classList.remove('selected');
+        btn.className = btn.className.replace(/border-\[#6C47FF\]/g, 'border-[#EBEBF0]').replace(/bg-\[#EDE8FF\]/g, '').replace(/text-\[#6C47FF\]/g, 'text-[#1A1A2E]');
+});
 
-    // Add selected class to clicked option
-    if (element) { // Element might be null on initial load
-        element.classList.add('selected', 'border-rose-500');
-        element.classList.remove('border-gray-200');
-    }
-
-    applyTranslation(); // Apply translation immediately
+    element.classList.add('selected');
+    applyTranslation();
 }
 
 function selectGender(gender, element) {
     formData.gender = gender;
 
-    // Remove selected class from all options
-    document.querySelectorAll('.gender-option').forEach(option => {
-        option.classList.remove('selected', 'border-rose-500');
-        option.classList.add('border-gray-200');
+    document.querySelectorAll('.gender-btn').forEach(btn => btn.classList.remove('selected'));
+    element.classList.add('selected');
+    hideError('genderError');
+
+    // Populate avatars based on gender
+    populateAvatars();
+}
+
+
+// ── Navigation ───────────────────────────────────
+function showStep(step) {
+    document.querySelectorAll('.slide').forEach(s => {
+        s.classList.remove('active');
+    });
+    const target = document.getElementById(`step${step}`);
+    if (target) target.classList.add('active');
+
+    // Update step dots
+    document.querySelectorAll('.step-dot').forEach((dot, i) => {
+        dot.classList.remove('active', 'done');
+        if (i + 1 === step) dot.classList.add('active');
+        else if (i + 1 < step) dot.classList.add('done');
     });
 
-    // Add selected class to clicked option
-    element.classList.add('selected', 'border-rose-500');
-    element.classList.remove('border-gray-200');
+    // Update label
+    const stepLabels = { en: 'Step', uz: 'Qadam', ru: 'Шаг' };
+    const ofLabels = { en: 'of', uz: '/', ru: 'из' };
+    headerStepLabel.textContent = `${stepLabels[selectedLanguage] || 'Step'} ${step} ${ofLabels[selectedLanguage] || 'of'} ${totalSteps}`;
 }
 
-function toggleInterest(element, interestKey) {
-    // Check if the interest key is valid (exists in interestData)
-    if (!interestData[interestKey]) {
-         console.warn(`Unknown interest key: ${interestKey}`);
-         return;
-    }
+function nextStep() {
+    if (!validateStep(currentStep)) return;
+    updateFormData();
+    currentStep++;
 
-    const index = formData.interests.indexOf(interestKey);
-    if (index === -1) {
-        // Add interest
-        formData.interests.push(interestKey);
-         element.classList.add('selected', 'border-rose-500', 'bg-rose-50');
-         element.classList.remove('border-gray-200');
+    if (currentStep === totalSteps) {
+        // Auto-submit and show celebration
+        showStep(currentStep);
+        triggerCelebration();
+        submitForm();
     } else {
-        // Remove interest
-        formData.interests.splice(index, 1);
-         element.classList.remove('selected', 'border-rose-500', 'bg-rose-50');
-         element.classList.add('border-gray-200');
+        showStep(currentStep);
     }
-     // console.log("Selected Interests:", formData.interests); // Debugging
 }
 
+function prevStep() {
+    if (currentStep <= 1) return;
+    currentStep--;
+    showStep(currentStep);
+}
+
+
+// ── Inline Validation ────────────────────────────
+function showError(id, inputId) {
+    const err = document.getElementById(id);
+    if (err) err.classList.remove('hidden');
+    if (inputId) {
+        const input = document.getElementById(inputId);
+        if (input) input.classList.add('input-error');
+    }
+}
+
+function hideError(id, inputId) {
+    const err = document.getElementById(id);
+    if (err) err.classList.add('hidden');
+    if (inputId) {
+        const input = document.getElementById(inputId);
+        if (input) input.classList.remove('input-error');
+    }
+}
+
+function validateStep(step) {
+    let valid = true;
+
+    if (step === 1) {
+        const name = document.getElementById('firstName').value.trim();
+        const uname = document.getElementById('username').value.trim();
+
+  if (!name) {
+            showError('nameError', 'firstName');
+            valid = false;
+        } else {
+            hideError('nameError', 'firstName');
+        }
+
+        if (!uname) {
+            showError('usernameError', 'username');
+            valid = false;
+        } else {
+            hideError('usernameError', 'username');
+        }
+    }
+
+    if (step === 2) {
+        if (!formData.gender) {
+            showError('genderError');
+            valid = false;
+        }
+
+        const ageVal = parseInt(document.getElementById('userAge').value, 10);
+        if (!ageVal || ageVal < 10 || ageVal > 100) {
+            showError('ageError', 'userAge');
+            valid = false;
+        } else {
+            hideError('ageError', 'userAge');
+        }
+
+        if (!formData.avatarSeed) {
+            showError('avatarError');
+            valid = false;
+        }
+    }
+
+    if (step === 3) {
+        if (formData.interests.length === 0) {
+            showError('interestError');
+            valid = false;
+        }
+    }
+
+    return valid;
+}
+
+
+// ── Update Form Data ─────────────────────────────
+function updateFormData() {
+    if (currentStep === 1) {
+        formData.firstName = document.getElementById('firstName').value.trim();
+        formData.username = document.getElementById('username').value.trim();
+    }
+    if (currentStep === 2) {
+        formData.age = parseInt(document.getElementById('userAge').value, 10);
+    }
+    // Step 3: interests are already tracked via toggleInterest
+}
+
+
+// ── Celebration ──────────────────────────────────
+function triggerCelebration() {
+    // Set avatar
+    const img = document.getElementById('celebrationAvatar');
+    if (img && formData.avatarSeed) {
+        img.src = `https://api.dicebear.com/7.x/adventurer/svg?seed=${formData.avatarSeed}&backgroundColor=${formData.avatarBg}`;
+    }
+
+    // Set name
+    const nameEl = document.getElementById('celebrationName');
+    if (nameEl) nameEl.textContent = `Welcome, ${formData.firstName}! 👋`;
+
+    // Set interests
+    const intEl = document.getElementById('celebrationInterests');
+    if (intEl) {
+        intEl.innerHTML = formData.interests.map(key => {
+            const interest = interestData[key];
+            const name = interest?.[selectedLanguage] || interest?.en || key;
+            return `<span class="interest-pill selected text-xs">${name}</span>`;
+        }).join('');
+    }
+
+    // Match count (mock)
+    const matchEl = document.getElementById('celebrationMatch');
+    if (matchEl) {
+        const count = Math.floor(Math.random() * 40) + 15;
+        setTimeout(() => {
+            const msgs = {
+                en: `${count} people share your interests!`,
+                uz: `${count} kishi sizning qiziqishlaringizga mos!`,
+                ru: `${count} человек разделяют ваши интересы!`
+            };
+            matchEl.textContent = msgs[selectedLanguage] || msgs.en;
+        }, 1200);
+    }
+
+    // Confetti
+    spawnConfetti();
+}
+
+function spawnConfetti() {
+    const wrapper = document.getElementById('confettiWrapper');
+    if (!wrapper) return;
+    wrapper.innerHTML = '';
+
+    const colors = ['#6C47FF', '#9747FF', '#FFD93D', '#00C97A', '#FF5C5C', '#b6e3f4'];
+    for (let i = 0; i < 40; i++) {
+        const p = document.createElement('div');
+        p.className = 'confetti-particle';
+        p.style.left = `${Math.random() * 100}%`;
+        p.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+        p.style.animationDelay = `${Math.random() * 1.5}s`;
+        p.style.animationDuration = `${1.5 + Math.random() * 1.5}s`;
+        p.style.width = `${5 + Math.random() * 6}px`;
+        p.style.height = `${5 + Math.random() * 6}px`;
+        wrapper.appendChild(p);
+    }
+}
+
+
+// ── Submit ───────────────────────────────────────
 async function submitForm() {
-  // Prepare the data for API submission
-  // Calculate age from birthDate
-  const age = calculateAge(formData.birthDate);
-  
-  // Map gender to match GenderEnum values ('male' or 'female')
-  const genderMapping = {
-      'male': 'male',
-      'female': 'female'
-      // Add other mappings if your form has more gender options
-  };
-  
-  // Get institution name
-  const institutionName = formData.institution === 'other' ? 
-      formData.otherInstitution : 
-      institutionSelect.querySelector(`option[value="${formData.institution}"]`)?.textContent || formData.institution;
-  
-  // Format interests as comma-separated string if needed by API
-  const interestsString = formData.interests.join(', ');
-  
-  // Create API-compatible user object
-  const apiFormData = {
-      first_name: formData.firstName,
-      last_name: formData.lastName || null,
-      age: age,
-      gender: genderMapping[formData.gender] || formData.gender,
-      interests: interestsString,
-      institution: institutionName || null,
-      initdata: tg.initData,
-      lang: formData.language,
-      bio: formData.aboutMe
-  };
-  
-  try {
-      const response = await fetch(`${backend_url}/auth/sign-up`, {
-          method: 'POST',
-          headers: {
-              'Content-Type': 'application/json'
-          },
-          body: JSON.stringify(apiFormData)
-      });
-      
-      const data = await response.json();
-      
-      if (response.ok) {
-          console.log('Form submitted:', apiFormData);
-          document.cookie = `jwt=${data.token}; path=/;`;
-          const successMessage = translations[selectedLanguage]?.profile_created || 'Profile created successfully!';
-          alert(successMessage);
+    const genderMapping = { male: 'male', female: 'female' };
+    const interestsString = formData.interests.join(', ');
 
-          window.location.href = 'home.html';
-      } else {
-          if (response.status === 409) {
-              const conflictMessage = translations[selectedLanguage]?.user_exists || 'Error: User already exists';
-              alert(conflictMessage);
-          } else {
-              const errorMessage = translations[selectedLanguage]?.submission_error || 'Error:';
-              alert(`${errorMessage} ${data.message || 'Something went wrong'}`);
-          }
-      }
-  } catch (error) {
-      console.error('Error submitting form:', error);
-      const failureMessage = translations[selectedLanguage]?.profile_creation_failed || 'Failed to create profile. Please try again.';
-      alert(failureMessage);
-  }
+    const apiFormData = {
+        first_name: formData.firstName,
+        last_name: null,
+        username: formData.username,
+        avatar: formData.avatarSeed + ',' + formData.avatarBg,
+        age: formData.age,
+        gender: genderMapping[formData.gender] || formData.gender,
+        interests: interestsString,
+        institution: null,
+        initdata: tg.initData,
+        lang: formData.language,
+        bio: null
+    };
+
+    // Static mode: simulate success
+    document.cookie = `jwt=dummy_token; path=/;`;
+
+    // Wire up the lobby button
+    const lobbyBtn = document.getElementById('enterLobbyBtn');
+    if (lobbyBtn) {
+        lobbyBtn.onclick = () => { window.location.href = 'home.html'; };
+    }
 }
 
+
+// ── Real-time Inline Validation (blur) ───────────
 document.addEventListener('DOMContentLoaded', () => {
     showStep(1);
+    applyTranslation();
 
-    const defaultLangElement = document.querySelector('.language-option[onclick*="selectLanguage(\'en\')"]');
-     if (defaultLangElement) {
-         selectLanguage('en', defaultLangElement);
-     } else {
-         selectedLanguage = 'en';
-         formData.language = 'en';
-         applyTranslation();
-     }
-    updateProgressBar();
+    // Auto-select English lang button
+    const enBtn = document.querySelector('.lang-btn:last-child');
+    if (enBtn) enBtn.classList.add('selected');
+
+    // Blur validation for name
+    const nameInput = document.getElementById('firstName');
+    if (nameInput) {
+        nameInput.addEventListener('blur', () => {
+            if (!nameInput.value.trim()) showError('nameError', 'firstName');
+            else hideError('nameError', 'firstName');
+        });
+        nameInput.addEventListener('input', () => hideError('nameError', 'firstName'));
+}
+
+    // Blur validation for username
+    const unameInput = document.getElementById('username');
+    if (unameInput) {
+        unameInput.addEventListener('blur', () => {
+            if (!unameInput.value.trim()) showError('usernameError', 'username');
+            else hideError('usernameError', 'username');
+        });
+        unameInput.addEventListener('input', () => hideError('usernameError', 'username'));
+    }
+
+    // Blur validation for age
+    const ageInput = document.getElementById('userAge');
+    if (ageInput) {
+        ageInput.addEventListener('blur', () => {
+            const v = parseInt(ageInput.value, 10);
+            if (!v || v < 10 || v > 100) showError('ageError', 'userAge');
+            else hideError('ageError', 'userAge');
+        });
+        ageInput.addEventListener('input', () => hideError('ageError', 'userAge'));
+    }
 });

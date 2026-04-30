@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Like-Minded — Voice Groups</title>
+    <meta name="description" content="Join live voice rooms on topics you love. Languages, tech, music, and more." />
+    <link rel="stylesheet" href="css/design-tokens.css" />
+    <link rel="stylesheet" href="css/components.css" />
+    <link rel="stylesheet" href="css/groups.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+</head>
+
+<body>
+    <div class="app-frame">
+        <header class="groups-header">
+            <h1 class="text-h2">Voice Groups</h1>
+            <button class="btn-icon-sm" id="createGroupBtn"><i class="fas fa-plus"></i></button>
+        </header>
+
+        <!-- Search + Trending -->
+        <div class="groups-search-area">
+            <div class="search-input-wrap">
+                <i class="fas fa-search search-icon"></i>
+                <input type="text" class="search-input" placeholder="Search rooms or topics…" id="groupSearch" />
+            </div>
+            <div class="trending-chips" id="trendingChips">
+                <button class="chip chip-sm chip-selected"><i class="fas fa-fire chip-icon" style="color:#FF7B54"></i>
+                    All</button>
+                <button class="chip chip-sm" data-cat="languages">🌍 Languages</button>
+                <button class="chip chip-sm" data-cat="tech">💻 Tech</button>
+                <button class="chip chip-sm" data-cat="music">🎵 Music</button>
+                <button class="chip chip-sm" data-cat="philosophy">🧠 Philosophy</button>
+                <button class="chip chip-sm" data-cat="travel">✈️ Travel</button>
+                <button class="chip chip-sm" data-cat="gaming">🎮 Gaming</button>
+            </div>
+        </div>
+
+        <div class="scroll-area" style="padding:0 var(--space-4) var(--space-6)">
+            <div id="groupList"></div>
+        </div>
+
+        <!-- Bottom Nav -->
+        <nav class="tab-bar">
+            <button class="tab-item" data-tab="lobby"><i class="fas fa-home"></i><span>Lobby</span></button>
+            <button class="tab-item active" data-tab="groups"><i
+                    class="fas fa-headphones"></i><span>Groups</span></button>
+            <button class="tab-item" data-tab="ranking"><i class="fas fa-trophy"></i><span>Rating</span></button>
+            <button class="tab-item" data-tab="contacts"><i
+                    class="fas fa-address-book"></i><span>Contacts</span></button>
+            <button class="tab-item" data-tab="profile"><i class="far fa-user"></i><span>Profile</span></button>
+        </nav>
+    </div>
+
+    <!-- Create Group Sheet -->
+    <div class="sheet-overlay" id="createOverlay"></div>
+    <div class="sheet" id="createSheet">
+        <div class="sheet-handle"></div>
+        <div style="padding:0 var(--space-5) var(--space-4)">
+            <h2 class="text-h2">Start Voice Room</h2>
+        </div>
+        <div class="sheet-body" style="padding:0 var(--space-5)">
+            <div class="filter-group">
+                <label class="section-label">Room Title</label>
+                <input type="text" class="input" placeholder="e.g. Let's talk about tech!" />
+            </div>
+            <div class="filter-group">
+                <label class="section-label">Topic</label>
+                <div class="filter-chips">
+                    <button class="chip chip-sm chip-selected">Language Learning</button>
+                    <button class="chip chip-sm">Casual Chat</button>
+                    <button class="chip chip-sm">Technology</button>
+                    <button class="chip chip-sm">Entertainment</button>
+                    <button class="chip chip-sm">Philosophy</button>
+                    <button class="chip chip-sm">Music</button>
+                </div>
+            </div>
+            <div class="filter-group">
+                <label class="section-label">Visibility</label>
+                <div class="gender-toggle" style="max-width:200px">
+                    <button class="gender-btn active">Public</button>
+                    <button class="gender-btn">Private</button>
+                </div>
+            </div>
+        </div>
+        <div class="sheet-footer">
+            <button class="btn btn-primary btn-block" id="goLiveBtn"><i class="fas fa-tower-broadcast"></i> Go
+                Live</button>
+        </div>
+    </div>
+
+    <script src="js/groups.js"></script>
+</body>
+
+</html>

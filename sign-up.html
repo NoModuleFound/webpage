@@ -1,278 +1,207 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Daily Manfaat - Connecting Passionate Minds</title>
-    <!-- Font Awesome CDN -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-    <!-- Tailwind CSS CDN -->
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <title>Like-Minded — Join</title>
+    <link rel="stylesheet" href="css/design-tokens.css" />
+    <link rel="stylesheet" href="css/components.css" />
+    <link rel="stylesheet" href="css/sign-up.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://telegram.org/js/telegram-web-app.js?57"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
     <link rel="stylesheet" href="css/sign-up.css">
 </head>
-<body class="min-h-screen flex items-center justify-center p-4">
-    <div class="w-full max-w-md bg-white rounded-2xl shadow-xl overflow-hidden relative" id="formContainer">
-        <!-- Progress Bar -->
-        <div class="h-1 bg-gray-200">
-            <div id="progressBar" class="progress-bar bg-rose-500" style="width: 0%"></div>
+<body class="bg-[#F5F5FA] h-[100dvh] overflow-hidden">
+    <div class="app-frame mx-auto relative h-full flex flex-col bg-white overflow-hidden shadow-2xl md:rounded-[44px] border border-[#EBEBF0]" id="formContainer">
+
+        <!-- ─── HEADER ─── -->
+        <header class="pt-5 pb-4 px-5 bg-gradient-to-br from-[#6C47FF] to-[#9747FF] text-white relative z-10 shrink-0">
+            <div class="flex items-center justify-between mb-3">
+                <h1 class="text-lg font-bold tracking-[-0.3px]">Daily Manfaat ✨</h1>
+                <span class="text-white/60 text-xs font-semibold" id="headerStepLabel">Step 1 of 4</span>
+            </div>
+            <!-- Step Dots -->
+            <div class="flex items-center gap-2" id="stepDotsContainer">
+                <div class="step-dot active" data-step="1"></div>
+                <div class="step-dot" data-step="2"></div>
+                <div class="step-dot" data-step="3"></div>
+                <div class="step-dot" data-step="4"></div>
         </div>
+        </header>
 
-        <!-- Registration Form Container -->
-        <div>
-             <!-- Step 1: Welcome & Language -->
-            <div id="step1" class="slide p-6">
-                <div class="text-center mb-8">
-                    <h1 class="text-3xl font-bold text-gray-800 mb-2" data-translate="welcome_title">Welcome to <span class="text-rose-500">Daily Manfaat</span></h1>
-                    <p class="text-gray-500" data-translate="welcome_subtitle">Connecting passionate minds through shared interests</p>
-                </div>
+        <!-- ─── FORM SCROLL AREA ─── -->
+        <div class="flex-1 overflow-y-auto relative">
 
-                <div class="mb-8">
-                    <p class="text-gray-600 text-center mb-6" data-translate="language_prompt">Let's get started by selecting your preferred language</p>
+            <!-- ════════ STEP 1: Hey! Let's get you started ════════ -->
+            <div id="step1" class="slide p-6 active">
+                <div class="mb-5">
+                    <h2 class="text-2xl font-extrabold text-[#1A1A2E] mb-1 tracking-[-0.3px]" data-translate="step1_title">Hey! Let's get you started 🎉</h2>
+                    <p class="text-[#8E8E9A] text-sm" data-translate="step1_subtitle">Takes 60 seconds. No spam, ever.</p>
+                    </div>
 
-                    <div class="space-y-3">
-                        <div class="language-option p-4 border-2 border-gray-200 rounded-xl flex items-center cursor-pointer" onclick="selectLanguage('uz', this)">
-                            <div class="w-8 h-8 rounded-full bg-rose-100 flex items-center justify-center mr-3">
-                                <span class="text-rose-500 font-semibold">UZ</span>
-                            </div>
-                            <span class="font-medium" data-translate="uzbek">Uzbek</span>
-                        </div>
-                        <div class="language-option p-4 border-2 border-gray-200 rounded-xl flex items-center cursor-pointer" onclick="selectLanguage('ru', this)">
-                            <div class="w-8 h-8 rounded-full bg-rose-100 flex items-center justify-center mr-3">
-                                <span class="text-rose-500 font-semibold">RU</span>
-                            </div>
-                            <span class="font-medium" data-translate="russian">Russian</span>
-                        </div>
-                        <div class="language-option p-4 border-2 border-gray-200 rounded-xl flex items-center cursor-pointer" onclick="selectLanguage('en', this)">
-                            <div class="w-8 h-8 rounded-full bg-rose-100 flex items-center justify-center mr-3">
-                                <span class="text-rose-500 font-semibold">EN</span>
-                            </div>
-                            <span class="font-medium" data-translate="english">English</span>
-                        </div>
+                <!-- Language -->
+                <div class="mb-5">
+                    <label class="block text-xs font-bold text-[#8E8E9A] uppercase tracking-widest mb-2" data-translate="language_label">Language</label>
+                    <div class="flex gap-2">
+                        <button type="button" class="lang-btn flex-1 py-3 rounded-xl border-2 border-[#EBEBF0] font-semibold text-sm text-[#1A1A2E] transition-all hover:border-[#6C47FF] active:scale-[0.96]" onclick="selectLanguage('uz', this)">🇺🇿 O'zbek</button>
+                        <button type="button" class="lang-btn flex-1 py-3 rounded-xl border-2 border-[#EBEBF0] font-semibold text-sm text-[#1A1A2E] transition-all hover:border-[#6C47FF] active:scale-[0.96]" onclick="selectLanguage('ru', this)">🇷🇺 Русский</button>
+                        <button type="button" class="lang-btn flex-1 py-3 rounded-xl border-2 border-[#6C47FF] bg-[#EDE8FF] font-semibold text-sm text-[#6C47FF] transition-all active:scale-[0.96]" onclick="selectLanguage('en', this)">🇬🇧 English</button>
                     </div>
                 </div>
 
-                <button onclick="nextStep()" class="w-full py-3 bg-rose-500 text-white rounded-xl font-medium hover:bg-rose-600 transition">
-                    <span data-translate="continue">Continue</span>
-                    <i class="fas fa-arrow-right ml-2"></i>
+                <!-- Name -->
+                <div class="mb-4">
+                    <label for="firstName" class="block text-xs font-bold text-[#8E8E9A] uppercase tracking-widest mb-2" data-translate="name_label">Your name</label>
+                    <input type="text" id="firstName" autocomplete="given-name"
+                        class="w-full px-4 py-3.5 border-2 border-[#EBEBF0] rounded-xl text-[#1A1A2E] font-medium focus:ring-0 focus:border-[#6C47FF] transition-colors outline-none"
+                        data-translate-placeholder="name_placeholder" placeholder="What should we call you?">
+                    <p class="inline-error hidden mt-1.5" id="nameError" data-translate="name_error">What should we call you?</p>
+            </div>
+
+                <!-- Username -->
+                <div class="mb-5">
+                    <label for="username" class="block text-xs font-bold text-[#8E8E9A] uppercase tracking-widest mb-2" data-translate="username_label">Username</label>
+                    <div class="relative">
+                        <span class="absolute inset-y-0 left-0 pl-4 flex items-center text-[#8E8E9A] font-semibold text-sm">@</span>
+                        <input type="text" id="username" autocomplete="username"
+                            class="w-full pl-9 pr-4 py-3.5 border-2 border-[#EBEBF0] rounded-xl text-[#1A1A2E] font-medium focus:ring-0 focus:border-[#6C47FF] transition-colors outline-none"
+                            data-translate-placeholder="username_placeholder" placeholder="choose_a_username">
+                    </div>
+                    <p class="inline-error hidden mt-1.5" id="usernameError" data-translate="username_error">Pick a username — it's how people find you</p>
+                </div>
+
+                <!-- Trust Signal -->
+                <p class="text-center text-[11px] text-[#8E8E9A] mb-5 flex items-center justify-center gap-1">
+                    <i class="fas fa-lock text-[#6C47FF]"></i>
+                    <span data-translate="trust_name">Your real name is never shown publicly</span>
+                </p>
+
+                <!-- CTA -->
+                <button type="button" onclick="nextStep()"
+                    class="cta-btn w-full py-4 bg-gradient-to-r from-[#00C97A] to-[#00A865] text-white rounded-2xl font-bold text-[15px] shadow-lg shadow-[#00C97A]/30 hover:-translate-y-[2px] active:scale-[0.94] transition-all flex items-center justify-center gap-2">
+                    <span data-translate="cta_step1">Find Your People</span>
+                    <i class="fas fa-arrow-right"></i>
                 </button>
             </div>
 
-            <!-- Step 2: Core Identity -->
+            <!-- ════════ STEP 2: Who are you? ════════ -->
             <div id="step2" class="slide p-6">
-                <div class="mb-6">
-                    <h2 class="text-2xl font-bold text-gray-800 mb-1" data-translate="identity_title">Tell us about yourself</h2>
-                    <p class="text-gray-500" data-translate="identity_subtitle">This helps us personalize your experience</p>
+                <div class="mb-5">
+                    <h2 class="text-2xl font-extrabold text-[#1A1A2E] mb-1 tracking-[-0.3px]" data-translate="step2_title">Who are you? 👤</h2>
+                    <p class="text-[#8E8E9A] text-sm" data-translate="step2_subtitle">This helps us match you with the right people</p>
                 </div>
 
-                <div class="space-y-4 mb-8">
-                    <div>
-                        <label for="firstName" class="block text-sm font-medium text-gray-700 mb-1" data-translate="first_name">First Name *</label>
-                        <input type="text" id="firstName" class="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-rose-500 focus:border-rose-500 transition" data-translate-placeholder="first_name_placeholder" placeholder="Your first name">
+                <!-- Gender -->
+                <div class="mb-5">
+                    <label class="block text-xs font-bold text-[#8E8E9A] uppercase tracking-widest mb-2" data-translate="gender_label">Gender</label>
+                    <div class="grid grid-cols-2 gap-3">
+                        <button type="button" class="gender-btn p-4 border-2 border-[#EBEBF0] rounded-2xl text-center cursor-pointer transition-all hover:border-[#6C47FF] active:scale-[0.96]" onclick="selectGender('male', this)">
+                            <div class="text-3xl mb-1">👨</div>
+                            <p class="font-semibold text-sm text-[#1A1A2E]" data-translate="male">Male</p>
+                        </button>
+                        <button type="button" class="gender-btn p-4 border-2 border-[#EBEBF0] rounded-2xl text-center cursor-pointer transition-all hover:border-[#6C47FF] active:scale-[0.96]" onclick="selectGender('female', this)">
+                            <div class="text-3xl mb-1">👩</div>
+                            <p class="font-semibold text-sm text-[#1A1A2E]" data-translate="female">Female</p>
+                        </button>
+                    </div>
+                    <p class="inline-error hidden mt-1.5" id="genderError" data-translate="gender_error">Tap one to continue</p>
+                        </div>
+
+                <!-- Age -->
+                <div class="mb-5">
+                    <label for="userAge" class="block text-xs font-bold text-[#8E8E9A] uppercase tracking-widest mb-2" data-translate="age_label">Your age</label>
+                    <input type="number" id="userAge" min="10" max="100" inputmode="numeric" autocomplete="off"
+                        class="w-full px-4 py-3.5 border-2 border-[#EBEBF0] rounded-xl text-[#1A1A2E] font-medium focus:ring-0 focus:border-[#6C47FF] transition-colors outline-none tabular-nums"
+                        data-translate-placeholder="age_placeholder" placeholder="e.g. 19">
+                    <p class="inline-error hidden mt-1.5" id="ageError" data-translate="age_error">How old are you? We need this to keep things safe</p>
                     </div>
 
-                    <div>
-                        <label for="lastName" class="block text-sm font-medium text-gray-700 mb-1" data-translate="last_name">Last Name (Optional)</label>
-                        <input type="text" id="lastName" class="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-rose-500 focus:border-rose-500 transition" data-translate-placeholder="last_name_placeholder" placeholder="Your last name">
+                <!-- Avatar -->
+                <div class="mb-5">
+                    <label class="block text-xs font-bold text-[#8E8E9A] uppercase tracking-widest mb-2" data-translate="avatar_label">Pick your look</label>
+                    <div class="grid grid-cols-6 gap-2.5" id="avatarContainer">
+                        <!-- Populated by JS -->
                     </div>
+                    <p class="inline-error hidden mt-1.5" id="avatarError" data-translate="avatar_error">Pick your look! You can always change it later</p>
                 </div>
 
-                <div class="flex justify-between">
-                    <button onclick="prevStep()" class="px-6 py-3 text-gray-600 font-medium rounded-xl hover:bg-gray-100 transition">
-                        <i class="fas fa-arrow-left mr-2"></i>
-                        <span data-translate="back">Back</span>
+                <!-- Nav -->
+                <div class="flex gap-3">
+                    <button type="button" onclick="prevStep()"
+                        class="w-12 h-12 rounded-xl border-2 border-[#EBEBF0] flex items-center justify-center text-[#8E8E9A] hover:bg-[#F5F5FA] active:scale-[0.94] transition-all shrink-0">
+                        <i class="fas fa-arrow-left"></i>
                     </button>
-                    <button onclick="nextStep()" class="px-6 py-3 bg-rose-500 text-white rounded-xl font-medium hover:bg-rose-600 transition">
-                        <span data-translate="continue">Continue</span>
-                        <i class="fas fa-arrow-right ml-2"></i>
+                    <button type="button" onclick="nextStep()"
+                        class="cta-btn flex-1 py-3.5 bg-gradient-to-r from-[#00C97A] to-[#00A865] text-white rounded-xl font-bold text-[15px] shadow-lg shadow-[#00C97A]/30 hover:-translate-y-[2px] active:scale-[0.94] transition-all flex items-center justify-center gap-2">
+                        <span data-translate="cta_step2">Almost there!</span>
+                        <i class="fas fa-arrow-right"></i>
                     </button>
                 </div>
             </div>
 
-            <!-- Step 3: Basic Demographics -->
+            <!-- ════════ STEP 3: What are you into? ════════ -->
             <div id="step3" class="slide p-6">
-                <div class="mb-6">
-                    <h2 class="text-2xl font-bold text-gray-800 mb-1" data-translate="demographics_title">Basic information</h2>
-                    <p class="text-gray-500" data-translate="demographics_subtitle">This helps us find relevant communities for you</p>
-                </div>
-
-                <div class="space-y-4 mb-8">
-                    <div>
-                        <label for="birthDate" class="block text-sm font-medium text-gray-700 mb-1" data-translate="birth_date">Date of Birth *</label>
-                        <input type="date" id="birthDate" class="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-rose-500 focus:border-rose-500 transition date-input">
+                <div class="mb-5">
+                    <h2 class="text-2xl font-extrabold text-[#1A1A2E] mb-1 tracking-[-0.3px]" data-translate="step3_title">What are you into? 🎯</h2>
+                    <p class="text-[#8E8E9A] text-sm" data-translate="step3_subtitle">Pick 1–5 that excite you. This is how we find your people.</p>
                     </div>
 
-                    <div>
-                        <label class="block text-sm font-medium text-gray-700 mb-2" data-translate="gender">Gender *</label>
-                        <div class="grid grid-cols-2 gap-3">
-                            <div class="gender-option p-4 border-2 border-gray-200 rounded-xl text-center cursor-pointer" onclick="selectGender('male', this)">
-                                <i class="fas fa-mars text-blue-500 text-xl mb-2"></i>
-                                <p class="font-medium" data-translate="male">Male</p>
-                            </div>
-                            <div class="gender-option p-4 border-2 border-gray-200 rounded-xl text-center cursor-pointer" onclick="selectGender('female', this)">
-                                <i class="fas fa-venus text-pink-500 text-xl mb-2"></i>
-                                <p class="font-medium" data-translate="female">Female</p>
-                            </div>
-                        </div>
+                <div class="mb-5">
+                    <div class="flex flex-wrap gap-2" id="interestsContainer">
+                        <!-- Populated by JS -->
                     </div>
+                    <p class="inline-error hidden mt-2" id="interestError" data-translate="interest_error">Pick at least 1 — this is how we find your people</p>
                 </div>
 
-                <div class="flex justify-between">
-                    <button onclick="prevStep()" class="px-6 py-3 text-gray-600 font-medium rounded-xl hover:bg-gray-100 transition">
-                        <i class="fas fa-arrow-left mr-2"></i>
-                        <span data-translate="back">Back</span>
+                <!-- Nav -->
+                <div class="flex gap-3">
+                    <button type="button" onclick="prevStep()"
+                        class="w-12 h-12 rounded-xl border-2 border-[#EBEBF0] flex items-center justify-center text-[#8E8E9A] hover:bg-[#F5F5FA] active:scale-[0.94] transition-all shrink-0">
+                        <i class="fas fa-arrow-left"></i>
                     </button>
-                    <button onclick="nextStep()" class="px-6 py-3 bg-rose-500 text-white rounded-xl font-medium hover:bg-rose-600 transition">
-                        <span data-translate="continue">Continue</span>
-                        <i class="fas fa-arrow-right ml-2"></i>
+                    <button type="button" onclick="nextStep()"
+                        class="cta-btn flex-1 py-3.5 bg-gradient-to-r from-[#00C97A] to-[#00A865] text-white rounded-xl font-bold text-[15px] shadow-lg shadow-[#00C97A]/30 hover:-translate-y-[2px] active:scale-[0.94] transition-all flex items-center justify-center gap-2">
+                        <span data-translate="cta_step3">Show Me My Matches!</span>
+                        <i class="fas fa-rocket"></i>
                     </button>
                 </div>
             </div>
 
-            <!-- Step 4: Affiliation/Context -->
+            <!-- ════════ STEP 4: You're in! (Celebration) ════════ -->
             <div id="step4" class="slide p-6">
-                <div class="mb-6">
-                    <h2 class="text-2xl font-bold text-gray-800 mb-1" data-translate="institution_title">Your institution</h2>
-                    <p class="text-gray-500" data-translate="institution_subtitle">Connect with peers from your school or organization</p>
-                </div>
+                <div class="celebration-container text-center pt-6">
+                    <!-- Confetti particles -->
+                    <div class="confetti-wrapper" id="confettiWrapper"></div>
 
-                <div class="mb-8">
-                    <label for="institution" class="block text-sm font-medium text-gray-700 mb-1" data-translate="institution">Institution *</label>
-                    <div class="relative">
-                        <select id="institution" class="w-full px-4 py-3 border border-gray-300 rounded-xl appearance-none focus:ring-2 focus:ring-rose-500 focus:border-rose-500 transition">
-                            <option value="" disabled selected data-translate="select_institution">Select your institution</option>
-                            <option value="webster">Webster University</option>
-                            <option value="westminster">Westminster International University</option>
-                            <option value="tmc">Tashkent Medical College</option>
-                            <option value="bmu">Bukhara Medical University</option>
-                            <option value="cau">Central Asia University</option>
-                            <option value="other" data-translate="other">Other</option>
-                        </select>
-                        <div class="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none">
-                            <i class="fas fa-chevron-down text-gray-400"></i>
+                    <div class="celebration-avatar mx-auto mb-4">
+                        <div class="w-28 h-28 mx-auto rounded-full border-4 border-[#6C47FF] overflow-hidden shadow-xl shadow-[#6C47FF]/20 bg-white" id="celebrationAvatarRing">
+                            <img id="celebrationAvatar" src="" alt="You" class="w-full h-full object-cover">
                         </div>
                     </div>
 
-                    <div id="otherInstitutionContainer" class="mt-3 hidden">
-                        <input type="text" id="otherInstitution" class="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-rose-500 focus:border-rose-500 transition" data-translate-placeholder="other_institution" placeholder="Enter your institution name">
-                    </div>
-                </div>
+                    <h2 class="text-3xl font-black text-[#1A1A2E] mb-2 tracking-[-0.5px] celebration-text" data-translate="step4_title">You're in! 🎊</h2>
+                    <p class="text-[#8E8E9A] text-sm mb-2 font-medium" id="celebrationName"></p>
+                    <p class="text-[#6C47FF] text-sm font-bold mb-6" id="celebrationMatch" data-translate="match_count">Finding people who share your interests...</p>
 
-                <div class="flex justify-between">
-                    <button onclick="prevStep()" class="px-6 py-3 text-gray-600 font-medium rounded-xl hover:bg-gray-100 transition">
-                        <i class="fas fa-arrow-left mr-2"></i>
-                        <span data-translate="back">Back</span>
-                    </button>
-                    <button onclick="nextStep()" class="px-6 py-3 bg-rose-500 text-white rounded-xl font-medium hover:bg-rose-600 transition">
-                        <span data-translate="continue">Continue</span>
-                        <i class="fas fa-arrow-right ml-2"></i>
-                    </button>
+                    <!-- Mini Preview Card -->
+                    <div class="bg-[#F5F5FA] rounded-2xl p-4 mb-8 text-left border border-[#EBEBF0]">
+                        <div class="flex flex-wrap gap-1.5" id="celebrationInterests">
+                            <!-- Filled by JS -->
                 </div>
-            </div>
-
-            <!-- Step 5: Interests/Purpose -->
-            <div id="step5" class="slide p-6">
-                <div class="mb-6">
-                    <h2 class="text-2xl font-bold text-gray-800 mb-1" data-translate="interests_title">Your interests</h2>
-                    <p class="text-gray-500" data-translate="interests_subtitle">Select topics you're passionate about to connect with like-minded people</p>
-                </div>
-
-                <div class="mb-8">
-                    <!-- КЛАСС ИЗМЕНЕН ЗДЕСЬ -->
-                    <div class="grid grid-cols-3 gap-3" id="interestsContainer">
-                        <!-- Interests will be populated by JavaScript -->
-                    </div>
-                    <p id="interestError" class="text-rose-500 text-sm mt-2 hidden" data-translate="interest_error">Please select at least one interest</p>
-                </div>
-
-                <div class="flex justify-between">
-                    <button onclick="prevStep()" class="px-6 py-3 text-gray-600 font-medium rounded-xl hover:bg-gray-100 transition">
-                        <i class="fas fa-arrow-left mr-2"></i>
-                        <span data-translate="back">Back</span>
-                    </button>
-                    <button onclick="nextStep()" class="px-6 py-3 bg-rose-500 text-white rounded-xl font-medium hover:bg-rose-600 transition">
-                        <span data-translate="continue">Continue</span>
-                        <i class="fas fa-arrow-right ml-2"></i>
-                    </button>
-                </div>
-            </div>
-
-            <!-- Step 6: Personal Touch -->
-            <div id="step6" class="slide p-6">
-                <div class="mb-6">
-                    <h2 class="text-2xl font-bold text-gray-800 mb-1" data-translate="personal_title">Personal touch</h2>
-                    <p class="text-gray-500" data-translate="personal_subtitle">Tell others about yourself (optional)</p>
-                </div>
-
-                <div class="mb-8">
-                    <label for="aboutMe" class="block text-sm font-medium text-gray-700 mb-1" data-translate="about_me">About Me (Optional)</label>
-                    <textarea id="aboutMe" rows="4" class="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-rose-500 focus:border-rose-500 transition" data-translate-placeholder="about_me_placeholder" placeholder="Share something interesting about yourself..."></textarea>
-                    <p class="text-xs text-gray-400 mt-1"><span data-translate="max_chars">Max 300 characters</span></p>
-                </div>
-
-                <div class="flex justify-between">
-                    <button onclick="prevStep()" class="px-6 py-3 text-gray-600 font-medium rounded-xl hover:bg-gray-100 transition">
-                        <i class="fas fa-arrow-left mr-2"></i>
-                        <span data-translate="back">Back</span>
-                    </button>
-                    <button onclick="nextStep()" class="px-6 py-3 bg-rose-500 text-white rounded-xl font-medium hover:bg-rose-600 transition">
-                        <span data-translate="continue">Continue</span>
-                        <i class="fas fa-arrow-right ml-2"></i>
-                    </button>
-                </div>
-            </div>
-
-            <!-- Final Step: Confirmation -->
-            <div id="step7" class="slide p-6">
-                <div class="text-center mb-8">
-                    <div class="w-20 h-20 bg-rose-100 rounded-full flex items-center justify-center mx-auto mb-6">
-                        <i class="fas fa-check text-rose-500 text-3xl"></i>
-                    </div>
-                    <h2 class="text-2xl font-bold text-gray-800 mb-2" data-translate="complete_title">You're all set!</h2>
-                    <p class="text-gray-500" data-translate="complete_subtitle">Review your information below before creating your profile</p>
-                </div>
-
-                <div class="bg-gray-50 rounded-xl p-4 mb-8">
-                    <div class="flex items-center mb-4">
-                        <div class="w-12 h-12 bg-rose-100 rounded-full flex items-center justify-center mr-3">
-                            <i class="fas fa-user text-rose-500"></i>
-                        </div>
-                        <div>
-                            <h3 class="font-medium" id="reviewName"></h3>
-                            <p class="text-sm text-gray-500" id="reviewAgeGender"></p>
-                        </div>
                     </div>
 
-                    <div class="space-y-3">
-                        <div class="flex items-center">
-                            <i class="fas fa-university text-gray-400 mr-3 w-5"></i>
-                            <p class="text-sm" id="reviewInstitution"></p>
-                        </div>
-
-                        <div class="flex items-start">
-                            <i class="fas fa-heart text-gray-400 mr-3 mt-1 w-5"></i>
-                            <p class="text-sm" id="reviewInterests"></p>
-                        </div>
-
-                        <div id="reviewAboutContainer" class="flex items-start hidden">
-                            <i class="fas fa-info-circle text-gray-400 mr-3 mt-1 w-5"></i>
-                            <p class="text-sm" id="reviewAbout"></p>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="space-y-3">
-                    <button onclick="submitForm()" class="w-full py-3 bg-rose-500 text-white rounded-xl font-medium hover:bg-rose-600 transition">
-                        <span data-translate="create_profile">Create My Profile</span>
-                    </button>
-                    <button onclick="prevStep()" class="w-full py-3 text-gray-600 font-medium rounded-xl hover:bg-gray-100 transition">
-                        <span data-translate="edit_profile">Back to Edit</span>
+                    <!-- CTA -->
+                    <button type="button" id="enterLobbyBtn"
+                        class="cta-btn w-full py-4 bg-gradient-to-r from-[#6C47FF] to-[#9747FF] text-white rounded-2xl font-bold text-[15px] shadow-lg shadow-[#6C47FF]/30 hover:-translate-y-[2px] active:scale-[0.94] transition-all flex items-center justify-center gap-2">
+                        <span data-translate="cta_step4">Enter the Lobby</span>
+                        <i class="fas fa-door-open"></i>
                     </button>
                 </div>
             </div>
         </div>
     </div>
-    <noscript>Please enable JavaScript</noscript>
     <script src="js/sign-up.js"></script>
 </body>
 </html>

@@ -1,0 +1,189 @@
+/* =============================================
+   Like-Minded — Ranking (ranking.css)
+   ============================================= */
+
+.rank-header {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: var(--space-4) var(--space-5);
+  flex-shrink: 0; background: var(--color-surface);
+}
+
+.btn-icon-sm {
+  width: 36px; height: 36px; border-radius: var(--radius-md);
+  background: var(--color-surface-raised);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 14px; color: var(--color-text-muted);
+  transition: all var(--duration-fast);
+}
+
+/* ── Scope Toggle ──────────────────────────── */
+.rank-scope {
+  display: flex; gap: var(--space-2);
+  padding: var(--space-2) var(--space-4);
+  background: var(--color-surface);
+  flex-shrink: 0;
+}
+
+.scope-btn {
+  flex: 1; display: flex; align-items: center; justify-content: center; gap: 6px;
+  padding: 8px; border-radius: var(--radius-md);
+  font-size: 12px; font-weight: 700;
+  color: var(--color-text-muted);
+  background: var(--color-surface-raised);
+  transition: all var(--duration-fast);
+}
+.scope-btn.active {
+  background: var(--color-primary); color: white;
+  box-shadow: var(--shadow-glow-primary);
+}
+.scope-btn i { font-size: 11px; }
+
+/* ── Your Place Card ─────────────────────────── */
+.your-place-card {
+  background: linear-gradient(135deg, var(--color-primary), #8463FF, #9B6FFF);
+  border-radius: var(--radius-xl);
+  padding: var(--space-4);
+  margin-bottom: var(--space-5);
+  position: relative;
+  overflow: hidden;
+  box-shadow: var(--shadow-glow-primary);
+}
+
+.your-place-inner {
+  display: flex; align-items: center; gap: var(--space-4);
+  position: relative; z-index: 1;
+}
+
+.your-place-rank {
+  display: flex; flex-direction: column; align-items: center; gap: 4px;
+}
+
+.your-place-label {
+  font-size: 11px; font-weight: 600; color: rgba(255,255,255,.8);
+}
+
+.your-place-stats {
+  flex: 1;
+  display: flex; gap: var(--space-5);
+}
+
+.your-stat-num {
+  font-family: var(--font-display);
+  font-size: 24px; font-weight: 800; color: white;
+  font-variant-numeric: tabular-nums;
+}
+
+.your-stat-unit {
+  font-size: 13px; font-weight: 500; color: rgba(255,255,255,.7); margin-left: 4px;
+}
+
+.your-place-hint {
+  font-size: 12px; color: rgba(255,255,255,.75); margin-top: var(--space-2);
+  position: relative; z-index: 1;
+}
+
+.your-place-orb {
+  position: absolute; width: 160px; height: 160px;
+  right: -50px; top: -60px;
+  background: radial-gradient(circle, rgba(255,255,255,.18), transparent 70%);
+  border-radius: 50%; pointer-events: none;
+}
+
+/* ── Podium ──────────────────────────────────── */
+.podium {
+  display: flex; align-items: flex-end; justify-content: center;
+  gap: var(--space-3); margin-bottom: var(--space-5);
+  padding: 0 var(--space-2);
+}
+
+.podium-card {
+  flex: 1; text-align: center;
+  background: var(--color-surface); border-radius: var(--radius-xl);
+  padding: var(--space-4) var(--space-2) var(--space-3);
+  border: 1px solid var(--color-border);
+  box-shadow: var(--shadow-sm);
+  animation: slideUp var(--duration-slow) var(--ease-spring) both;
+  position: relative;
+}
+
+.podium-card.gold {
+  border-color: #FFD93D; box-shadow: 0 4px 20px rgba(255,217,61,.2);
+  padding-top: var(--space-5);
+}
+
+.podium-medal {
+  font-size: 24px; margin-bottom: var(--space-2);
+}
+
+.podium-avatar {
+  width: 56px; height: 56px; border-radius: 50%;
+  margin: 0 auto var(--space-2);
+  border: 3px solid var(--color-border);
+  object-fit: cover; background: var(--color-surface-raised);
+}
+
+.podium-card.gold .podium-avatar { width: 64px; height: 64px; border-color: #FFD93D; }
+
+.podium-name {
+  font-family: var(--font-display); font-weight: 700;
+  font-size: 13px; color: var(--color-text);
+  white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+}
+
+.podium-score {
+  font-size: 11px; font-weight: 600; color: var(--color-text-muted); margin-top: 2px;
+}
+
+/* ── Rank List ───────────────────────────────── */
+.rank-list-wrap {
+  background: var(--color-surface); border-radius: var(--radius-xl);
+  padding: var(--space-1) var(--space-4);
+  box-shadow: var(--shadow-sm);
+}
+
+.rank-row {
+  display: flex; align-items: center; gap: var(--space-3);
+  padding: var(--space-3) 0;
+  border-bottom: 1px solid var(--color-border);
+  cursor: pointer;
+  transition: background var(--duration-fast);
+  animation: slideUp var(--duration-slow) var(--ease-spring) both;
+}
+.rank-row:last-child { border-bottom: none; }
+.rank-row:hover { background: rgba(var(--color-primary-rgb), .03); }
+
+.rank-num {
+  width: 28px; text-align: center;
+  font-family: var(--font-display); font-weight: 800;
+  font-size: 14px; color: var(--color-text-muted);
+  font-variant-numeric: tabular-nums;
+}
+
+.rank-avatar-wrap {
+  position: relative; width: 44px; height: 44px; flex-shrink: 0;
+}
+
+.rank-avatar {
+  width: 100%; height: 100%; border-radius: 50%;
+  object-fit: cover; background: var(--color-surface-raised);
+}
+
+.rank-info { flex: 1; min-width: 0; }
+.rank-name { font-weight: 700; font-size: 14px; color: var(--color-text); }
+.rank-meta { font-size: 12px; color: var(--color-text-muted); margin-top: 1px; }
+
+.rank-score {
+  text-align: right; flex-shrink: 0; min-width: 50px;
+}
+.rank-score-num {
+  font-family: var(--font-display); font-weight: 800;
+  font-size: 18px; color: var(--color-text);
+  font-variant-numeric: tabular-nums;
+}
+.rank-score-unit { font-size: 11px; color: var(--color-text-muted); }
+
+.rank-row:nth-child(1) { animation-delay: .04s; }
+.rank-row:nth-child(2) { animation-delay: .08s; }
+.rank-row:nth-child(3) { animation-delay: .12s; }
+.rank-row:nth-child(4) { animation-delay: .16s; }
+.rank-row:nth-child(5) { animation-delay: .20s; }

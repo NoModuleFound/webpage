@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Like-Minded — Contacts</title>
+    <link rel="stylesheet" href="css/design-tokens.css" />
+    <link rel="stylesheet" href="css/components.css" />
+    <link rel="stylesheet" href="css/contacts.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+</head>
+<body>
+    <div class="app-frame">
+        <header class="contacts-header">
+            <h1 class="text-h2">Contacts</h1>
+        </header>
+
+        <!-- Search -->
+        <div class="contacts-search">
+            <div class="search-input-wrap">
+                <i class="fas fa-search search-icon"></i>
+                <input type="text" class="search-input" placeholder="Search contacts…" id="contactSearch" />
+            </div>
+        </div>
+
+        <!-- Tabs -->
+        <div class="tabs-header" id="contactTabs">
+            <button class="tab-btn active" data-tab="history">History</button>
+            <button class="tab-btn" data-tab="friends">Friends</button>
+            <button class="tab-btn" data-tab="blocked">Blocked</button>
+            <span class="tab-indicator" id="tabIndicator" style="left:0;width:33.33%"></span>
+        </div>
+
+        <div class="scroll-area" style="padding:var(--space-3) var(--space-4) var(--space-6)">
+            <div id="contactPane"></div>
+            <div class="empty-state" id="emptyState" style="display:none">
+                <div class="empty-icon"><i class="fas fa-inbox"></i></div>
+                <p class="empty-title">Nothing here yet</p>
+                <p class="empty-sub">Start talking to fill this list!</p>
+            </div>
+        </div>
+
+        <nav class="tab-bar">
+            <button class="tab-item" data-tab="lobby"><i class="fas fa-home"></i><span>Lobby</span></button>
+            <button class="tab-item" data-tab="groups"><i class="fas fa-headphones"></i><span>Groups</span></button>
+            <button class="tab-item" data-tab="ranking"><i class="fas fa-trophy"></i><span>Rating</span></button>
+            <button class="tab-item active" data-tab="contacts"><i class="fas fa-address-book"></i><span>Contacts</span></button>
+            <button class="tab-item" data-tab="profile"><i class="far fa-user"></i><span>Profile</span></button>
+        </nav>
+    </div>
+    <script src="js/contacts.js"></script>
+</body>
+</html>

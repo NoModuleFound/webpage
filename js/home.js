@@ -1,643 +1,637 @@
-// --- Cookie Functions ---
+/* =============================================
+   Like-Minded — Lobby (home.js)
+   State Machine: idle → searching → match_found → post_call → idle
+   ============================================= */
 
+'use strict';
 
-const tg = window.Telegram.WebApp;
-console.log(tg.initData)
-function setCookie(name, value, days) {
-  let expires = "";
-  if (days) {
-      const date = new Date();
-      date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
-      expires = "; expires=" + date.toUTCString();
-  }
-  document.cookie = name + "=" + (value || "") + expires + "; path=/";
-}
+// ══════════════════════════════════════════════════
+// DATA
+// ══════════════════════════════════════════════════
 
-function getCookie(name) {
-  const nameEQ = name + "=";
-  const ca = document.cookie.split(';');
-  for(let i = 0; i < ca.length; i++) {
-      let c = ca[i];
-      while (c.charAt(0) === ' ') c = c.substring(1, c.length);
-      if (c.indexOf(nameEQ) === 0) return c.substring(nameEQ.length, c.length);
-  }
-  return null;
-}
-
-const translations = {
-  en: {
-      "app.title": "Daily Manfaat",
-      "nav.home": "Home",
-      "nav.chat": "Notifications",
-      "nav.profile": "Profile",
-      "home.discoverTitle": "Discover",
-      "home.discoverSubtitle": "Find like-minded people",
-      "home.section.bio": "Bio",
-      "home.section.interests": "Interests",
-      "home.tag.photography": "Photography",
-      "home.tag.hiking": "Hiking",
-      "home.tag.coffee": "Coffee",
-      "home.tag.travel": "Travel",
-      "home.tag.reading": "Reading",
-      "chat.title": "Chat",
-      "chat.comingSoon": "Coming Soon...",
-      "chat.underDevelopment": "Our messaging feature is under development.",
-      "profile.title": "Profile Settings",
-      "profile.editProfile": "✏️ Edit Profile",
-      "profile.nameLabel": "Name",
-      "profile.bioLabel": "Bio",
-      "profile.filterPreferences": "🔍 Filter Preferences",
-      "profile.gender.preference": "Choose gender preference", // Added this translation key
-      "profile.gender.male": "Male", // Added this translation key
-      "profile.gender.female": "Female", // Added this translation key
-      "profile.gender.both": "Both", // Added this translation key
-      "choice.yes": "Yes", // Added this translation key
-      "choice.no": "No", // Added this translation key
-      "profile.filterInterests": "🔍 Filter By Interests", // Added this translation key
-      "profile.ageRangeLabel": "Age Range",
-      "profile.rangeSeparator": "to",
-      "profile.distanceLabel": "Distance (km)",
-      "profile.languageLabel": "🌐 Language",
-      "profile.language.choose": "Choose your language", // Added this translation key
-       // Language names displayed in options (in their own language)
-      "lang.en": "English",
-      "lang.ru": "Русский",
-      "lang.uz": "O'zbek",
-      "notifications.title": "Notifications",
-      "notifications.subtitle": "People who liked your profile",
-      "notifications.empty.title": "No Notifications Yet",
-      "notifications.empty.message": "When someone likes your profile, you'll see them here.",
-      "edit.profile.title": "Edit Profile", // Added for modal
-      "first_name": "First Name *", // Added for modal
-      "last_name": "Last Name", // Added for modal
-      "birth_date": "Date of Birth *", // Added for modal
-      "gender": "Gender *", // Added for modal
-      "male": "Male", // Added for modal gender options
-      "female": "Female", // Added for modal gender options
-      "other_gender": "Other / Prefer not to say", // Added for modal gender options
-      "institution": "Institution *", // Added for modal
-      "select_institution": "Select your institution", // Added for modal
-      "other": "Other", // Added for modal institution
-      "other_institution": "Enter your institution name", // Added for modal
-      "interests_title": "Interests", // Added for modal
-      "about_me": "About Me", // Added for modal
-      "cancel": "Cancel", // Added for modal
-      "save": "Save Changes" // Added for modal
-  },
-  ru: {
-       "app.title": "Приложение для знакомств",
-      "nav.home": "Главная",
-      "nav.chat": "Уведомления",
-      "nav.profile": "Профиль",
-      "home.discoverTitle": "Найти",
-      "home.discoverSubtitle": "Найдите единомышленников",
-      "home.section.bio": "О себе",
-      "home.section.interests": "Интересы",
-      "home.tag.photography": "Фотография",
-      "home.tag.hiking": "Походы",
-      "home.tag.coffee": "Кофе",
-      "home.tag.travel": "Путешествия",
-      "home.tag.reading": "Чтение",
-      "chat.title": "Чат",
-      "chat.comingSoon": "Скоро...",
-      "chat.underDevelopment": "Наш мессенджер находится в разработке.",
-      "profile.title": "Настройки профиля",
-      "profile.editProfile": "✏️ Редактировать профиль",
-      "profile.nameLabel": "Имя",
-      "profile.bioLabel": "О себе",
-      "profile.filterPreferences": "🔍 Настройки фильтра",
-      "profile.gender.preference": "Выберите предпочтительный пол",
-      "profile.gender.male": "Мужской",
-      "profile.gender.female": "Женский",
-      "profile.gender.both": "Оба",
-      "choice.yes": "Да",
-      "choice.no": "Нет",
-      "profile.filterInterests": "🔍 Фильтровать по интересам",
-      "profile.ageRangeLabel": "Возрастной диапазон",
-      "profile.rangeSeparator": "до",
-      "profile.distanceLabel": "Расстояние (км)",
-      "profile.languageLabel": "🌐 Язык",
-       "profile.language.choose": "Выберите ваш язык",
-       "lang.en": "English",
-      "lang.ru": "Русский",
-      "lang.uz": "Узбекский",
-      "notifications.title": "Уведомления",
-      "notifications.subtitle": "Люди, которым понравился ваш профиль",
-      "notifications.empty.title": "Пока нет уведомлений",
-      "notifications.empty.message": "Когда кому-то понравится ваш профиль, вы увидите их здесь.",
-      "edit.profile.title": "Редактировать профиль",
-      "first_name": "Имя *",
-      "last_name": "Фамилия",
-      "birth_date": "Дата рождения *",
-      "gender": "Пол *",
-      "male": "Мужской",
-      "female": "Женский",
-      "other_gender": "Другой / Не указано",
-      "institution": "Учреждение *",
-      "select_institution": "Выберите учреждение",
-      "other": "Другое",
-      "other_institution": "Введите название учреждения",
-      "interests_title": "Интересы",
-      "about_me": "О себе",
-      "cancel": "Отмена",
-      "save": "Сохранить изменения"
-  },
-  uz: {
-       "app.title": "Tanishuv ilovasi",
-      "nav.home": "Bosh sahifa",
-      "nav.chat": "Bildirishnomalar",
-      "nav.profile": "Profil",
-      "home.discoverTitle": "Kashf etish",
-      "home.discoverSubtitle": "Fikrlar yaqin odamlarni toping",
-      "home.section.bio": "Men haqimda",
-      "home.section.interests": "Qiziqishlar",
-      "home.tag.photography": "Fotografiya",
-      "home.tag.hiking": "Sayohat",
-      "home.tag.coffee": "Qahva",
-      "home.tag.travel": "Sayohat",
-      "home.tag.reading": "O'qish",
-      "chat.title": "Chat",
-      "chat.comingSoon": "Tez orada...",
-      "chat.underDevelopment": "Bizning xabar almashish funksiyasi ishlab chiqilmoqda.",
-      "profile.title": "Profil sozlamalari",
-      "profile.editProfile": "✏️ Profilni tahrirlash",
-      "profile.nameLabel": "Ism",
-      "profile.bioLabel": "Men haqimda",
-      "profile.filterPreferences": "🔍 Filtrlash sozlamalari",
-      "profile.gender.preference": "Jinsni tanlang",
-      "profile.gender.male": "Erkak",
-      "profile.gender.female": "Ayol",
-      "profile.gender.both": "Ikkalasi",
-      "choice.yes": "Ha",
-      "choice.no": "Yo'q",
-      "profile.filterInterests": "🔍 Qiziqishlar bo'yicha filtrlash",
-      "profile.ageRangeLabel": "Yosh oralig'i",
-      "profile.rangeSeparator": "gacha",
-      "profile.distanceLabel": "Masofa (km)",
-      "profile.languageLabel": "🌐 Til",
-       "profile.language.choose": "Tilni tanlang",
-       "lang.en": "English",
-      "lang.ru": "Ruscha",
-      "lang.uz": "O'zbekcha",
-      "notifications.title": "Bildirishnomalar",
-      "notifications.subtitle": "Sizning profilingizga yoqqan odamlar",
-      "notifications.empty.title": "Hozircha bildirishnoma yo'q",
-      "notifications.empty.message": "Kimdir sizning profilingizga yoqsa, siz ularni bu yerda ko'rasiz.",
-      "edit.profile.title": "Profilni tahrirlash",
-      "first_name": "Ism *",
-      "last_name": "Familiya",
-      "birth_date": "Tug'ilgan sana *",
-      "gender": "Jins *",
-      "male": "Erkak",
-      "female": "Ayol",
-      "other_gender": "Boshqa / Aytishni xohlamayman",
-      "institution": "Muassasa *",
-      "select_institution": "Muassasangizni tanlang",
-      "other": "Boshqa",
-      "other_institution": "Muassasa nomini kiriting",
-      "interests_title": "Qiziqishlar",
-      "about_me": "Men haqimda",
-      "cancel": "Bekor qilish",
-      "save": "Saqlash"
-  }
-};
-
-
-
-const interestData = {
-  business_management: {
-      en: "Business Management",
-      uz: "Biznes boshqaruvi",
-      ru: "Управление бизнесом",
-      icon: "fa-briefcase"
-  },
-  finance_and_accounting: {
-      en: "Finance & Accounting",
-      uz: "Moliya va buxgalteriya",
-      ru: "Финансы и бухгалтерский учёт",
-      icon: "fa-coins"
-  },
-  tourism_and_hospitality: {
-      en: "Tourism & Hospitality",
-      uz: "Turizm va mehmonxona ishi",
-      ru: "Туризм и гостиничное дело",
-      icon: "fa-plane"
-  },
-  data_science: {
-      en: "Data Science & Analytics",
-      uz: "Ma'lumotlar fanlari va analitikasi",
-      ru: "Наука о данных и аналитика",
-      icon: "fa-chart-pie"
-  },
-   cybersecurity: {
-      en: "Cybersecurity",
-      uz: "Kiberxavfsizlik",
-      ru: "Кибербезопасность",
-      icon: "fa-lock"
-  },
-  motion_design: {
-      en: "Motion Design",
-      uz: "Harakat dizayni",
-      ru: "Моушн‑дизайн",
-      icon: "fa-film"
-  },
-  three_d_modeling: {
-      en: "3D Modeling",
-      uz: "3D modellashtirish",
-      ru: "3D‑моделирование",
-      icon: "fa-cube"
-  },
-  animation_and_visualization: {
-      en: "Animation & Visualization",
-      uz: "Animatsiya va vizualizatsiya",
-      ru: "Анимация и визуализация",
-      icon: "fa-paint-brush"
-  },
-  marketing_and_promotion: {
-      en: "Marketing & Promotion",
-      uz: "Marketing va targ‘ibot",
-      ru: "Маркетинг и продвижение",
-      icon: "fa-bullhorn"
-  },
-  human_resources_and_project_management: {
-      en: "Human Resources & Project Management",
-      uz: "Inson resurslari va loyiha boshqaruvi",
-      ru: "Управление персоналом и проектами",
-      icon: "fa-users"
-  },
-  economics_and_banking: {
-      en: "Economics & Banking",
-      uz: "Iqtisodiyot va bank ishlari",
-      ru: "Экономика и банковское дело",
-      icon: "fa-chart-line"
-  },
-  international_relations: {
-      en: "International Relations",
-      uz: "Xalqaro munosabatlar",
-      ru: "Международные отношения",
-      icon: "fa-globe"
-  },
-  psychology: {
-      en: "Psychology",
-      uz: "Psixologiya",
-      ru: "Психология",
-      icon: "fa-brain"
-  },
-  law_and_jurisprudence: {
-      en: "Law / Jurisprudence",
-      uz: "Huquqshunoslik",
-      ru: "Право / Юриспруденция",
-      icon: "fa-gavel"
-  },
-   education: {
-      en: "Education / Pedagogy",
-      uz: "Ta'lim / Pedagogika",
-      ru: "Образование / Педагогика",
-      icon: "fa-chalkboard-teacher"
-  },
-  journalism_and_mass_comm: {
-      en: "Journalism & Mass Communication",
-      uz: "Jurnalistika va ommaviy kommunikatsiya",
-      ru: "Журналистика и массовые коммуникации",
-      icon: "fa-newspaper"
-  },
-  architecture: {
-      en: "Architecture",
-      uz: "Arxitektura",
-      ru: "Архитектура",
-      icon: "fa-building"
-  },
-  construction: {
-      en: "Construction",
-      uz: "Qurilish",
-      ru: "Строительство",
-      icon: "fa-hard-hat"
-  },
-  engineering: {
-      en: "Engineering",
-      uz: "Muhandislik",
-      ru: "Инженерия",
-      icon: "fa-cogs"
-  },
-  languages_and_philology: {
-      en: "Languages & Philology",
-      uz: "Tillashunoslik va filologiya",
-      ru: "Языки и филология",
-      icon: "fa-language"
-  },
-  transportation_and_logistics: {
-      en: "Transportation & Logistics",
-      uz: "Transport va logistika",
-      ru: "Транспорт и логистика",
-      icon: "fa-truck"
-  },
-  medicine: {
-      en: "Medicine / Healthcare",
-      uz: "Tibbiyot / Sog'liqni saqlash",
-      ru: "Медицина / Здравоохранение",
-      icon: "fa-medkit"
-  },
-   pharmacy: {
-      en: "Pharmacy",
-      uz: "Farmatsevtika",
-      ru: "Фармацевтика",
-      icon: "fa-pills"
-   },
-   dentistry: {
-      en: "Dentistry",
-      uz: "Stomatologiya",
-      ru: "Стоматология",
-      icon: "fa-tooth"
-   },
-   pediatrics: {
-      en: "Pediatrics",
-      uz: "Pediatriya",
-      ru: "Педиатрия",
-      icon: "fa-child"
-   },
-   sports_and_fitness: {
-      en: "Sports & Fitness",
-      uz: "Sport va fitnes",
-      ru: "Спорт и фитнес",
-      icon: "fa-dumbbell"
-   },
-   art_and_design: {
-      en: "Art & Design",
-      uz: "San'at va dizayn",
-      ru: "Искусство и дизайн",
-      icon: "fa-palette"
-   }
-};
-
-function translatePage(lang) {
-  document.querySelectorAll('[data-translate]').forEach(element => {
-      const key = element.getAttribute('data-translate');
-      if (translations[lang] && translations[lang][key]) {
-           // Handle specific cases if needed (e.g., input placeholders)
-           if (element.tagName === 'INPUT' && element.type === 'text') {
-               // Not typically translating value attribute in this method,
-               // but if needed, you could set element.placeholder or similar
-           } else {
-               element.textContent = translations[lang][key];
-           }
-      }
-  });
-
-  // Update language options text (display language name in target language)
-   document.querySelectorAll('.choice-btn[data-lang]').forEach(option => {
-      const langCode = option.getAttribute('data-lang');
-       if (translations[lang] && translations[lang]['lang.' + langCode]) {
-           option.textContent = translations[lang]['lang.' + langCode];
-       } else {
-           // Fallback to English name if translation is missing for the language option text itself
-            option.textContent = translations['en']['lang.' + langCode];
-       }
-  });
-
-  // Update the html lang attribute
-  document.documentElement.lang = lang;
-  // Update the document title separately as it's often not inside the body
-   if (translations[lang] && translations[lang]['app.title']) {
-       document.title = translations[lang]['app.title'];
-   } else {
-        document.title = translations['en']['app.title']; // Fallback
-   }
-
-}
-
-// --- Sample User Data ---
-const userProfiles = [
-  {
-      name: "Alisher Navoi",
-      institution: "Central Asia University",
-      age: 25,
-      gender: "Male",
-      bio: "Passionate about technology, literature, and hiking. Always looking to learn and connect with interesting people.",
-      interests: ["Technology", "Reading", "Hiking", "Coffee"]
-  },
-  {
-      name: "Zulfiya Isroilova",
-      institution: "Webster University",
-      age: 22,
-      gender: "Female",
-      bio: "Creative soul, loves photography and exploring new places. Coffee is a must!",
-      interests: ["Photography", "Travel", "Coffee", "Art & Design"]
-  },
-  {
-      name: "Bobur Mirzo",
-      institution: "Westminster International University",
-      age: 28,
-      gender: "Male",
-      bio: "Entrepreneur and history enthusiast. Enjoy discussions on economics and international relations.",
-      interests: ["Business Management", "Economics & Banking", "International Relations"]
-  }
+const INTERESTS_DATA = [
+  { id: 'languages', name: 'Languages', icon: 'fa-globe', cat: 'lang' },
+  { id: 'music', name: 'Music', icon: 'fa-music', cat: 'music' },
+  { id: 'movies', name: 'Movies & TV', icon: 'fa-film', cat: 'movies' },
+  { id: 'gaming', name: 'Gaming', icon: 'fa-gamepad', cat: 'gaming' },
+  { id: 'tech', name: 'Tech', icon: 'fa-laptop-code', cat: 'tech' },
+  { id: 'travel', name: 'Travel', icon: 'fa-plane', cat: 'travel' },
+  { id: 'sports', name: 'Sports', icon: 'fa-futbol', cat: 'sports' },
+  { id: 'cooking', name: 'Cooking', icon: 'fa-utensils', cat: 'food' },
+  { id: 'art', name: 'Art & Design', icon: 'fa-palette', cat: 'art' },
+  { id: 'books', name: 'Books', icon: 'fa-book', cat: 'books' },
+  { id: 'psychology', name: 'Psychology', icon: 'fa-brain', cat: 'mind' },
+  { id: 'science', name: 'Science', icon: 'fa-flask', cat: 'science' },
 ];
 
-let currentProfileIndex = 0; // Keep track of the currently displayed profile
+const READY_USERS = [
+  { name: 'Dilshoda', seed: 'Dilshoda', bg: 'b6e3f4', flag: '🇺🇿', rating: 99, gender: 'Female', online: true },
+  { name: 'Lawyer ⚖️', seed: 'Lawyer', bg: 'e0e0e0', flag: '', rating: 99, gender: 'Male', online: true, noAvatar: true },
+  { name: 'Maria', seed: 'Maria', bg: 'ffd5dc', flag: '🇬🇧', rating: 98, gender: 'Female', online: true },
+  { name: 'James', seed: 'James', bg: 'c0aede', flag: '🇺🇸', rating: 96, gender: 'Male', online: true },
+];
 
-// --- Display Profile Function ---
-function displayProfile(profile) {
-  const userNameElement = document.getElementById('userName');
-  const userInstitutionElement = document.getElementById('userInstitution');
-  const userAgeElement = document.getElementById('userAge');
-  const userGenderElement = document.getElementById('userGender');
-  const userBioElement = document.getElementById('userBio');
-  const userInterestsContainer = document.getElementById('userInterestsContainer');
-  const profileCard = document.querySelector('.profile-card');
+const INVITE_USERS = [
+  { name: 'Amin', seed: 'Amin', bg: 'b6e3f4', flag: '🇦🇿', rating: 97, gender: 'Male', language: 'English', talks: 855 },
+  { name: 'Lena', seed: 'Lena', bg: 'ffd5dc', flag: '🇩🇪', rating: 95, gender: 'Female', language: 'German', talks: 412 },
+  { name: 'Carlos', seed: 'Carlos', bg: 'c0aede', flag: '🇪🇸', rating: 93, gender: 'Male', language: 'Spanish', talks: 230 },
+];
 
-  // Clear previous interests
-  userInterestsContainer.innerHTML = '';
+const MATCH_CANDIDATES = [
+  { name: 'Maria', age: 24, seed: 'Maria', bg: 'ffd5dc', flag: '🇬🇧', rating: 98, interests: ['Music', 'Travel', 'Art'], shared: ['Music', 'Travel'] },
+  { name: 'Aisha', age: 21, seed: 'Aisha', bg: 'c0aede', flag: '🇺🇿', rating: 95, interests: ['Books', 'Psychology', 'Science'], shared: ['Books'] },
+  { name: 'James', age: 25, seed: 'James', bg: 'b6e3f4', flag: '🇺🇸', rating: 92, interests: ['Gaming', 'Tech', 'Sports'], shared: ['Tech', 'Gaming'] },
+  { name: 'Elena', age: 22, seed: 'Elena', bg: 'ffd5dc', flag: '🇷🇺', rating: 97, interests: ['Languages', 'Travel', 'Cooking'], shared: ['Languages'] },
+];
 
-  // Populate elements with profile data
-  userNameElement.textContent = profile.name;
-  userInstitutionElement.textContent = profile.institution;
-  userAgeElement.textContent = profile.age + ' years old'; // Add 'years old' for clarity
-  userGenderElement.textContent = profile.gender;
-  userBioElement.textContent = profile.bio;
+const DISCOVERY_PROFILES = [
+  { name: 'Maria', age: 24, seed: 'Maria', bg: 'ffd5dc', flag: '🇬🇧', rating: 98, language: 'English', bio: 'Language enthusiast who loves art galleries and live concerts 🎶', interests: ['Music', 'Travel', 'Art', 'Languages'] },
+  { name: 'Aisha', age: 21, seed: 'Aisha', bg: 'c0aede', flag: '🇺🇿', rating: 95, language: 'Uzbek', bio: 'Psychology student exploring the world through books 📚', interests: ['Books', 'Psychology', 'Science'] },
+  { name: 'James', age: 25, seed: 'James', bg: 'b6e3f4', flag: '🇺🇸', rating: 92, language: 'English', bio: 'Tech nerd by day, gamer by night. Let\'s talk code!', interests: ['Gaming', 'Tech', 'Sports'] },
+  { name: 'Elena', age: 22, seed: 'Elena', bg: 'ffd5dc', flag: '🇷🇺', rating: 97, language: 'Russian', bio: 'Cooking lover who dreams of traveling the world 🌍', interests: ['Languages', 'Travel', 'Cooking'] },
+  { name: 'Carlos', age: 27, seed: 'Carlos', bg: 'c0aede', flag: '🇪🇸', rating: 93, language: 'Spanish', bio: 'Musician and philosopher. Deep talks welcome 🎸', interests: ['Music', 'Philosophy', 'Art'] },
+  { name: 'Lena', age: 23, seed: 'Lena', bg: 'ffdfbf', flag: '🇩🇪', rating: 96, language: 'German', bio: 'Engineering student who loves hiking and cooking', interests: ['Tech', 'Cooking', 'Travel', 'Sports'] },
+  { name: 'Dilshoda', age: 20, seed: 'Dilshoda', bg: 'b6e3f4', flag: '🇺🇿', rating: 99, language: 'Uzbek', bio: 'Dreamer ✨ Learning English to see the world!', interests: ['Languages', 'Movies', 'Music'] },
+  { name: 'Amin', age: 26, seed: 'Amin', bg: 'b6e3f4', flag: '🇦🇿', rating: 97, language: 'English', bio: 'Software dev. Love discussing tech, AI, and startups 🚀', interests: ['Tech', 'Science', 'Books', 'Gaming'] },
+];
 
-  // Add interests
-  profile.interests.forEach(interest => {
-      const tagSpan = document.createElement('span');
-      tagSpan.classList.add('tag');
-      // Basic tag content - could be enhanced with icons based on interest type
-      tagSpan.innerHTML = `<i class="fas fa-heart"></i> <span>${interest}</span>`; // Using a generic heart icon for now
-      userInterestsContainer.appendChild(tagSpan);
+// ══════════════════════════════════════════════════
+// DOM REFS
+// ══════════════════════════════════════════════════
+
+const findPartnerBtn   = document.getElementById('findPartnerBtn');
+const searchingOverlay = document.getElementById('searchingOverlay');
+const cancelSearchBtn  = document.getElementById('cancelSearchBtn');
+const matchFoundOverlay= document.getElementById('matchFoundOverlay');
+const acceptCallBtn    = document.getElementById('acceptCallBtn');
+const skipMatchBtn     = document.getElementById('skipMatchBtn');
+const refreshBtn       = document.getElementById('refreshBtn');
+const refreshIcon      = document.getElementById('refreshIcon');
+const filterTopBtn     = document.getElementById('filterTopBtn');
+const filterOverlay    = document.getElementById('filterOverlay');
+const filterSheet      = document.getElementById('filterSheet');
+const closeFilterBtn   = document.getElementById('closeFilterBtn');
+const applyFilterBtn   = document.getElementById('applyFilterBtn');
+const readyCardsEl     = document.getElementById('readyCards');
+const inviteListEl     = document.getElementById('inviteList');
+const rateCard         = document.getElementById('rateCard');
+const genderToggle     = document.getElementById('genderToggle');
+const filterInterests  = document.getElementById('filterInterests');
+const countdownCircle  = document.getElementById('countdownCircle');
+const countdownNum     = document.getElementById('countdownNum');
+const radarAvatars     = document.getElementById('radarAvatars');
+const previewOverlay   = document.getElementById('previewOverlay');
+const previewSheet     = document.getElementById('previewSheet');
+const closePreviewBtn  = document.getElementById('closePreviewBtn');
+
+const discoveryOverlay = document.getElementById('discoveryOverlay');
+const discoveryDeck    = document.getElementById('discoveryDeck');
+const closeDiscoveryBtn= document.getElementById('closeDiscoveryBtn');
+const discSkipBtn      = document.getElementById('discSkipBtn');
+const discLikeBtn      = document.getElementById('discLikeBtn');
+const discSuperBtn     = document.getElementById('discSuperBtn');
+
+let activeFilters = [];
+let matchIndex = 0;
+let discProfileIndex = 0;
+let countdownInterval = null;
+
+// ══════════════════════════════════════════════════
+// RENDER
+// ══════════════════════════════════════════════════
+
+function avatarUrl(seed, bg) {
+  return `https://api.dicebear.com/7.x/adventurer/svg?seed=${encodeURIComponent(seed)}&backgroundColor=${bg}`;
+}
+
+function renderReadyCards() {
+  readyCardsEl.innerHTML = '';
+  READY_USERS.forEach(u => {
+    const el = document.createElement('div');
+    el.className = 'partner-card';
+    el.innerHTML = `
+      <div class="avatar-wrap" style="width:64px;height:64px;margin:0 auto var(--space-3)">
+        ${u.noAvatar
+          ? `<div style="width:64px;height:64px;border-radius:50%;background:var(--color-surface-raised);display:flex;align-items:center;justify-content:center"><i class="fas fa-user" style="font-size:24px;color:var(--color-text-muted)"></i></div>`
+          : `<img src="${avatarUrl(u.seed, u.bg)}" class="avatar" style="width:64px;height:64px" alt="${u.name}" />`
+        }
+        ${u.flag ? `<span class="flag-dot">${u.flag}</span>` : ''}
+        <span class="online-dot"></span>
+      </div>
+      <p class="partner-card-name">${u.name}</p>
+      <p class="partner-card-meta">👍 ${u.rating}% · ${u.gender}</p>
+      <button class="talk-btn">Talk now</button>
+    `;
+    el.querySelector('.talk-btn').addEventListener('click', (e) => {
+      e.stopPropagation();
+      showToast('Connecting…');
+      setTimeout(() => window.location.href = 'call.html', 800);
+    });
+    el.addEventListener('click', () => openPreview(u));
+    readyCardsEl.appendChild(el);
   });
-
-   // Add fade-in animation to the new card
-   profileCard.classList.add('is-in');
-   profileCard.addEventListener('animationend', () => {
-       profileCard.classList.remove('is-in');
-   }, { once: true });
 }
 
-// --- Handle Like/Dislike and Profile Cycling ---
-function handleLike() {
-  const profileCard = document.querySelector('.profile-card');
-  // Disable buttons temporarily during animation to prevent rapid clicks
-  document.querySelector('.like-btn').disabled = true;
-  document.querySelector('.dislike-btn').disabled = true;
-
-  profileCard.classList.add('is-out-right'); // Add animation class for like
-
-  profileCard.addEventListener('animationend', () => {
-      // Animation finished, now update profile data and remove animation class
-      profileCard.classList.remove('is-out-right');
-      currentProfileIndex++;
-      if (currentProfileIndex >= userProfiles.length) {
-          currentProfileIndex = 0; // Cycle back to the beginning
-      }
-      displayProfile(userProfiles[currentProfileIndex]);
-
-      // Re-enable buttons after the new profile is displayed
-      document.querySelector('.like-btn').disabled = false;
-      document.querySelector('.dislike-btn').disabled = false;
-
-  }, { once: true }); // Use { once: true } to remove the listener after it runs
+function renderInviteList() {
+  inviteListEl.innerHTML = '';
+  INVITE_USERS.forEach(u => {
+    const el = document.createElement('div');
+    el.className = 'invite-row';
+    el.innerHTML = `
+      <div class="avatar-wrap" style="width:48px;height:48px">
+        <img src="${avatarUrl(u.seed, u.bg)}" class="avatar" style="width:48px;height:48px" alt="${u.name}" />
+        <span class="invite-flag">${u.flag}</span>
+      </div>
+      <div class="invite-info">
+        <p class="invite-name">${u.name}</p>
+        <p class="invite-meta">👍 ${u.rating}% · ${u.gender} · ${u.language} · ${u.talks} talks</p>
+      </div>
+      <button class="invite-call-btn" aria-label="Call ${u.name}">
+        <i class="fas fa-phone"></i>
+      </button>
+    `;
+    el.querySelector('.invite-call-btn').addEventListener('click', (e) => {
+      e.stopPropagation();
+      showToast(`Calling ${u.name}…`);
+      setTimeout(() => window.location.href = 'call.html', 800);
+    });
+    el.addEventListener('click', () => openPreview(u));
+    inviteListEl.appendChild(el);
+  });
 }
 
-function handleDislike() {
-  const profileCard = document.querySelector('.profile-card');
-   // Disable buttons temporarily during animation to prevent rapid clicks
-  document.querySelector('.like-btn').disabled = true;
-  document.querySelector('.dislike-btn').disabled = true;
-
-  profileCard.classList.add('is-out-left'); // Add animation class for dislike
-
-  profileCard.addEventListener('animationend', () => {
-      // Animation finished, now update profile data and remove animation class
-      profileCard.classList.remove('is-out-left');
-      currentProfileIndex++;
-      if (currentProfileIndex >= userProfiles.length) {
-          currentProfileIndex = 0; // Cycle back to the beginning
-      }
-      displayProfile(userProfiles[currentProfileIndex]);
-
-      // Re-enable buttons after the new profile is displayed
-      document.querySelector('.like-btn').disabled = false;
-      document.querySelector('.dislike-btn').disabled = false;
-
-  }, { once: true }); // Use { once: true } to remove the listener after it runs
-}
-
-
-// --- Initial Load & Event Listeners ---
-document.addEventListener('DOMContentLoaded', () => {
-  // Get saved preferences from cookies
-  const savedLang = getCookie('lang') || 'en';
-  const savedGender = getCookie('gender_preference') || 'both';
-  const savedInterestFilter = getCookie('filter_by_interests') || 'no';
-
-
-  // Initialize language, gender, and interest filter buttons with saved preferences
-  document.querySelectorAll('.choice-btn[data-lang]').forEach(btn => {
-       if (btn.getAttribute('data-lang') === savedLang) {
-           btn.classList.add('active');
-       } else {
-           btn.classList.remove('active');
-       }
-   });
-
-   document.querySelectorAll('.choice-btn[data-gender]').forEach(btn => {
-      if (btn.getAttribute('data-gender') === savedGender) {
-          btn.classList.add('active');
+function renderFilterInterests() {
+  if (!filterInterests) return;
+  filterInterests.innerHTML = '';
+  INTERESTS_DATA.forEach(int => {
+    const isSelected = activeFilters.includes(int.id);
+    const el = document.createElement('button');
+    el.className = `chip chip-cat-${int.cat}${isSelected ? ' chip-selected' : ''}`;
+    el.innerHTML = `<i class="fas ${int.icon} chip-icon"></i> ${int.name}`;
+    el.addEventListener('click', () => {
+      if (activeFilters.includes(int.id)) {
+        activeFilters = activeFilters.filter(id => id !== int.id);
       } else {
-          btn.classList.remove('active');
+        activeFilters.push(int.id);
       }
+      renderFilterInterests();
+    });
+    filterInterests.appendChild(el);
+  });
+}
+
+function renderRadarAvatars() {
+  radarAvatars.innerHTML = '';
+  const positions = [
+    { top: '8%', left: '50%' }, { top: '25%', right: '5%' },
+    { bottom: '25%', right: '8%' }, { bottom: '5%', left: '45%' },
+    { bottom: '20%', left: '5%' }, { top: '20%', left: '8%' },
+  ];
+  MATCH_CANDIDATES.concat(READY_USERS.slice(0, 2)).forEach((u, i) => {
+    if (i >= positions.length) return;
+    const img = document.createElement('img');
+    img.src = avatarUrl(u.seed, u.bg || 'c0aede');
+    img.className = 'radar-avatar';
+    img.alt = '';
+    Object.assign(img.style, positions[i]);
+    img.style.animationDelay = `${i * 0.5}s`;
+    radarAvatars.appendChild(img);
+  });
+}
+
+// ══════════════════════════════════════════════════
+// STATE MACHINE
+// ══════════════════════════════════════════════════
+
+function startSearching() {
+  renderRadarAvatars();
+  searchingOverlay.classList.add('active');
+  // Simulate finding a match after 2-4 seconds
+  const delay = 2000 + Math.random() * 2000;
+  setTimeout(() => {
+    if (!searchingOverlay.classList.contains('active')) return;
+    searchingOverlay.classList.remove('active');
+    showMatchFound();
+  }, delay);
+}
+
+function cancelSearching() {
+  searchingOverlay.classList.remove('active');
+}
+
+function showMatchFound() {
+  const match = MATCH_CANDIDATES[matchIndex % MATCH_CANDIDATES.length];
+  matchIndex++;
+
+  document.getElementById('matchAvatar').src = avatarUrl(match.seed, match.bg);
+  document.getElementById('matchName').textContent = `${match.name}, ${match.age}`;
+  document.getElementById('matchFlag').textContent = match.flag;
+  document.getElementById('matchRating').innerHTML = `<i class="fas fa-thumbs-up"></i> ${match.rating}%`;
+
+  const interestsEl = document.getElementById('matchInterests');
+  interestsEl.innerHTML = '';
+  match.interests.forEach(int => {
+    const chip = document.createElement('span');
+    const isShared = match.shared.includes(int);
+    chip.className = `chip chip-sm${isShared ? ' match-interest-shared' : ''}`;
+    chip.textContent = int;
+    interestsEl.appendChild(chip);
   });
 
-   document.querySelectorAll('.choice-btn[data-choice]').forEach(btn => {
-       if (btn.getAttribute('data-choice') === savedInterestFilter) {
-           btn.classList.add('active');
-       } else {
-           btn.classList.remove('active');
-       }
-   });
+  matchFoundOverlay.classList.add('active');
+  startCountdown(8);
+}
+
+function startCountdown(seconds) {
+  let remaining = seconds;
+  const circumference = 2 * Math.PI * 46; // r=46
+  countdownCircle.style.strokeDasharray = circumference;
+  countdownCircle.style.strokeDashoffset = '0';
+  countdownNum.textContent = remaining;
+
+  clearInterval(countdownInterval);
+  countdownInterval = setInterval(() => {
+    remaining--;
+    countdownNum.textContent = remaining;
+    const progress = ((seconds - remaining) / seconds) * circumference;
+    countdownCircle.style.strokeDashoffset = progress;
+
+    if (remaining <= 0) {
+      clearInterval(countdownInterval);
+      skipMatch();
+    }
+  }, 1000);
+}
+
+function skipMatch() {
+  clearInterval(countdownInterval);
+  matchFoundOverlay.classList.remove('active');
+  setTimeout(() => startSearching(), 300);
+}
+
+function acceptCall() {
+  clearInterval(countdownInterval);
+  matchFoundOverlay.classList.remove('active');
+  window.location.href = 'call.html';
+}
+
+function showPostCall() {
+  rateCard.style.display = '';
+  rateCard.scrollIntoView({ behavior: 'smooth', block: 'start' });
+}
+
+// ══════════════════════════════════════════════════
+// FILTER SHEET
+// ══════════════════════════════════════════════════
+
+function openFilter() {
+  filterOverlay.classList.add('open');
+  filterSheet.classList.add('open');
+  renderFilterInterests();
+}
+
+function closeFilter() {
+  filterOverlay.classList.remove('open');
+  filterSheet.classList.remove('open');
+}
+
+// ══════════════════════════════════════════════════
+// PREVIEW SHEET
+// ══════════════════════════════════════════════════
+
+function openPreview(user) {
+  document.getElementById('previewAvatar').src = avatarUrl(user.seed, user.bg || 'c0aede');
+  document.getElementById('previewName').textContent = user.name;
+  document.getElementById('previewAge').textContent = user.age ? `, ${user.age}` : '';
+  document.getElementById('previewUsername').textContent = `@${user.seed?.toLowerCase() || user.name.toLowerCase()}`;
+  document.getElementById('previewLanguage').textContent = user.language || 'English';
+  document.getElementById('previewLocation').textContent = user.flag || '🌍';
+  document.getElementById('previewBio').textContent = user.bio || 'Loves good conversations and meeting new people.';
+
+  const interestsEl = document.getElementById('previewInterests');
+  interestsEl.innerHTML = '';
+  (user.interests || ['Languages', 'Travel']).forEach(int => {
+    const chip = document.createElement('span');
+    chip.className = 'chip chip-sm';
+    chip.textContent = int;
+    interestsEl.appendChild(chip);
+  });
+
+  previewOverlay.classList.add('open');
+  previewSheet.classList.add('open');
+}
+
+function closePreview() {
+  previewOverlay.classList.remove('open');
+  previewSheet.classList.remove('open');
+}
+
+// ══════════════════════════════════════════════════
+// RATE CARD
+// ══════════════════════════════════════════════════
+
+let rateChosen = 0;
+let rateTags = [];
+
+document.getElementById('rateStars')?.addEventListener('click', (e) => {
+  const btn = e.target.closest('.star-btn');
+  if (!btn) return;
+  rateChosen = parseInt(btn.dataset.star);
+  document.querySelectorAll('.star-btn').forEach((s, i) => {
+    s.classList.toggle('active', i < rateChosen);
+  });
+});
+
+document.getElementById('rateTags')?.addEventListener('click', (e) => {
+  const chip = e.target.closest('.chip');
+  if (!chip) return;
+  chip.classList.toggle('chip-selected');
+});
+
+document.getElementById('rateSubmitBtn')?.addEventListener('click', () => {
+  rateCard.style.display = 'none';
+  showToast(rateChosen > 0 ? `Rated ${rateChosen}⭐ — Thanks!` : 'Thanks for the feedback!');
+  setTimeout(() => startSearching(), 500);
+});
+
+document.getElementById('rateSkipBtn')?.addEventListener('click', () => {
+  rateCard.style.display = 'none';
+});
+
+// ══════════════════════════════════════════════════
+// GENDER TOGGLE
+// ══════════════════════════════════════════════════
+
+genderToggle?.addEventListener('click', (e) => {
+  const btn = e.target.closest('.gender-btn');
+  if (!btn) return;
+  genderToggle.querySelectorAll('.gender-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+});
+
+// ══════════════════════════════════════════════════
+// NAVIGATION
+// ══════════════════════════════════════════════════
+
+const NAV_ROUTES = {
+  lobby: 'home.html',
+  groups: 'groups.html',
+  ranking: 'ranking.html',
+  contacts: 'contacts.html',
+  profile: 'profile.html',
+};
+
+document.querySelectorAll('.tab-item').forEach(item => {
+  item.addEventListener('click', () => {
+    const tab = item.dataset.tab;
+    if (tab !== 'lobby' && NAV_ROUTES[tab]) {
+      window.location.href = NAV_ROUTES[tab];
+    }
+  });
+});
+
+// ══════════════════════════════════════════════════
+// EVENT LISTENERS
+// ══════════════════════════════════════════════════
+
+findPartnerBtn.addEventListener('click', startSearching);
+const discoverBtn = document.getElementById('discoverBtn');
+discoverBtn?.addEventListener('click', openDiscovery);
+cancelSearchBtn.addEventListener('click', cancelSearching);
+acceptCallBtn.addEventListener('click', acceptCall);
+skipMatchBtn.addEventListener('click', skipMatch);
+document.getElementById('reportMatchBtn')?.addEventListener('click', () => {
+  showToast('User reported. Thank you.');
+  skipMatch();
+});
+
+filterTopBtn.addEventListener('click', openFilter);
+filterOverlay.addEventListener('click', closeFilter);
+closeFilterBtn.addEventListener('click', closeFilter);
+applyFilterBtn.addEventListener('click', () => {
+  closeFilter();
+  showToast('Filters applied ✓');
+});
+
+closePreviewBtn?.addEventListener('click', closePreview);
+previewOverlay?.addEventListener('click', closePreview);
+
+document.getElementById('previewFollowBtn')?.addEventListener('click', function() {
+  const icon = this.querySelector('i');
+  const text = this.querySelector('span');
+  if (this.classList.contains('followed')) {
+    this.classList.remove('followed');
+    icon.className = 'fas fa-user-plus';
+    text.textContent = 'Add Friend';
+    showToast('Removed from friends');
+  } else {
+    this.classList.add('followed');
+    icon.className = 'fas fa-user-check';
+    text.textContent = 'Friends';
+    showToast('Friend request sent!');
+  }
+});
+
+refreshBtn.addEventListener('click', () => {
+  refreshIcon.classList.add('animate-spin');
+  setTimeout(() => {
+    refreshIcon.classList.remove('animate-spin');
+    showToast('Partners refreshed!');
+  }, 700);
+});
+
+// ══════════════════════════════════════════════════
+// TOAST
+// ══════════════════════════════════════════════════
+
+function showToast(msg) {
+  const existing = document.querySelector('.toast');
+  if (existing) existing.remove();
+
+  const toast = document.createElement('div');
+  toast.className = 'toast';
+  toast.textContent = msg;
+  document.body.appendChild(toast);
+
+  requestAnimationFrame(() => {
+    requestAnimationFrame(() => toast.classList.add('show'));
+  });
+
+  setTimeout(() => {
+    toast.classList.remove('show');
+    setTimeout(() => toast.remove(), 300);
+  }, 2200);
+}
+
+// ══════════════════════════════════════════════════
+// INIT
+// ══════════════════════════════════════════════════
+
+renderReadyCards();
+renderInviteList();
 
 
-  // Initial display of the first profile
-  if (userProfiles.length > 0) {
-      displayProfile(userProfiles[currentProfileIndex]);
+// ══════════════════════════════════════════════════
+// DISCOVERY DECK (Tinder-like swiping)
+// ══════════════════════════════════════════════════
+
+function openDiscovery() {
+  discProfileIndex = 0;
+  renderDiscoveryCards();
+  discoveryOverlay.classList.add('active');
+}
+
+function closeDiscovery() {
+  discoveryOverlay.classList.remove('active');
+}
+
+closeDiscoveryBtn?.addEventListener('click', closeDiscovery);
+document.getElementById('discoveryFilterBtn')?.addEventListener('click', () => {
+  closeDiscovery();
+  setTimeout(openFilter, 200);
+});
+
+function renderDiscoveryCards() {
+  discoveryDeck.innerHTML = '';
+
+  const remaining = DISCOVERY_PROFILES.slice(discProfileIndex);
+  if (remaining.length === 0) {
+    discoveryDeck.innerHTML = `
+      <div class="disc-empty">
+        <i class="fas fa-heart-crack"></i>
+        <p>No more profiles</p>
+        <button class="btn btn-primary btn-sm" id="discResetBtn">Start Over</button>
+      </div>`;
+    document.getElementById('discResetBtn')?.addEventListener('click', () => {
+      discProfileIndex = 0;
+      renderDiscoveryCards();
+    });
+    return;
   }
 
-  // Rest of your initialization code
-  translatePage(savedLang); // Ensure page is translated based on initial active language
-
-  // Navigation listener
-  document.querySelectorAll('.nav-item').forEach(item => {
-      item.addEventListener('click', function() {
-          // Remove active class from all screens and nav items
-          document.querySelectorAll('.screen').forEach(screen => {
-              screen.classList.remove('active');
-          });
-          document.querySelectorAll('.nav-item').forEach(navItem => {
-              navItem.classList.remove('active');
-          });
-
-          // Add active class to clicked nav item
-          this.classList.add('active');
-
-          // Show corresponding screen
-          const screenId = this.getAttribute('data-screen');
-          const targetScreen = document.getElementById(screenId);
-          if (targetScreen) {
-              targetScreen.classList.add('active');
-          } else {
-              // Handle case where screenId is invalid (like the old 'explore')
-              console.warn(`Screen with ID "${screenId}" not found.`);
-               // Optionally, navigate back to home or show an error screen
-               document.getElementById('home-screen').classList.add('active');
-               document.querySelector('.nav-item[data-screen="home-screen"]').classList.add('active');
-          }
-      });
+  // Render up to 3 stacked cards (top card first in DOM)
+  const visible = remaining.slice(0, 3);
+  visible.forEach((profile, i) => {
+    const card = createDiscCard(profile, i);
+    discoveryDeck.appendChild(card);
   });
 
-  // Language preference selection listener in Profile screen
-   document.querySelectorAll('.choice-btn[data-lang]').forEach(btn => {
-       btn.addEventListener('click', function() {
-           // Remove active class from all language buttons
-           document.querySelectorAll('.choice-btn[data-lang]').forEach(b => b.classList.remove('active'));
-           // Add active class to clicked button
-           this.classList.add('active');
+  // Attach swipe gestures to the top card
+  attachSwipeGesture(discoveryDeck.firstElementChild);
+}
 
-           const selectedLang = this.getAttribute('data-lang');
-           translatePage(selectedLang); // Translate immediately
-           setCookie('lang', selectedLang, 30); // Save preference for 30 days
-       });
-   });
+function createDiscCard(profile, stackIndex) {
+  const card = document.createElement('div');
+  card.className = 'disc-card';
 
-  // Gender preference selection listener in Profile screen
-   document.querySelectorAll('.choice-btn[data-gender]').forEach(btn => {
-       btn.addEventListener('click', function() {
-           // Remove active class from all gender buttons
-           document.querySelectorAll('.choice-btn[data-gender]').forEach(b => b.classList.remove('active'));
-           // Add active class to clicked button
-           this.classList.add('active');
-           const selectedGender = this.getAttribute('data-gender');
-           setCookie('gender_preference', selectedGender, 30);
-           // TODO: Implement filtering logic here to update displayed profiles based on gender preference
-       });
-   });
+  card.innerHTML = `
+    <div class="disc-card-cover">
+      <img src="${avatarUrl(profile.seed, profile.bg)}" class="disc-card-img" alt="${profile.name}" />
+      <div class="disc-card-gradient"></div>
+      <div class="disc-stamp disc-stamp-like">LIKE</div>
+      <div class="disc-stamp disc-stamp-nope">NOPE</div>
+      <div class="disc-card-info">
+        <h3 class="disc-card-name">${profile.name}, ${profile.age} ${profile.flag}</h3>
+        <div class="disc-card-meta">
+          <span class="badge">👍 ${profile.rating}%</span>
+          <span class="badge">${profile.language}</span>
+        </div>
+        <p class="disc-card-bio">${profile.bio}</p>
+        <div class="disc-card-tags">
+          ${profile.interests.map(i => `<span class="chip">${i}</span>`).join('')}
+        </div>
+      </div>
+    </div>
+  `;
 
-   // Interest filter preference selection listener in Profile screen
-    document.querySelectorAll('.choice-btn[data-choice]').forEach(btn => {
-        btn.addEventListener('click', function() {
-            // Remove active class from all interest filter buttons
-            document.querySelectorAll('.choice-btn[data-choice]').forEach(b => b.classList.remove('active'));
-            // Add active class to clicked button
-            this.classList.add('active');
-            const filterByInterests = this.getAttribute('data-choice');
-            setCookie('filter_by_interests', filterByInterests, 30);
-            // TODO: Implement filtering logic here to update displayed profiles based on interest filter preference
-        });
-    });
+  return card;
+}
 
+// ── Swipe Gesture Engine ──────────────────────────
+function attachSwipeGesture(card) {
+  if (!card) return;
 
-  // Add event listeners for Like and Dislike buttons
-  document.querySelector('.like-btn').addEventListener('click', handleLike);
-  document.querySelector('.dislike-btn').addEventListener('click', handleDislike);
+  let startX = 0, startY = 0, currentX = 0, currentY = 0;
+  let isDragging = false;
+  const likeStamp = card.querySelector('.disc-stamp-like');
+  const nopeStamp = card.querySelector('.disc-stamp-nope');
 
-  // TODO: Add event listener for Edit Profile button to open modal
-  // TODO: Implement Edit Profile modal functionality (populate, save, close)
-  // TODO: Implement color theme styling based on user preference (if available from sign-up data)
-});
+  function onStart(e) {
+    isDragging = true;
+    const point = e.touches ? e.touches[0] : e;
+    startX = point.clientX;
+    startY = point.clientY;
+    card.style.transition = 'none';
+  }
+
+  function onMove(e) {
+    if (!isDragging) return;
+    const point = e.touches ? e.touches[0] : e;
+    currentX = point.clientX - startX;
+    currentY = point.clientY - startY;
+
+    const rotate = currentX * 0.08;
+    card.style.transform = `translate(${currentX}px, ${currentY}px) rotate(${rotate}deg)`;
+
+    // Show like/nope stamps based on direction
+    const progress = Math.min(Math.abs(currentX) / 120, 1);
+    if (currentX > 0) {
+      likeStamp.style.opacity = progress;
+      nopeStamp.style.opacity = 0;
+    } else {
+      nopeStamp.style.opacity = progress;
+      likeStamp.style.opacity = 0;
+    }
+  }
+
+  function onEnd() {
+    if (!isDragging) return;
+    isDragging = false;
+    card.style.transition = '';
+
+    const threshold = 100;
+    if (currentX > threshold) {
+      swipeCard('right');
+    } else if (currentX < -threshold) {
+      swipeCard('left');
+    } else {
+      // Snap back
+      card.style.transform = '';
+      likeStamp.style.opacity = 0;
+      nopeStamp.style.opacity = 0;
+    }
+    currentX = 0;
+    currentY = 0;
+  }
+
+  card.addEventListener('pointerdown', onStart);
+  card.addEventListener('pointermove', onMove);
+  card.addEventListener('pointerup', onEnd);
+  card.addEventListener('pointerleave', onEnd);
+}
+
+function swipeCard(direction) {
+  const topCard = discoveryDeck.firstElementChild;
+  if (!topCard || topCard.classList.contains('disc-empty')) return;
+
+  const className = direction === 'right' ? 'swipe-right'
+                  : direction === 'up' ? 'swipe-up'
+                  : 'swipe-left';
+
+  topCard.classList.add(className);
+
+  const label = direction === 'right' ? '❤️ Liked!'
+              : direction === 'up' ? '⭐ Super Liked!'
+              : 'Skipped';
+  showToast(label);
+
+  setTimeout(() => {
+    discProfileIndex++;
+    renderDiscoveryCards();
+  }, 400);
+}
+
+// ── Discovery Action Buttons ─────────────────────
+discSkipBtn?.addEventListener('click', () => swipeCard('left'));
+discLikeBtn?.addEventListener('click', () => swipeCard('right'));
+discSuperBtn?.addEventListener('click', () => swipeCard('up'));

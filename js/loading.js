@@ -64,49 +64,7 @@ document.addEventListener('DOMContentLoaded', function() {
   }
 
   // Authenticate with the backend
-  fetch(`${backend_url}/auth/web-app-login`, {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify({
-      initdata: tg.initData
-    })
-  })
-  .then(response => {
-    console.log('Auth response status:', response.status);
-    
-    if (response.status === 404) {
-      console.log('User not found, redirecting to signup');
-      window.location.href = "sign-up.html";
-      return null;
-    }
-    
-    if (!response.ok) {
-      throw new Error(`Authentication failed with status: ${response.status}`);
-    }
-
-    return response.json();
-  })
-  .then(data => {
-    if (!data) return; // Handle the 404 redirect case
-    
-    if (data && data.access_token && data.refresh_token) {
-      const bearerToken = JSON.stringify({
-        access_token: data.access_token
-      });
-      const refreshToken = data.refresh_token;
-
-      document.cookie = `bearer=${encodeURIComponent(bearerToken)}; path=/; Secure; HttpOnly;`;
-      document.cookie = `refresh_token=${encodeURIComponent(refreshToken)}; path=/; Secure; HttpOnly;`;
-      console.log('Authentication successful, redirecting to home');
-      window.location.href = "home.html";
-    } else {
-      displayError("Authentication failed. Invalid token received.");
-    }
-  })
-  .catch(error => {
-    console.error('Authentication error:', error);
-    displayError("Authentication failed. Please try again later.");
-  });
+  // For static mode, skip backend and redirect to sign-up
+  console.log('Static mode: redirecting to sign-up');
+  window.location.href = "sign-up.html";
 });

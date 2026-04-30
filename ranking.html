@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Like-Minded — Rating</title>
+    <link rel="stylesheet" href="css/design-tokens.css" />
+    <link rel="stylesheet" href="css/components.css" />
+    <link rel="stylesheet" href="css/ranking.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+</head>
+<body>
+    <div class="app-frame">
+        <header class="rank-header">
+            <h1 class="text-h2">Leaderboard</h1>
+            <button class="btn-icon-sm" id="rankInfoBtn" aria-label="Info"><i class="fas fa-info-circle"></i></button>
+        </header>
+
+        <!-- Scope Toggle -->
+        <div class="rank-scope">
+            <button class="scope-btn active" data-scope="global"><i class="fas fa-globe"></i> Global</button>
+            <button class="scope-btn" data-scope="country"><i class="fas fa-flag"></i> Country</button>
+            <button class="scope-btn" data-scope="friends"><i class="fas fa-users"></i> Friends</button>
+        </div>
+
+        <!-- Period Tabs -->
+        <div class="tabs-header" id="periodTabs">
+            <button class="tab-btn active" data-period="today">Today</button>
+            <button class="tab-btn" data-period="week">Week</button>
+            <button class="tab-btn" data-period="month">Month</button>
+            <button class="tab-btn" data-period="all">All-time</button>
+            <span class="tab-indicator" id="tabIndicator" style="left:0;width:25%"></span>
+        </div>
+
+        <div class="scroll-area" style="padding:var(--space-4)">
+            <!-- Your Place -->
+            <div class="your-place-card animate-slide-up">
+                <div class="your-place-inner">
+                    <div class="your-place-rank">
+                        <div class="hex-badge hex-badge-lg"><span class="hex-badge-num" id="yourRank">442</span></div>
+                        <span class="your-place-label">Your place</span>
+                    </div>
+                    <div class="your-place-stats">
+                        <div><span class="your-stat-num" id="yourMinutes">57</span><span class="your-stat-unit">min</span></div>
+                        <div><span class="your-stat-num" id="yourTalks">9</span><span class="your-stat-unit">talks</span></div>
+                    </div>
+                </div>
+                <p class="your-place-hint">Talk more to climb the ranks!</p>
+                <div class="your-place-orb"></div>
+            </div>
+
+            <!-- Podium (Top 3) -->
+            <div class="podium" id="podium"></div>
+
+            <!-- List -->
+            <div class="rank-list-wrap">
+                <div class="rank-list" id="rankingList"></div>
+            </div>
+        </div>
+
+        <nav class="tab-bar">
+            <button class="tab-item" data-tab="lobby"><i class="fas fa-home"></i><span>Lobby</span></button>
+            <button class="tab-item" data-tab="groups"><i class="fas fa-headphones"></i><span>Groups</span></button>
+            <button class="tab-item active" data-tab="ranking"><i class="fas fa-trophy"></i><span>Rating</span></button>
+            <button class="tab-item" data-tab="contacts"><i class="fas fa-address-book"></i><span>Contacts</span></button>
+            <button class="tab-item" data-tab="profile"><i class="far fa-user"></i><span>Profile</span></button>
+        </nav>
+    </div>
+    <script src="js/ranking.js"></script>
+</body>
+</html>

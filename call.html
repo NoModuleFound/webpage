@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <title>Like-Minded — Active Call</title>
+    <link rel="stylesheet" href="css/design-tokens.css" />
+    <link rel="stylesheet" href="css/components.css" />
+    <link rel="stylesheet" href="css/call.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+</head>
+<body data-theme="dark" class="call-body">
+    <div class="call-frame" id="callFrame">
+
+        <!-- ═══ HEADER ═══ -->
+        <header class="call-header">
+            <div>
+                <h1 class="text-h3 call-title" id="roomTitle">1-on-1 Call</h1>
+                <p class="call-timer" id="callTimer">00:00</p>
+            </div>
+            <div class="call-header-actions">
+                <span class="call-member-count" id="memberCount" style="display:none">
+                    <i class="fas fa-user"></i> <span id="memberNum">5</span>
+                </span>
+                <button class="call-header-btn" id="reportCallBtn" aria-label="Report">
+                    <i class="fas fa-flag"></i>
+                </button>
+            </div>
+        </header>
+
+        <!-- ═══ 1-on-1 MODE ═══ -->
+        <div class="call-oneone" id="oneoneView">
+            <div class="call-person" id="personYou">
+                <div class="call-avatar-wrap">
+                    <div class="speaking-ring-outer" id="yourSpeakRing"></div>
+                    <img src="https://api.dicebear.com/7.x/adventurer/svg?seed=You&backgroundColor=c0aede" class="call-avatar" id="yourAvatar" alt="You" />
+                    <div class="mic-badge" id="yourMicBadge"><i class="fas fa-microphone"></i></div>
+                </div>
+                <p class="call-person-name">You</p>
+            </div>
+
+            <div class="call-wave-center" id="waveCenter">
+                <div class="wave-bar"></div>
+                <div class="wave-bar"></div>
+                <div class="wave-bar"></div>
+                <div class="wave-bar"></div>
+                <div class="wave-bar"></div>
+            </div>
+
+            <div class="call-person" id="personPartner">
+                <div class="call-avatar-wrap">
+                    <div class="speaking-ring-outer active" id="partnerSpeakRing"></div>
+                    <img src="https://api.dicebear.com/7.x/adventurer/svg?seed=Maria&backgroundColor=ffd5dc" class="call-avatar" id="partnerAvatar" alt="Partner" />
+                </div>
+                <p class="call-person-name" id="partnerName">Maria</p>
+                <p class="call-person-meta" id="partnerMeta">🇬🇧 · 98%</p>
+            </div>
+        </div>
+
+        <!-- ═══ GROUP MODE — Grid of participants ═══ -->
+        <div class="call-group" id="groupView" style="display:none">
+            <div class="group-grid" id="groupGrid">
+                <!-- JS populated: grid of participant tiles -->
+            </div>
+        </div>
+
+        <!-- ═══ SOCIAL ACTIONS ═══ -->
+        <div class="call-social" id="callSocial">
+            <button class="social-btn" id="addFriendBtn">
+                <i class="fas fa-user-plus"></i>
+                <span>Add Friend</span>
+            </button>
+            <button class="social-btn" id="likeBtn">
+                <i class="fas fa-heart"></i>
+                <span>Like</span>
+            </button>
+            <button class="social-btn" id="giftBtn">
+                <i class="fas fa-gift"></i>
+                <span>Gift</span>
+            </button>
+        </div>
+
+        <!-- ═══ CONTROLS ═══ -->
+        <div class="call-controls">
+            <button class="control-btn" id="speakerBtn" aria-label="Speaker">
+                <i class="fas fa-volume-up"></i>
+            </button>
+            <button class="control-btn control-end" id="endCallBtn" aria-label="End call">
+                <i class="fas fa-phone-slash"></i>
+            </button>
+            <button class="control-btn" id="micBtn" aria-label="Microphone">
+                <i class="fas fa-microphone"></i>
+            </button>
+        </div>
+    </div>
+
+    <!-- ═══ MOD SHEET (for group mode — tap on a participant) ═══ -->
+    <div class="sheet-overlay" id="modOverlay"></div>
+    <div class="sheet mod-sheet" id="modSheet">
+        <div class="sheet-handle"></div>
+        <div class="mod-header">
+            <img id="modAvatar" class="avatar avatar-md" src="" alt="" />
+            <div>
+                <p class="text-body-bold" id="modName">User</p>
+                <p class="text-caption" style="color:var(--color-text-muted)" id="modMeta">Speaker</p>
+            </div>
+        </div>
+        <div class="mod-actions">
+            <button class="mod-action" id="actionViewProfile"><i class="fas fa-user"></i> View Profile</button>
+            <button class="mod-action" id="actionAddFriend"><i class="fas fa-user-plus"></i> Add Friend</button>
+            <button class="mod-action" id="actionLike"><i class="fas fa-heart"></i> Like</button>
+            <button class="mod-action" id="actionGift"><i class="fas fa-gift"></i> Send Gift</button>
+            <button class="mod-action" id="actionLocalMute"><i class="fas fa-volume-mute"></i> Mute for Me</button>
+            <button class="mod-action" id="actionForceMute" style="display:none"><i class="fas fa-microphone-slash"></i> Force Mute</button>
+            <button class="mod-action" id="actionKick" style="display:none"><i class="fas fa-user-slash"></i> Remove from Room</button>
+            <button class="mod-action mod-action-danger" id="actionBlock"><i class="fas fa-ban"></i> Block User</button>
+        </div>
+    </div>
+
+    <script src="js/call.js"></script>
+</body>
+</html>

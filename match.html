@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <title>Like-Minded — Discover</title>
+    <link rel="stylesheet" href="css/design-tokens.css" />
+    <link rel="stylesheet" href="css/components.css" />
+    <link rel="stylesheet" href="css/match.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+</head>
+<body>
+    <div class="app-frame" style="overflow:hidden">
+        <header class="match-header">
+            <button class="btn-icon-sm" onclick="window.location.href='home.html'" aria-label="Back"><i class="fas fa-arrow-left"></i></button>
+            <div class="match-header-center">
+                <h1 class="text-h2">Discover</h1>
+                <p class="text-overline" style="color:var(--color-primary);letter-spacing:1.5px;font-size:10px">Similar Interests</p>
+            </div>
+            <button class="btn-icon-sm" id="matchInboxBtn" aria-label="Matches"><i class="fas fa-heart"></i><span class="match-badge-dot"></span></button>
+        </header>
+
+        <div class="cards-area" id="cardsContainer"></div>
+
+        <div class="match-actions">
+            <button class="action-circle action-pass" id="btnPass" aria-label="Pass"><i class="fas fa-times"></i></button>
+            <button class="action-circle action-super" id="btnSuper" aria-label="Super Like"><i class="fas fa-star"></i></button>
+            <button class="action-circle action-like" id="btnLike" aria-label="Like"><i class="fas fa-heart"></i></button>
+        </div>
+
+        <!-- Match Celebration -->
+        <div class="match-celebration" id="matchOverlay">
+            <div class="match-cel-content">
+                <h2 class="match-cel-title">It's a Match! 🎉</h2>
+                <p class="match-cel-sub" id="matchText">You and Maria share similar interests</p>
+                <div class="match-cel-avatars">
+                    <div class="match-cel-avatar"><img src="https://api.dicebear.com/7.x/adventurer/svg?seed=You&backgroundColor=c0aede" alt="You" /></div>
+                    <div class="match-cel-heart"><i class="fas fa-heart"></i></div>
+                    <div class="match-cel-avatar"><img id="matchCelAvatar" src="" alt="Match" /></div>
+                </div>
+                <div class="match-cel-actions">
+                    <button class="btn btn-primary" id="matchCallBtn"><i class="fas fa-phone"></i> Call Now</button>
+                    <button class="btn btn-ghost" id="btnKeepSwiping">Keep Discovering</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="js/match.js"></script>
+</body>
+</html>

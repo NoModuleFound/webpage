@@ -9,6 +9,17 @@
 // DATA
 // ══════════════════════════════════════════════════
 
+const LANGUAGES_DATA = [
+  { id: 'english', name: 'English', flag: '🇬🇧' },
+  { id: 'russian', name: 'Russian', flag: '🇷🇺' },
+  { id: 'uzbek', name: 'Uzbek', flag: '🇺🇿' },
+  { id: 'spanish', name: 'Spanish', flag: '🇪🇸' },
+  { id: 'german', name: 'German', flag: '🇩🇪' },
+  { id: 'french', name: 'French', flag: '🇫🇷' },
+  { id: 'arabic', name: 'Arabic', flag: '🇸🇦' },
+  { id: 'turkish', name: 'Turkish', flag: '🇹🇷' },
+];
+
 const INTERESTS_DATA = [
   { id: 'languages', name: 'Languages', icon: 'fa-globe', cat: 'lang' },
   { id: 'music', name: 'Music', icon: 'fa-music', cat: 'music' },
@@ -92,6 +103,7 @@ const discLikeBtn      = document.getElementById('discLikeBtn');
 const discSuperBtn     = document.getElementById('discSuperBtn');
 
 let activeFilters = [];
+let activeLanguageFilters = [];
 let matchIndex = 0;
 let discProfileIndex = 0;
 let countdownInterval = null;
@@ -177,6 +189,27 @@ function renderFilterInterests() {
       renderFilterInterests();
     });
     filterInterests.appendChild(el);
+  });
+}
+
+function renderFilterLanguages() {
+  const container = document.getElementById('filterLanguages');
+  if (!container) return;
+  container.innerHTML = '';
+  LANGUAGES_DATA.forEach(lang => {
+    const isSelected = activeLanguageFilters.includes(lang.id);
+    const el = document.createElement('button');
+    el.className = `chip${isSelected ? ' chip-selected' : ''}`;
+    el.innerHTML = `${lang.flag} ${lang.name}`;
+    el.addEventListener('click', () => {
+      if (activeLanguageFilters.includes(lang.id)) {
+        activeLanguageFilters = activeLanguageFilters.filter(id => id !== lang.id);
+      } else {
+        activeLanguageFilters.push(lang.id);
+      }
+      renderFilterLanguages();
+    });
+    container.appendChild(el);
   });
 }
 
@@ -288,6 +321,7 @@ function openFilter() {
   filterOverlay.classList.add('open');
   filterSheet.classList.add('open');
   renderFilterInterests();
+  renderFilterLanguages();
 }
 
 function closeFilter() {
@@ -526,15 +560,18 @@ function createDiscCard(profile, stackIndex) {
 
   card.innerHTML = `
     <div class="disc-card-cover">
-      <img src="${avatarUrl(profile.seed, profile.bg)}" class="disc-card-img" alt="${profile.name}" />
-      <div class="disc-card-gradient"></div>
+      <div class="disc-card-header">
+        <div class="disc-card-avatar">
+          <img src="${avatarUrl(profile.seed, profile.bg)}" alt="${profile.name}" />
+        </div>
+        <h3 class="disc-card-name">${profile.name}, ${profile.age}</h3>
+        <span class="disc-card-rating">👍 ${profile.rating}%</span>
+      </div>
       <div class="disc-stamp disc-stamp-like">LIKE</div>
       <div class="disc-stamp disc-stamp-nope">NOPE</div>
-      <div class="disc-card-info">
-        <h3 class="disc-card-name">${profile.name}, ${profile.age} ${profile.flag}</h3>
+      <div class="disc-card-body">
         <div class="disc-card-meta">
-          <span class="badge">👍 ${profile.rating}%</span>
-          <span class="badge">${profile.language}</span>
+          <span class="badge"><i class="fas fa-language"></i> ${profile.language}</span>
         </div>
         <p class="disc-card-bio">${profile.bio}</p>
         <div class="disc-card-tags">

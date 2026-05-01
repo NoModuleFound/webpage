@@ -68,26 +68,7 @@ document.getElementById('saveProfileBtn')?.addEventListener('click', () => {
   closeEditProfile();
 });
 
-// Matching preferences sheet
-const matchingOverlay = document.getElementById('matchingOverlay');
-const matchingSheet = document.getElementById('matchingSheet');
 
-document.getElementById('settingsMatching')?.addEventListener('click', () => {
-  matchingOverlay.classList.add('open');
-  matchingSheet.classList.add('open');
-});
-
-const closeMatching = () => {
-  matchingOverlay.classList.remove('open');
-  matchingSheet.classList.remove('open');
-};
-
-document.getElementById('closeMatchingBtn')?.addEventListener('click', closeMatching);
-matchingOverlay?.addEventListener('click', closeMatching);
-document.getElementById('saveMatchingBtn')?.addEventListener('click', () => {
-  showToast('Matching preferences saved!');
-  closeMatching();
-});
 
 // Nav
 document.querySelectorAll('.tab-item').forEach(item => {

@@ -10,8 +10,8 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://telegram.org/js/telegram-web-app.js?57"></script>
+    <script src="https://cdn.jsdelivr.net/npm/i18next@23/i18next.min.js"></script>
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
-    <link rel="stylesheet" href="css/sign-up.css">
 </head>
 <body class="bg-[#F5F5FA] h-[100dvh] overflow-hidden">
     <div class="app-frame mx-auto relative h-full flex flex-col bg-white overflow-hidden shadow-2xl md:rounded-[44px] border border-[#EBEBF0]" id="formContainer">
@@ -37,13 +37,13 @@
             <!-- ════════ STEP 1: Hey! Let's get you started ════════ -->
             <div id="step1" class="slide p-6 active">
                 <div class="mb-5">
-                    <h2 class="text-2xl font-extrabold text-[#1A1A2E] mb-1 tracking-[-0.3px]" data-translate="step1_title">Hey! Let's get you started 🎉</h2>
-                    <p class="text-[#8E8E9A] text-sm" data-translate="step1_subtitle">Takes 60 seconds. No spam, ever.</p>
+                    <h2 class="text-2xl font-extrabold text-[#1A1A2E] mb-1 tracking-[-0.3px]" data-i18n="step1_title">Hey! Let's get you started 🎉</h2>
+                    <p class="text-[#8E8E9A] text-sm" data-i18n="step1_subtitle">Takes 60 seconds. No spam, ever.</p>
                     </div>
 
                 <!-- Language -->
                 <div class="mb-5">
-                    <label class="block text-xs font-bold text-[#8E8E9A] uppercase tracking-widest mb-2" data-translate="language_label">Language</label>
+                    <label class="block text-xs font-bold text-[#8E8E9A] uppercase tracking-widest mb-2" data-i18n="language_label">Language</label>
                     <div class="flex gap-2">
                         <button type="button" class="lang-btn flex-1 py-3 rounded-xl border-2 border-[#EBEBF0] font-semibold text-sm text-[#1A1A2E] transition-all hover:border-[#6C47FF] active:scale-[0.96]" onclick="selectLanguage('uz', this)">🇺🇿 O'zbek</button>
                         <button type="button" class="lang-btn flex-1 py-3 rounded-xl border-2 border-[#EBEBF0] font-semibold text-sm text-[#1A1A2E] transition-all hover:border-[#6C47FF] active:scale-[0.96]" onclick="selectLanguage('ru', this)">🇷🇺 Русский</button>
@@ -53,35 +53,35 @@
 
                 <!-- Name -->
                 <div class="mb-4">
-                    <label for="firstName" class="block text-xs font-bold text-[#8E8E9A] uppercase tracking-widest mb-2" data-translate="name_label">Your name</label>
+                    <label for="firstName" class="block text-xs font-bold text-[#8E8E9A] uppercase tracking-widest mb-2" data-i18n="name_label">Your name</label>
                     <input type="text" id="firstName" autocomplete="given-name"
                         class="w-full px-4 py-3.5 border-2 border-[#EBEBF0] rounded-xl text-[#1A1A2E] font-medium focus:ring-0 focus:border-[#6C47FF] transition-colors outline-none"
-                        data-translate-placeholder="name_placeholder" placeholder="What should we call you?">
-                    <p class="inline-error hidden mt-1.5" id="nameError" data-translate="name_error">What should we call you?</p>
+                        data-i18n-placeholder="name_placeholder" placeholder="What should we call you?">
+                    <p class="inline-error hidden mt-1.5" id="nameError" data-i18n="name_error">What should we call you?</p>
             </div>
 
                 <!-- Username -->
                 <div class="mb-5">
-                    <label for="username" class="block text-xs font-bold text-[#8E8E9A] uppercase tracking-widest mb-2" data-translate="username_label">Username</label>
+                    <label for="username" class="block text-xs font-bold text-[#8E8E9A] uppercase tracking-widest mb-2" data-i18n="username_label">Username</label>
                     <div class="relative">
                         <span class="absolute inset-y-0 left-0 pl-4 flex items-center text-[#8E8E9A] font-semibold text-sm">@</span>
                         <input type="text" id="username" autocomplete="username"
                             class="w-full pl-9 pr-4 py-3.5 border-2 border-[#EBEBF0] rounded-xl text-[#1A1A2E] font-medium focus:ring-0 focus:border-[#6C47FF] transition-colors outline-none"
-                            data-translate-placeholder="username_placeholder" placeholder="choose_a_username">
+                            data-i18n-placeholder="username_placeholder" placeholder="choose_a_username">
                     </div>
-                    <p class="inline-error hidden mt-1.5" id="usernameError" data-translate="username_error">Pick a username — it's how people find you</p>
+                    <p class="inline-error hidden mt-1.5" id="usernameError" data-i18n="username_error">Pick a username — it's how people find you</p>
                 </div>
 
                 <!-- Trust Signal -->
                 <p class="text-center text-[11px] text-[#8E8E9A] mb-5 flex items-center justify-center gap-1">
                     <i class="fas fa-lock text-[#6C47FF]"></i>
-                    <span data-translate="trust_name">Your real name is never shown publicly</span>
+                    <span data-i18n="trust_name">Your real name is never shown publicly</span>
                 </p>
 
                 <!-- CTA -->
                 <button type="button" onclick="nextStep()"
                     class="cta-btn w-full py-4 bg-gradient-to-r from-[#00C97A] to-[#00A865] text-white rounded-2xl font-bold text-[15px] shadow-lg shadow-[#00C97A]/30 hover:-translate-y-[2px] active:scale-[0.94] transition-all flex items-center justify-center gap-2">
-                    <span data-translate="cta_step1">Find Your People</span>
+                    <span data-i18n="cta_step1">Find Your People</span>
                     <i class="fas fa-arrow-right"></i>
                 </button>
             </div>
@@ -89,42 +89,42 @@
             <!-- ════════ STEP 2: Who are you? ════════ -->
             <div id="step2" class="slide p-6">
                 <div class="mb-5">
-                    <h2 class="text-2xl font-extrabold text-[#1A1A2E] mb-1 tracking-[-0.3px]" data-translate="step2_title">Who are you? 👤</h2>
-                    <p class="text-[#8E8E9A] text-sm" data-translate="step2_subtitle">This helps us match you with the right people</p>
+                    <h2 class="text-2xl font-extrabold text-[#1A1A2E] mb-1 tracking-[-0.3px]" data-i18n="step2_title">Who are you? 👤</h2>
+                    <p class="text-[#8E8E9A] text-sm" data-i18n="step2_subtitle">This helps us match you with the right people</p>
                 </div>
 
                 <!-- Gender -->
                 <div class="mb-5">
-                    <label class="block text-xs font-bold text-[#8E8E9A] uppercase tracking-widest mb-2" data-translate="gender_label">Gender</label>
+                    <label class="block text-xs font-bold text-[#8E8E9A] uppercase tracking-widest mb-2" data-i18n="gender_label">Gender</label>
                     <div class="grid grid-cols-2 gap-3">
                         <button type="button" class="gender-btn p-4 border-2 border-[#EBEBF0] rounded-2xl text-center cursor-pointer transition-all hover:border-[#6C47FF] active:scale-[0.96]" onclick="selectGender('male', this)">
                             <div class="text-3xl mb-1">👨</div>
-                            <p class="font-semibold text-sm text-[#1A1A2E]" data-translate="male">Male</p>
+                            <p class="font-semibold text-sm text-[#1A1A2E]" data-i18n="male">Male</p>
                         </button>
                         <button type="button" class="gender-btn p-4 border-2 border-[#EBEBF0] rounded-2xl text-center cursor-pointer transition-all hover:border-[#6C47FF] active:scale-[0.96]" onclick="selectGender('female', this)">
                             <div class="text-3xl mb-1">👩</div>
-                            <p class="font-semibold text-sm text-[#1A1A2E]" data-translate="female">Female</p>
+                            <p class="font-semibold text-sm text-[#1A1A2E]" data-i18n="female">Female</p>
                         </button>
                     </div>
-                    <p class="inline-error hidden mt-1.5" id="genderError" data-translate="gender_error">Tap one to continue</p>
+                    <p class="inline-error hidden mt-1.5" id="genderError" data-i18n="gender_error">Tap one to continue</p>
                         </div>
 
                 <!-- Age -->
                 <div class="mb-5">
-                    <label for="userAge" class="block text-xs font-bold text-[#8E8E9A] uppercase tracking-widest mb-2" data-translate="age_label">Your age</label>
+                    <label for="userAge" class="block text-xs font-bold text-[#8E8E9A] uppercase tracking-widest mb-2" data-i18n="age_label">Your age</label>
                     <input type="number" id="userAge" min="10" max="100" inputmode="numeric" autocomplete="off"
                         class="w-full px-4 py-3.5 border-2 border-[#EBEBF0] rounded-xl text-[#1A1A2E] font-medium focus:ring-0 focus:border-[#6C47FF] transition-colors outline-none tabular-nums"
-                        data-translate-placeholder="age_placeholder" placeholder="e.g. 19">
-                    <p class="inline-error hidden mt-1.5" id="ageError" data-translate="age_error">How old are you? We need this to keep things safe</p>
+                        data-i18n-placeholder="age_placeholder" placeholder="e.g. 19">
+                    <p class="inline-error hidden mt-1.5" id="ageError" data-i18n="age_error">How old are you? We need this to keep things safe</p>
                     </div>
 
                 <!-- Avatar -->
                 <div class="mb-5">
-                    <label class="block text-xs font-bold text-[#8E8E9A] uppercase tracking-widest mb-2" data-translate="avatar_label">Pick your look</label>
+                    <label class="block text-xs font-bold text-[#8E8E9A] uppercase tracking-widest mb-2" data-i18n="avatar_label">Pick your look</label>
                     <div class="grid grid-cols-6 gap-2.5" id="avatarContainer">
                         <!-- Populated by JS -->
                     </div>
-                    <p class="inline-error hidden mt-1.5" id="avatarError" data-translate="avatar_error">Pick your look! You can always change it later</p>
+                    <p class="inline-error hidden mt-1.5" id="avatarError" data-i18n="avatar_error">Pick your look! You can always change it later</p>
                 </div>
 
                 <!-- Nav -->
@@ -135,7 +135,7 @@
                     </button>
                     <button type="button" onclick="nextStep()"
                         class="cta-btn flex-1 py-3.5 bg-gradient-to-r from-[#00C97A] to-[#00A865] text-white rounded-xl font-bold text-[15px] shadow-lg shadow-[#00C97A]/30 hover:-translate-y-[2px] active:scale-[0.94] transition-all flex items-center justify-center gap-2">
-                        <span data-translate="cta_step2">Almost there!</span>
+                        <span data-i18n="cta_step2">Almost there!</span>
                         <i class="fas fa-arrow-right"></i>
                     </button>
                 </div>
@@ -144,15 +144,15 @@
             <!-- ════════ STEP 3: What are you into? ════════ -->
             <div id="step3" class="slide p-6">
                 <div class="mb-5">
-                    <h2 class="text-2xl font-extrabold text-[#1A1A2E] mb-1 tracking-[-0.3px]" data-translate="step3_title">What are you into? 🎯</h2>
-                    <p class="text-[#8E8E9A] text-sm" data-translate="step3_subtitle">Pick 1–5 that excite you. This is how we find your people.</p>
+                    <h2 class="text-2xl font-extrabold text-[#1A1A2E] mb-1 tracking-[-0.3px]" data-i18n="step3_title">What are you into? 🎯</h2>
+                    <p class="text-[#8E8E9A] text-sm" data-i18n="step3_subtitle">Pick 1–5 that excite you. This is how we find your people.</p>
                     </div>
 
                 <div class="mb-5">
                     <div class="flex flex-wrap gap-2" id="interestsContainer">
                         <!-- Populated by JS -->
                     </div>
-                    <p class="inline-error hidden mt-2" id="interestError" data-translate="interest_error">Pick at least 1 — this is how we find your people</p>
+                    <p class="inline-error hidden mt-2" id="interestError" data-i18n="interest_error">Pick at least 1 — this is how we find your people</p>
                 </div>
 
                 <!-- Nav -->
@@ -163,7 +163,7 @@
                     </button>
                     <button type="button" onclick="nextStep()"
                         class="cta-btn flex-1 py-3.5 bg-gradient-to-r from-[#00C97A] to-[#00A865] text-white rounded-xl font-bold text-[15px] shadow-lg shadow-[#00C97A]/30 hover:-translate-y-[2px] active:scale-[0.94] transition-all flex items-center justify-center gap-2">
-                        <span data-translate="cta_step3">Show Me My Matches!</span>
+                        <span data-i18n="cta_step3">Show Me My Matches!</span>
                         <i class="fas fa-rocket"></i>
                     </button>
                 </div>
@@ -181,9 +181,9 @@
                         </div>
                     </div>
 
-                    <h2 class="text-3xl font-black text-[#1A1A2E] mb-2 tracking-[-0.5px] celebration-text" data-translate="step4_title">You're in! 🎊</h2>
+                    <h2 class="text-3xl font-black text-[#1A1A2E] mb-2 tracking-[-0.5px] celebration-text" data-i18n="step4_title">You're in! 🎊</h2>
                     <p class="text-[#8E8E9A] text-sm mb-2 font-medium" id="celebrationName"></p>
-                    <p class="text-[#6C47FF] text-sm font-bold mb-6" id="celebrationMatch" data-translate="match_count">Finding people who share your interests...</p>
+                    <p class="text-[#6C47FF] text-sm font-bold mb-6" id="celebrationMatch" data-i18n="match_count">Finding people who share your interests...</p>
 
                     <!-- Mini Preview Card -->
                     <div class="bg-[#F5F5FA] rounded-2xl p-4 mb-8 text-left border border-[#EBEBF0]">
@@ -195,13 +195,14 @@
                     <!-- CTA -->
                     <button type="button" id="enterLobbyBtn"
                         class="cta-btn w-full py-4 bg-gradient-to-r from-[#6C47FF] to-[#9747FF] text-white rounded-2xl font-bold text-[15px] shadow-lg shadow-[#6C47FF]/30 hover:-translate-y-[2px] active:scale-[0.94] transition-all flex items-center justify-center gap-2">
-                        <span data-translate="cta_step4">Enter the Lobby</span>
+                        <span data-i18n="cta_step4">Enter the Lobby</span>
                         <i class="fas fa-door-open"></i>
                     </button>
                 </div>
             </div>
         </div>
     </div>
+    <script src="js/i18n.js"></script>
     <script src="js/sign-up.js"></script>
 </body>
 </html>

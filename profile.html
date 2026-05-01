@@ -105,11 +105,7 @@
                         <span class="settings-text">Notifications</span>
                         <span class="settings-value"><i class="fas fa-chevron-right"></i></span>
                     </button>
-                    <button class="settings-row" id="settingsMatching">
-                        <div class="settings-icon" style="background:var(--color-success-soft);color:var(--color-success)"><i class="fas fa-sliders"></i></div>
-                        <span class="settings-text">Matching Preferences</span>
-                        <span class="settings-value"><i class="fas fa-chevron-right"></i></span>
-                    </button>
+
                     <button class="settings-row" id="settingsTheme">
                         <div class="settings-icon" style="background:var(--color-surface-sunken);color:var(--color-text-secondary)"><i class="fas fa-moon"></i></div>
                         <span class="settings-text">Appearance</span>
@@ -133,37 +129,7 @@
         </nav>
     </div>
 
-    <!-- ═══ MATCHING PREFERENCES SHEET ═══ -->
-    <div class="sheet-overlay" id="matchingOverlay"></div>
-    <div class="sheet" id="matchingSheet">
-        <div class="sheet-handle"></div>
-        <div class="sheet-header">
-            <h2 class="text-h2">Matching Preferences</h2>
-            <button class="btn-icon-sm" id="closeMatchingBtn"><i class="fas fa-times"></i></button>
-        </div>
-        <div class="sheet-body">
-            <div class="filter-group">
-                <label class="section-label">Preferred Languages</label>
-                <div class="filter-chips">
-                    <span class="chip chip-selected">English</span>
-                    <span class="chip">Spanish</span>
-                    <span class="chip chip-selected">Russian</span>
-                    <span class="chip">Uzbek</span>
-                </div>
-            </div>
-            <div class="filter-group">
-                <label class="section-label">Preferred Gender</label>
-                <select class="input">
-                    <option value="all">Anyone</option>
-                    <option value="male">Male</option>
-                    <option value="female">Female</option>
-                </select>
-            </div>
-        </div>
-        <div class="sheet-footer">
-            <button class="btn btn-primary btn-block" id="saveMatchingBtn">Save Preferences</button>
-        </div>
-    </div>
+
 
     <!-- ═══ EDIT PROFILE SHEET ═══ -->
     <div class="sheet-overlay" id="editProfileOverlay"></div>

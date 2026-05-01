@@ -145,6 +145,39 @@ body {
     transform: scale(1.05);
 }
 
+/* ─── Avatar Randomize Button ─── */
+.avatar-randomize-btn {
+    border-radius: 9999px;
+    overflow: hidden;
+    border: 3px dashed #c0aede;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    aspect-ratio: 1 / 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(135deg, #EDE8FF, #F5F5FA);
+    color: #6C47FF;
+    font-size: 1.2rem;
+}
+.avatar-randomize-btn:hover {
+    transform: scale(1.08);
+    border-color: #6C47FF;
+    background: linear-gradient(135deg, #DDD6FF, #EDE8FF);
+    box-shadow: 0 4px 12px rgba(108, 71, 255, 0.2);
+}
+.avatar-randomize-btn:active {
+    transform: scale(0.94);
+}
+.avatar-randomize-btn.spinning i {
+    animation: diceRoll 0.5s ease-out;
+}
+@keyframes diceRoll {
+    0%   { transform: rotate(0deg) scale(1); }
+    50%  { transform: rotate(180deg) scale(1.3); }
+    100% { transform: rotate(360deg) scale(1); }
+}
+
 /* ─── CTA Buttons ─── */
 .cta-btn {
     position: relative;

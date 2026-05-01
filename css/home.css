@@ -876,79 +876,119 @@
   z-index: 10;
 }
 
-/* Card cover image */
+/* Card cover — gradient header like preview-cover */
 .disc-card-cover {
   position: relative;
   width: 100%;
   height: 100%;
   display: flex;
   flex-direction: column;
-  justify-content: flex-end;
 }
 
-.disc-card-img {
+.disc-card-header {
+  position: relative;
+  flex-shrink: 0;
+  padding: var(--space-6) var(--space-5) var(--space-5);
+  background: linear-gradient(135deg, var(--color-primary), #9B6FFF, var(--color-secondary));
+  background-size: 200% 200%;
+  animation: gradientShift 8s ease infinite;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+.disc-card-header::after {
+  content: '';
   position: absolute;
   inset: 0;
+  background: linear-gradient(to top, rgba(0,0,0,0.3), transparent);
+  pointer-events: none;
+}
+
+.disc-card-avatar {
+  width: 96px;
+  height: 96px;
+  border-radius: 50%;
+  border: 4px solid white;
+  overflow: hidden;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.25);
+  background: white;
+  margin-bottom: var(--space-3);
+  position: relative;
+  z-index: 2;
+}
+
+.disc-card-avatar img {
   width: 100%;
   height: 100%;
   object-fit: cover;
-  background: linear-gradient(135deg, #242442, #1a1a2e);
-}
-
-.disc-card-gradient {
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(
-    to top,
-    rgba(0,0,0,0.85) 0%,
-    rgba(0,0,0,0.4) 40%,
-    rgba(0,0,0,0.0) 70%
-  );
-  z-index: 1;
-}
-
-.disc-card-info {
-  position: relative;
-  z-index: 2;
-  padding: var(--space-5);
-  color: white;
 }
 
 .disc-card-name {
   font-family: var(--font-display);
   font-weight: 800;
-  font-size: 28px;
+  font-size: 24px;
+  color: white;
+  text-shadow: 0 2px 8px rgba(0,0,0,0.3);
   margin-bottom: 4px;
-  text-shadow: 0 2px 8px rgba(0,0,0,0.4);
+  position: relative;
+  z-index: 2;
+}
+
+.disc-card-rating {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 12px;
+  font-weight: 700;
+  color: white;
+  background: rgba(255,255,255,0.2);
+  backdrop-filter: blur(8px);
+  padding: 4px 12px;
+  border-radius: var(--radius-full);
+  position: relative;
+  z-index: 2;
+}
+
+/* Card body — info section */
+.disc-card-body {
+  flex: 1;
+  padding: var(--space-4) var(--space-5);
+  overflow-y: auto;
+  background: var(--color-surface);
 }
 
 .disc-card-meta {
   display: flex;
   align-items: center;
   gap: var(--space-2);
-  font-size: 14px;
-  font-weight: 600;
-  color: rgba(255,255,255,0.85);
   margin-bottom: var(--space-3);
+  flex-wrap: wrap;
 }
 
 .disc-card-meta .badge {
-  background: rgba(255,255,255,0.18);
-  backdrop-filter: blur(8px);
-  padding: 4px 10px;
+  background: var(--color-surface-raised);
+  padding: 5px 12px;
   border-radius: var(--radius-full);
   font-size: 12px;
   font-weight: 700;
-  color: white;
+  color: var(--color-text-secondary);
+  border: 1px solid var(--color-border);
+}
+
+.disc-card-meta .badge i {
+  margin-right: 4px;
+  color: var(--color-primary);
 }
 
 .disc-card-bio {
   font-size: 14px;
-  color: rgba(255,255,255,0.75);
+  color: var(--color-text-secondary);
   margin-bottom: var(--space-3);
-  line-height: 1.5;
+  line-height: 1.6;
   display: -webkit-box;
-  -webkit-line-clamp: 2;
+  -webkit-line-clamp: 3;
   -webkit-box-orient: vertical;
   overflow: hidden;
 }
@@ -960,12 +1000,12 @@
 }
 
 .disc-card-tags .chip {
-  background: rgba(255,255,255,0.15);
-  backdrop-filter: blur(6px);
-  color: white;
-  border: none;
+  background: var(--color-primary-soft);
+  color: var(--color-primary);
+  border: 1px solid rgba(var(--color-primary-rgb), 0.15);
   font-size: 11px;
   padding: 5px 10px;
+  font-weight: 600;
 }
 
 /* Like / Nope stamp overlays */

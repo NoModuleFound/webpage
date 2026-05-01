@@ -27,153 +27,57 @@ const formData = {
 };
 
 
-// ── Translations ─────────────────────────────────
-const translations = {
-    en: {
-        step1_title: "Hey! Let's get you started 🎉",
-        step1_subtitle: "Takes 60 seconds. No spam, ever.",
-        language_label: "Language",
-        name_label: "Your name",
-        name_placeholder: "What should we call you?",
-        name_error: "What should we call you?",
-        username_label: "Username",
-        username_placeholder: "choose_a_username",
-        username_error: "Pick a username — it's how people find you",
-        trust_name: "Your real name is never shown publicly",
-        cta_step1: "Find Your People",
-        step2_title: "Who are you? 👤",
-        step2_subtitle: "This helps us match you with the right people",
-        gender_label: "Gender",
-        male: "Male",
-        female: "Female",
-        gender_error: "Tap one to continue",
-        age_label: "Your age",
-        age_placeholder: "e.g. 19",
-        age_error: "How old are you? We need this to keep things safe",
-        avatar_label: "Pick your look",
-        avatar_error: "Pick your look! You can always change it later",
-        cta_step2: "Almost there!",
-        step3_title: "What are you into? 🎯",
-        step3_subtitle: "Pick 1–5 that excite you. This is how we find your people.",
-        interest_error: "Pick at least 1 — this is how we find your people",
-        cta_step3: "Show Me My Matches!",
-        step4_title: "You're in! 🎊",
-        match_count: "Finding people who share your interests...",
-        cta_step4: "Enter the Lobby",
-        complete_later: "You can complete your full profile anytime in Settings"
-    },
-    uz: {
-        step1_title: "Keling, boshlaylik! 🎉",
-        step1_subtitle: "60 soniya. Hech qanday spam yo'q.",
-        language_label: "Til",
-        name_label: "Ismingiz",
-        name_placeholder: "Sizni qanday chaqiramiz?",
-        name_error: "Sizni qanday chaqiramiz?",
-        username_label: "Foydalanuvchi nomi",
-        username_placeholder: "foydalanuvchi_nomi",
-        username_error: "Foydalanuvchi nomini tanlang",
-        trust_name: "Haqiqiy ismingiz hech qachon ko'rsatilmaydi",
-        cta_step1: "Odamlaringizni toping",
-        step2_title: "Siz kimsiz? 👤",
-        step2_subtitle: "Bu sizga to'g'ri odamlarni topishga yordam beradi",
-        gender_label: "Jins",
-        male: "Erkak",
-        female: "Ayol",
-        gender_error: "Davom etish uchun birini tanlang",
-        age_label: "Yoshingiz",
-        age_placeholder: "masalan, 19",
-        age_error: "Yoshingiz necha? Xavfsizlik uchun kerak",
-        avatar_label: "Qiyofangizni tanlang",
-        avatar_error: "Qiyofangizni tanlang! Keyinroq o'zgartirsangiz ham bo'ladi",
-        cta_step2: "Deyarli tayyor!",
-        step3_title: "Nima qiziq? 🎯",
-        step3_subtitle: "1–5 ta tanlang. Shunga asoslanib odamlaringizni topamiz.",
-        interest_error: "Kamida 1 ta tanlang",
-        cta_step3: "Menga mos keladiganlarni ko'rsat!",
-        step4_title: "Siz ichkaridasiz! 🎊",
-        match_count: "Qiziqishlaringizga mos odamlar izlanmoqda...",
-        cta_step4: "Lobbyga kirish",
-        complete_later: "To'liq profilingizni istalgan vaqtda Sozlamalarda yakunlashingiz mumkin"
-    },
-    ru: {
-        step1_title: "Привет! Давайте начнём 🎉",
-        step1_subtitle: "60 секунд. Никакого спама.",
-        language_label: "Язык",
-        name_label: "Ваше имя",
-        name_placeholder: "Как вас называть?",
-        name_error: "Как вас называть?",
-        username_label: "Имя пользователя",
-        username_placeholder: "имя_пользователя",
-        username_error: "Выберите имя — так вас найдут другие",
-        trust_name: "Ваше настоящее имя никогда не показывается публично",
-        cta_step1: "Найти своих людей",
-        step2_title: "Кто вы? 👤",
-        step2_subtitle: "Это поможет подобрать для вас нужных людей",
-        gender_label: "Пол",
-        male: "Мужской",
-        female: "Женский",
-        gender_error: "Нажмите, чтобы продолжить",
-        age_label: "Ваш возраст",
-        age_placeholder: "напр. 19",
-        age_error: "Сколько вам лет? Это нужно для безопасности",
-        avatar_label: "Выберите образ",
-        avatar_error: "Выберите образ! Позже его можно изменить",
-        cta_step2: "Почти готово!",
-        step3_title: "Что вам интересно? 🎯",
-        step3_subtitle: "Выберите 1–5. Так мы найдём ваших людей.",
-        interest_error: "Выберите хотя бы 1 — так мы найдём ваших людей",
-        cta_step3: "Покажите мои совпадения!",
-        step4_title: "Вы в деле! 🎊",
-        match_count: "Ищем людей с вашими интересами...",
-        cta_step4: "Войти в лобби",
-        complete_later: "Полный профиль можно заполнить позже в Настройках"
-    }
-};
-
-
-// ── Interest Data (curated top 12) ───────────────
+// ── Interest Data (icons only — labels come from i18next) ──
 const interestData = {
-    business_management:     { en: "Business",           uz: "Biznes",             ru: "Бизнес",              icon: "fa-briefcase" },
-    data_science:            { en: "Data Science",       uz: "Ma'lumotlar fani",   ru: "Наука о данных",      icon: "fa-chart-pie" },
-    psychology:              { en: "Psychology",         uz: "Psixologiya",        ru: "Психология",          icon: "fa-brain" },
-    motion_design:           { en: "Motion Design",     uz: "Dizayn",             ru: "Моушн-дизайн",        icon: "fa-film" },
-    marketing_and_promotion: { en: "Marketing",         uz: "Marketing",          ru: "Маркетинг",           icon: "fa-bullhorn" },
-    medicine:                { en: "Medicine",           uz: "Tibbiyot",           ru: "Медицина",            icon: "fa-medkit" },
-    engineering:             { en: "Engineering",        uz: "Muhandislik",        ru: "Инженерия",           icon: "fa-cogs" },
-    international_relations: { en: "Intl Relations",     uz: "Xalqaro munosabat",  ru: "Межд. отношения",     icon: "fa-globe" },
-    law_and_jurisprudence:   { en: "Law",               uz: "Huquq",              ru: "Право",               icon: "fa-gavel" },
-    art_and_design:          { en: "Art & Design",      uz: "San'at va dizayn",   ru: "Искусство",           icon: "fa-palette" },
-    sports_and_fitness:      { en: "Sports & Fitness",  uz: "Sport",              ru: "Спорт",               icon: "fa-dumbbell" },
-    languages_and_philology: { en: "Languages",         uz: "Tillar",             ru: "Языки",               icon: "fa-language" }
+    business_management: { icon: "fa-briefcase" },
+    data_science: { icon: "fa-chart-pie" },
+    psychology: { icon: "fa-brain" },
+    motion_design: { icon: "fa-film" },
+    marketing_and_promotion: { icon: "fa-bullhorn" },
+    medicine: { icon: "fa-medkit" },
+    engineering: { icon: "fa-cogs" },
+    international_relations: { icon: "fa-globe" },
+    law_and_jurisprudence: { icon: "fa-gavel" },
+    art_and_design: { icon: "fa-palette" },
+    sports_and_fitness: { icon: "fa-dumbbell" },
+    languages_and_philology: { icon: "fa-language" }
 };
 
 
-// ── Avatar Seeds (6 per gender) ──────────────────
-const maleSeeds   = ['Jack', 'Alex', 'Max', 'Felix', 'Leo', 'Sam'];
-const femaleSeeds = ['Maria', 'Sarah', 'Lena', 'Mia', 'Zoe', 'Lily'];
-const bgColors    = ['b6e3f4', 'c0aede', 'd1d4f9', 'ffd5dc', 'ffdfbf', 'd1f4d9'];
+// ── Avatar Config ─────────────────────────────────
+const AVATAR_COUNT = 11;
+const bgColors = ['b6e3f4', 'c0aede', 'd1d4f9', 'ffd5dc', 'ffdfbf', 'd1f4d9'];
+let currentAvatarSeeds = [];
+
+function generateRandomSeed() {
+    const chars = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
+    let seed = '';
+    for (let i = 0; i < 8; i++) seed += chars[Math.floor(Math.random() * chars.length)];
+    return seed;
+}
+
+function generateAvatarSeeds() {
+    currentAvatarSeeds = [];
+    for (let i = 0; i < AVATAR_COUNT; i++) {
+        currentAvatarSeeds.push(generateRandomSeed());
+    }
+    return currentAvatarSeeds;
+}
+
+function getAvatarUrl(seed, bg) {
+    return `https://api.dicebear.com/9.x/adventurer/svg?seed=${seed}&skinColor=9e5622,ecad80,f2d3b1&backgroundColor=${bg}`;
+}
 
 
 // ── DOM Refs ─────────────────────────────────────
 const stepDotsContainer = document.getElementById('stepDotsContainer');
-const headerStepLabel   = document.getElementById('headerStepLabel');
+const headerStepLabel = document.getElementById('headerStepLabel');
 const interestsContainer = document.getElementById('interestsContainer');
 
 
-// ── Translation Engine ───────────────────────────
+// ── Translation Engine (powered by i18next) ──────
 function applyTranslation() {
-    document.querySelectorAll('[data-translate]').forEach(el => {
-        const key = el.getAttribute('data-translate');
-        if (translations[selectedLanguage]?.[key]) {
-            el.textContent = translations[selectedLanguage][key];
-        }
-    });
-    document.querySelectorAll('[data-translate-placeholder]').forEach(el => {
-        const key = el.getAttribute('data-translate-placeholder');
-        if (translations[selectedLanguage]?.[key]) {
-            el.placeholder = translations[selectedLanguage][key];
-        }
-    });
+    applyI18nToDOM();
     renderInterests();
 }
 
@@ -185,7 +89,7 @@ function renderInterests() {
 
     Object.keys(interestData).forEach(key => {
         const interest = interestData[key];
-        const name = interest[selectedLanguage] || interest.en;
+        const name = t(`interest_${key}`);
         const isSelected = formData.interests.includes(key);
 
         const pill = document.createElement('button');
@@ -213,23 +117,40 @@ function toggleInterest(key, pill) {
 
 
 // ── Populate Avatars ─────────────────────────────
-function populateAvatars() {
+function populateAvatars(regenerate = true) {
     const container = document.getElementById('avatarContainer');
     if (!container) return;
     container.innerHTML = '';
 
-    const seeds = formData.gender === 'female' ? femaleSeeds : maleSeeds;
+    if (regenerate || currentAvatarSeeds.length === 0) {
+        generateAvatarSeeds();
+        // Clear selection when regenerating
+        formData.avatarSeed = '';
+        formData.avatarBg = '';
+    }
 
-    seeds.forEach((seed, i) => {
+    currentAvatarSeeds.forEach((seed, i) => {
         const bg = bgColors[i % bgColors.length];
-        const url = `https://api.dicebear.com/7.x/adventurer/svg?seed=${seed}&backgroundColor=${bg}`;
+        const url = getAvatarUrl(seed, bg);
 
         const div = document.createElement('div');
         div.className = `avatar-option ${formData.avatarSeed === seed ? 'selected' : ''}`;
-        div.innerHTML = `<img src="${url}" alt="${seed}" class="w-full h-full object-cover">`;
+        div.innerHTML = `<img src="${url}" alt="avatar" class="w-full h-full object-cover">`;
         div.onclick = () => selectAvatar(seed, bg, div);
         container.appendChild(div);
     });
+
+    // 12th cell: Randomize button
+    const randBtn = document.createElement('div');
+    randBtn.className = 'avatar-randomize-btn';
+    randBtn.innerHTML = `<i class="fas fa-dice"></i>`;
+    randBtn.title = 'Randomize avatars';
+    randBtn.onclick = () => {
+        randBtn.classList.add('spinning');
+        setTimeout(() => randBtn.classList.remove('spinning'), 500);
+        populateAvatars(true);
+    };
+    container.appendChild(randBtn);
 }
 
 function selectAvatar(seed, bg, element) {
@@ -250,10 +171,14 @@ function selectLanguage(lang, element) {
     document.querySelectorAll('.lang-btn').forEach(btn => {
         btn.classList.remove('selected');
         btn.className = btn.className.replace(/border-\[#6C47FF\]/g, 'border-[#EBEBF0]').replace(/bg-\[#EDE8FF\]/g, '').replace(/text-\[#6C47FF\]/g, 'text-[#1A1A2E]');
-});
+    });
 
     element.classList.add('selected');
-    applyTranslation();
+
+    // Change i18next language and re-apply DOM translations
+    changeI18nLanguage(lang, () => {
+        renderInterests();
+    });
 }
 
 function selectGender(gender, element) {
@@ -263,8 +188,10 @@ function selectGender(gender, element) {
     element.classList.add('selected');
     hideError('genderError');
 
-    // Populate avatars based on gender
-    populateAvatars();
+    // Populate avatars if not already populated
+    if (currentAvatarSeeds.length === 0) {
+        populateAvatars(true);
+    }
 }
 
 
@@ -283,10 +210,8 @@ function showStep(step) {
         else if (i + 1 < step) dot.classList.add('done');
     });
 
-    // Update label
-    const stepLabels = { en: 'Step', uz: 'Qadam', ru: 'Шаг' };
-    const ofLabels = { en: 'of', uz: '/', ru: 'из' };
-    headerStepLabel.textContent = `${stepLabels[selectedLanguage] || 'Step'} ${step} ${ofLabels[selectedLanguage] || 'of'} ${totalSteps}`;
+    // Update label using i18next interpolation
+    headerStepLabel.textContent = t('step_label', { current: step, total: totalSteps });
 }
 
 function nextStep() {
@@ -337,7 +262,7 @@ function validateStep(step) {
         const name = document.getElementById('firstName').value.trim();
         const uname = document.getElementById('username').value.trim();
 
-  if (!name) {
+        if (!name) {
             showError('nameError', 'firstName');
             valid = false;
         } else {
@@ -401,34 +326,28 @@ function triggerCelebration() {
     // Set avatar
     const img = document.getElementById('celebrationAvatar');
     if (img && formData.avatarSeed) {
-        img.src = `https://api.dicebear.com/7.x/adventurer/svg?seed=${formData.avatarSeed}&backgroundColor=${formData.avatarBg}`;
+        img.src = getAvatarUrl(formData.avatarSeed, formData.avatarBg);
     }
 
-    // Set name
+    // Set name (translated)
     const nameEl = document.getElementById('celebrationName');
-    if (nameEl) nameEl.textContent = `Welcome, ${formData.firstName}! 👋`;
+    if (nameEl) nameEl.textContent = t('welcome_name', { name: formData.firstName });
 
     // Set interests
     const intEl = document.getElementById('celebrationInterests');
     if (intEl) {
         intEl.innerHTML = formData.interests.map(key => {
-            const interest = interestData[key];
-            const name = interest?.[selectedLanguage] || interest?.en || key;
+            const name = t(`interest_${key}`);
             return `<span class="interest-pill selected text-xs">${name}</span>`;
         }).join('');
     }
 
-    // Match count (mock)
+    // Match count (mock, translated)
     const matchEl = document.getElementById('celebrationMatch');
     if (matchEl) {
         const count = Math.floor(Math.random() * 40) + 15;
         setTimeout(() => {
-            const msgs = {
-                en: `${count} people share your interests!`,
-                uz: `${count} kishi sizning qiziqishlaringizga mos!`,
-                ru: `${count} человек разделяют ваши интересы!`
-            };
-            matchEl.textContent = msgs[selectedLanguage] || msgs.en;
+            matchEl.textContent = t('match_result', { count });
         }, 1200);
     }
 
@@ -488,12 +407,18 @@ async function submitForm() {
 
 // ── Real-time Inline Validation (blur) ───────────
 document.addEventListener('DOMContentLoaded', () => {
-    showStep(1);
-    applyTranslation();
+    // Initialize i18next, then boot UI
+    initI18n(selectedLanguage, () => {
+        showStep(1);
+        applyTranslation();
 
-    // Auto-select English lang button
-    const enBtn = document.querySelector('.lang-btn:last-child');
-    if (enBtn) enBtn.classList.add('selected');
+        // Pre-populate avatars (gender-independent)
+        populateAvatars(true);
+
+        // Auto-select English lang button
+        const enBtn = document.querySelector('.lang-btn:last-child');
+        if (enBtn) enBtn.classList.add('selected');
+    });
 
     // Blur validation for name
     const nameInput = document.getElementById('firstName');
@@ -503,7 +428,7 @@ document.addEventListener('DOMContentLoaded', () => {
             else hideError('nameError', 'firstName');
         });
         nameInput.addEventListener('input', () => hideError('nameError', 'firstName'));
-}
+    }
 
     // Blur validation for username
     const unameInput = document.getElementById('username');
